@@ -1,0 +1,555 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+
+<link rel="import" href="px-page.html"/>
+<link rel="import" href="px-page-styles.html"/>
+
+
+<!--
+<p>
+  For demo visit <a href="demo.html" target="_blank">Full demo here</a> or <a href="mobile-demo.html" target="_blank">Mobile demo here</a>
+</p>
+
+This component should be used to manage a stack of pages for a given view.
+This component is for use with child `px-page` elements, and is usefull if your content exceeds
+the viewport and want to enable smooth scrolling.
+
+When a page includes a `px-navbar` component, the navbar will show/hide a back button dependending
+if it is the current page in the stack or the main page.
+
+## Usage
+
+```
+<style>
+
+</style>
+<div class="viewport">
+	<div class="flex">
+	<button class="btn btn--full" onclick="document.getElementById('pages').prev()">Prev</button>
+  <button class="btn btn--full" onclick="document.getElementById('pages').next()">Next</button>
+</div>
+	<px-pages id="pages" selected="0">
+	  <px-page id="page1" main>One</px-page>
+	  <px-page id="page2">Two</px-page>
+	  <px-page id="page3">Three</px-page>
+	  <px-page id="page4">four</px-page>
+	</px-pages>
+</div>
+```
+### Styling
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--px-header-layout` | Mixin applied to component | {}
+
+
+@element px-pages
+@blurb
+@demo demo.html
+@homepage index.html
+-->
+
+<dom-module id="px-pages">
+		<style include="px-navbar-css"></style>
+  <template>
+    <style>
+      :host {
+        display: block;
+
+      }
+      :host .pages{
+        position: relative;
+        -webkit-transition: all 0.4s;
+        transition: all 0.4s;
+        -webkit-overflow-scrolling: touch;
+        height: 100%;
+        width: 100%;
+        @apply(--px-pages);
+      }
+
+
+      :host .pages ::content .page{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      :host .pages ::content .page:not(.current){
+        opacity: 0;
+        visibility: hidden;
+
+        -webkit-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+
+        @apply(--px-page);
+      }
+
+      :host ::content .has-navbar{
+        padding-top: 56px;
+      }
+
+      :host ::content .current {
+        opacity: 1;
+        visibility: visible;
+
+        transform: translate(0, 0);
+
+        @apply(--px-page-current);
+      }
+
+      :host ::content .next {
+
+        transform: translate(50%, 0);
+
+        @apply(--px-page-next);
+      }
+
+      :host ::content .previous {
+        transform: translate(-50%, 0);
+        @apply(--px-page-previous);
+      }
+
+    </style>
+    <div class="pages">
+    	<content id="pages" select=".page, px-page, .px-page"></content>
+    </div>
+  </template>
+</dom-module>
+<script type="text/javascript">
+  Polymer({
+    is: 'px-pages',
+    behaviors: [
+      Polymer.IronResizableBehavior
+    ],
+		listeners: {
+			'px-navbar-back': 'back'
+		},
+    properties: {
+      /**
+       * The selected index
+       */
+      selected: {
+        type: Number,
+        reflectToAttribute: true,
+        notify: true,
+        observer: '_handleSelectedChange',
+        value: 0
+      },
+      /**
+       * The current active page object
+       */
+      selectedPage: {
+        type: Object,
+        notify: true
+      },
+      /**
+       * The main page
+       */
+      mainPage: {
+        type: Object
+      },
+      /**
+       * The array of indexed pages
+       */
+      pages: {
+        type: Array,
+        value: function () {
+          return [];
+        }
+      },
+      /**
+       * The class to set on element when selected.
+       */
+      selectedClass: {
+        type: String,
+        value: 'current'
+      },
+      /**
+       * Update the URL with the current page #id attribute
+       * @private
+       */
+      updateHash: {
+        type: Boolean,
+        value: false
+      }
+    },
+
+    created: function () {
+      this._PageMap = {};
+      this._PageList = [];
+    },
+    attached: function () {
+      var _this = this;
+      if (!this.id) {
+        throw 'pages' + this.tagName + ' cannot be created without an id!';
+      }
+      //  this.listen(this, 'track', 'handleTrack');
+      this.async(function () {
+        this._init();
+        this.toggleClass('et-wrapper');
+        this.toggleClass('px-pages__wrapper');
+        this.gotoIndex(this.selected);
+      }, 1);
+    },
+    detached: function () {
+      this._log('detached');
+    },
+    _init: function () {
+      var self = this;
+      var pages = this.getPages();
+      //Cache pages
+      this._pages = pages;
+      var len = pages.length;
+      for (var i = 0; i < len; i++) {
+        self._log('page', pages[i]);
+        self._addPage(pages[i]);
+      }
+      this.fire('px-page-ready');
+    },
+    /**
+     * Fires when the page is changed.
+     * @event px-page-change
+     */
+    _handleSelectedChange: function (index, oldIndex) {
+
+      var _this = this;
+      var _pages = this.getPages();
+      var prevPage = _pages[index - 1];
+      var currPage = _pages[index];
+      var nextPage = _pages[index + 1];
+
+      this._clearCurrent();
+
+      if (nextPage) {
+        _this._log('nextPage', nextPage);
+        _this.toggleClass('next', true, nextPage);
+        _this.toggleClass(_this.selectedClass, false, nextPage);
+        _this.toggleClass('previous', false, nextPage);
+      }
+
+      if (prevPage) {
+        _this._log('prevPage', prevPage);
+        _this.toggleClass(_this.selectedClass, false, prevPage);
+        _this.toggleClass('next', false, prevPage);
+        _this.toggleClass('previous', true, prevPage);
+      }
+      if (currPage) {
+        _this._log('currPage', _this.selectedClass, currPage);
+        currPage.nextPage = nextPage;
+        currPage.prevPage = prevPage;
+        _this.toggleClass('next', false, currPage);
+        _this.toggleClass('previous', false, currPage);
+        _this.toggleClass(_this.selectedClass, true, currPage);
+        _this.selectedPage = currPage;
+
+        _this.fire('px-page-change', currPage);
+      }
+
+      return currPage;
+    },
+
+
+    /**
+     * Select a page by index or id
+     * @param {String} value The value to select
+     * @return {Object} Page element object
+     */
+    select: function (value) {
+      return this.goto(value);
+    },
+    /**
+     * Goto a page by index or id
+     * @private
+     * @return {Object} Page element object
+     */
+    goto: function (indexOrId) {
+      var p = null;
+      if (this._PageList[indexOrId]) {
+        p = this._PageList[indexOrId];
+        return this.gotoIndex(indexOrId);
+      } else if (this._PageMap[indexOrId]) {
+        p = this._PageMap[indexOrId];
+        return this.gotoIndex(this.indexOf(p));
+      } else {
+        console.log('Page', indexOrId, 'does not exist!');
+        return false;
+      }
+    },
+    /**
+     * Handle adding a Page to the map and any neccessary properties for mapping.
+     * @param Page
+     * @private
+     */
+    _addPage: function (Page) {
+      if (Page.main) {
+        Page.toggleClass(this.selectedClass, true);
+        this.mainPage = Page;
+      }
+      //add the index to the el
+      Page.setAttribute('index', this._PageList.length.toString());
+
+      //add next class to element
+      this.toggleClass('et-page', true, Page);
+      //Page.toggleClass('next');
+
+      //add to Page map
+      this._PageMap[Page.id] = Page;
+
+      Page.container = this;
+
+      //push to Page list
+      this._PageList.push(Page);
+
+      this.fire('px-page-add', Page);
+    },
+    /**
+     * Resets all pages to there initial state.
+     * @event px-page-reset
+     */
+    reset: function (selected) {
+      var self = this;
+      var _pages = this.getPages();
+      var len = _pages.length;
+      var p;
+      this._clearCurrent();
+      for (var i = 0; i < len; i++) {
+        p = _pages[i];
+        self._log('resetting', i, p);
+        this.toggleClass(self.selectedClass, false, p);
+        this.toggleClass('next', false, p);
+        this.toggleClass('previous', false, p);
+      }
+      this.selected = selected || 0;
+      this.toggleClass(self.selectedClass, true, _pages[this.selected]);
+      this.fire('px-page-reset');
+    },
+    /**
+     * Goto a page by index
+     * @private
+     * @return {Object} Page element object
+     */
+    gotoIndex: function (index) {
+      this._log('gotoIndex', index);
+      var _this = this;
+      var _pages = _this.getPages();
+      var p = _pages[index];
+      if (p) {
+        this.selected = this.indexOf(p);
+        return p;
+      } else {
+        return false;
+      }
+    },
+    /**
+     * Return the index of the page.
+     * @param page
+     * @return {Number} The page index
+     */
+    indexOf: function (page) {
+      var i = this._pages.indexOf(page);
+      if (i > -1) {
+        return i;
+      } else {
+        return false;
+      }
+    },
+    /**
+     * Goto a page by #id
+     * @private
+     * @return {Object} Page element object
+     */
+    gotoPage: function (id) {
+      this._log('gotoPage', id);
+      var index = 0;
+      var page = this._PageMap[id];
+      if (page) {
+        index = this.indexOf(page);
+        if (index > -1) {
+          this.selected = index;
+          return page;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    },
+    /**
+     * Utility method for logging a warn to the console.
+     * @private
+     * @param type
+     * @param message
+     */
+    _warn: function (type, message) {
+      // if (this._debug) {
+      //   console.warn('PagesBehavior.' + type, message);
+      // }
+    },
+    /**
+     * Utility method for logging to the console.
+     * @private
+     * @param type
+     * @param message
+     */
+    _log: function (type, message) {
+      // if (this._debug) {
+      //   console.log('PagesBehavior.' + type, message);
+      // }
+    },
+    /**
+     * Clears the current page
+     * @private
+     */
+    _clearCurrent: function () {
+      var self = this;
+      var _pages = this.getPages();
+      var len = _pages.length;
+      if (_pages) {
+        for (var i = 0; i < len; i++) {
+          self._log('_clearCurrent', self.selectedClass, _pages[i]);
+          self.toggleClass(self.selectedClass, false, _pages[i]);
+        }
+      }
+    },
+    /**
+     * Get the current selected page
+     * @return {Object} Page element object
+     */
+    getSelectedPage: function () {
+      return this._pages[this.selected];
+    },
+    /**
+     * Handle returning the previous page.
+     * @return {Object} Page element object
+     */
+    getPrevious: function () {
+      if (this.selected === 0) {
+        return false;
+      }
+      return this._pages[this.selected - 1];
+    },
+    /**
+     * Handle returning the next page.
+     * @return {Object} Page element object
+     */
+    getNext: function () {
+      if (this.selected === this._pages.length - 1) {
+        return false;
+      }
+      return this._pages[this.selected + 1];
+    },
+    /**
+     * Handle updating the location.hash
+     * @private
+     */
+    _updateHash: function () {
+      if (this.updateHash) {
+        window.location.hash = this.getCurrentPage().id;
+      }
+    },
+
+    /**
+     * Handle setting the current page.
+     * @private
+     * @param index
+     * @return {*}
+     */
+    current: function (index) {
+      this.selected = index || this.selected;
+      this._log('current', this.selected);
+      return this.gotoIndex(this.selected);
+    },
+    /**
+     * Handle going to the next page in the index.
+     * @private
+     * @return {Number} Index
+     */
+    next: function () {
+      this._log('next', this.selected);
+      if (this.selected >= this.getPages().length - 1) {
+        if (this.loop) {
+          this.reset();
+        } else {
+          this.current();
+        }
+        this._warn('next', 'end of page stack!');
+        return;
+      } else {
+        this.selected++;
+        //return this.gotoIndex(this.selected + 1);
+      }
+      return this.current();
+    },
+    /**
+     * Handle going to the previous page in the index.
+     * @private
+     * @return {Number} The selected index
+     */
+    prev: function () {
+      if (this.selected <= 0) {
+        if (this.loop) {
+          this.reset(true);
+        } else {
+          this.current();
+        }
+      } else {
+        this.gotoIndex(this.selected - 1);
+      }
+    },
+    /**
+     * Selects the previous item. (alias for prev())
+     * @return {Number} The selected index
+     */
+    selectPrevious: function () {
+      return this.prev();
+    },
+    /**
+     * Selects the next item. (alias for next())
+     * @return {Number} The selected index
+     */
+    selectNext: function () {
+      return this.next();
+    },
+    /**
+     * Handles getting the current page in the stack.
+     * @private
+     * @return {Object} Page element object
+     */
+    getCurrent: function () {
+      return this._pages[this.selected];
+    },
+    /**
+     * Handles navigating back in the page stack.
+     * @return {Number} The selected index
+     */
+    back: function () {
+      this._log('back', this.selected);
+      return this.selected--;
+    },
+    /**
+     * Handle setting the height of the current page to the height of the container.
+     * @private
+
+     _fixHeight: function () {
+      var pHeight = this.offsetHeight;
+      var pageHeight = this.selectedPage.offsetHeight;
+      var pageContent = this.querySelector('.page-content');
+      var contentHeight = pageContent.offsetHeight;
+      pageContent.css('height', pageHeight + 'px');
+      this._log('Parent', pHeight, 'Child', pageHeight, 'Content', contentHeight,
+        pageContent);
+      return pageContent;
+    },   */
+    /**
+     * Handle returning the current content pages.
+     * @returns {Array} Array of content pages.
+     */
+    getPages: function () {
+      this._pages = this.queryAllEffectiveChildren('px-page');
+      return this._pages;
+    }
+  });
+</script>

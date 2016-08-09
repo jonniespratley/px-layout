@@ -1,0 +1,416 @@
+<html>
+	<head>
+		<title>px navbar demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+		<link rel="import" href="../px-demo-helpers/px-demo-helpers.html"/>
+		<link rel="import" href="../px-theme/px-theme.html">
+		<link rel="import" href="../px-theme/px-app.html">
+		<link rel="import" href="px-navbar.html">
+		<link rel="import" href="../iron-demo-helpers/demo-snippet.html"/>
+		<style media="screen">
+			.box {
+				background: transparent;
+				border: none;
+				padding: 10px;
+			}
+			.position-relative {
+				position: relative;
+			}
+			.position-relative {
+				min-height: 75px;
+			}
+			body,
+			html {
+				background: #efeff4 !important;
+				overflow: hidden;
+				overflow-y: scroll;
+				overflow-y: auto;
+				-webkit-overflow-scrolling: touch;
+			}
+		</style>
+	</head>
+	<body unresolved>
+		<div class="viewport">
+			<h1 class="beta">px-navbar</h1>
+			<p>The px-navbar component is a responsive mobile first navigation bar.</p>
+			<p>
+				Visit the
+				<a href="mobile-demo.html" target="_blank">mobile demo</a>
+				on a mobile device.
+			</p>
+			<div class="u-mb">
+				<h2>Custom Content</h2>
+				<demo-snippet>
+					<template>
+						<div class="position-relative">
+							<px-navbar id="navbar1">
+								<div left>
+									left
+								</div>
+								<div center>
+									center
+								</div>
+								<div right>
+									right
+								</div>
+							</px-navbar>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+			<div class="u-mb">
+				<h2>Default - Title</h2>
+				<demo-snippet>
+					<template>
+						<div class="position-relative">
+							<px-navbar id="navbar1-0" title="Navbar"></px-navbar>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+			<div class="u-mb">
+				<h2>Default - Title - Subtitle</h2>
+				<demo-snippet>
+					<template>
+						<div class="position-relative">
+							<px-navbar id="navbar1-1" title="Navbar" subtitle="Subtitle"></px-navbar>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+			<div class="u-mb">
+				<h2>Default - Title - Menu</h2>
+				<demo-snippet>
+					<template>
+						<div class="position-relative">
+							<px-navbar id="navbar1-2" title="Navbar">
+								<div left>
+									<button class="navbar__button">
+										<px-icon icon="fa:fa-bars"></px-icon>
+									</button>
+								</div>
+								<div right>
+									<button class="navbar__button">
+										<px-icon icon="fa:fa-ellipsis-v"></px-icon>
+									</button>
+								</div>
+							</px-navbar>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+			<div class="u-mb">
+				<h2>Default - Back Button</h2>
+				<demo-snippet>
+					<template>
+						<div class="position-relative">
+							<px-navbar id="navbar1-3" title="Navbar" back-label="Back" back></px-navbar>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+			<div class="u-mb">
+				<h2>Default - Left / Right Buttons</h2>
+				<demo-snippet>
+					<template>
+						<div class="position-relative">
+							<px-navbar id="navbar1-4" title="Navbar">
+								<div left>
+									<button class="navbar__button">Button</button>
+								</div>
+								<div right>
+									<button class="navbar__button">Button</button>
+								</div>
+							</px-navbar>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+
+			<!-- TODO: Left / Right buttons-->
+			<div class="u-mb">
+				<h2>Default - Left / Right Primary Buttons</h2>
+				<demo-snippet>
+					<template>
+						<div class="position-relative">
+							<px-navbar id="navbar1-4" title="Navbar">
+								<div left>
+									<button class="btn btn--primary">Button</button>
+								</div>
+								<div right>
+									<button class="btn btn--primary">Button</button>
+								</div>
+							</px-navbar>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+			<!-- TODO: Left/Right Buttons-->
+			<div class="u-mb">
+				<h2>Default - Left / Right Tertiary Buttons</h2>
+				<demo-snippet>
+					<template>
+						<div class="position-relative">
+							<px-navbar id="navbar1-4" title="Navbar">
+								<div left>
+									<button class="btn btn--tertiary">Button</button>
+								</div>
+								<div right>
+									<button class="btn btn--tertiary">Button</button>
+								</div>
+							</px-navbar>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+			<div class="u-mb">
+				<h2>Custom CSS Vars</h2>
+				<demo-snippet>
+					<template>
+						<style is="custom-style">
+							.custom-navbar {
+								--px-navbar: {
+									background-color: #0d5fb6;
+									color: white;
+								}
+								--px-navbar-title: {
+									font-size: 2rem;
+								}
+								--px-navbar-subtitle: {
+									font-size: .9rem;
+									color: #eee;
+								}
+								--px-navbar-button:{
+									background-color: #fff;
+									border-radius: 5px;
+								}
+							}
+						</style>
+						<div class="position-relative">
+							<px-navbar id="navbar2" title="Custom Styles" subtitle="Using CSS Vars" class="custom-navbar">
+								<div left>
+									<button class="navbar__button">Button</button>
+								</div>
+								<div right>
+									<button class="navbar__button">Button</button>
+								</div>
+							</px-navbar>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+			<!-- TODO: Auto Back / Title  -->
+			<h2>Default - Auto Back Button - Auto Title - with px-pages</h2>
+			<demo-snippet>
+				<template id="">
+					<div class="box flex flex--center flex--middle">
+						<device-view device="phone" landscape>
+							<link rel="import" href="../px-page/px-pages.html">
+							<div class="app">
+								<style></style>
+								<px-pages id="pages" debug>
+									<!-- TODO: Page 1 -->
+									<px-page id="page1" main title="px-navbar">
+										<px-navbar id="navbar1">
+											<div left>
+												<button class="navbar__button">
+													<i class="fa fa-lg fa-bars"></i>
+												</button>
+											</div>
+										</px-navbar>
+										<section class="viewport">
+											<h2>Overview</h2>
+											<p>The px-navbar enables navigation through an information hierarchy and, optionally, management of screen contents.</p>
+											<div class="flex">
+												<button class="btn btn--full" onclick="document.getElementById('pages').next()">Next</button>
+											</div>
+										</section>
+									</px-page>
+									<!-- TODO: Page 2 -->
+									<px-page id="page2" title="Page 2">
+										<px-navbar></px-navbar>
+										<section class="viewport">
+											<p>When the user goes to a new level in a navigation hierarchy, two things should happen:</p>
+											<p>
+												<ol>
+													<li>The navigation bar title should change to the new level’s title, if appropriate.</li>
+													<li>A back button should appear in the left end of the bar; it can be labeled with the previous level’s title if it adds value.</li>
+												</ol>
+											</p>
+											<div class="flex">
+												<button class="btn btn--full" onclick="document.getElementById('pages').next()">Next</button>
+											</div>
+										</section>
+									</px-page>
+									<!-- TODO: Page 3 -->
+									<px-page id="page3" title="Page 3">
+										<px-navbar>
+											<div right>
+												<button class="navbar__button" onclick="document.getElementById('myOtherDrawer').toggle()">
+													<i class="fa fa-lg fa-ellipsis-v"></i>
+												</button>
+											</div>
+										</px-navbar>
+										<section class="viewport">
+											<p>In general, a navigation bar should contain no more than the view’s current title, the back button, and one control that manages the view’s contents.</p>
+											<p>
+												<blockquote>
+													<p>By default, the buttons are a minimum size of 44x44 (Per Apple Design Guidelines)</p>
+												</blockquote>
+											</p>
+											<div class="flex">
+												<button class="btn btn--full" onclick="document.getElementById('pages').reset()">Reset</button>
+											</div>
+										</section>
+									</px-page>
+								</px-pages>
+							</div>
+						</device-view>
+					</div>
+				</template>
+			</demo-snippet>
+			<h2>Mobile Demo</h2>
+			<demo-snippet>
+				<template id="">
+					<device-layout-viewer device="phone" src="./mobile-demo.html"></device-layout-viewer>
+				</template>
+			</demo-snippet>
+			<!--
+    <h1>HTML Examples</h1>
+    <div class="u-mb++">
+        <h2>Default</h2>
+        <demo-snippet>
+            <template>
+                <div class="position-relative">
+                    <div class="navbar navbar--default">
+                        <div class="navbar__center">
+                            <span class="navbar__title">Navbar Title</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </demo-snippet>
+    </div>
+
+    <div class="u-mb++">
+        <h2>Default with Subtitle</h2>
+        <demo-snippet>
+            <template>
+                <div class="position-relative">
+                    <div class="navbar navbar--default">
+                        <div class="navbar__center">
+                            <span class="navbar__title">Navbar Title</span>
+                            <span class="navbar__subtitle">Subtitle</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </demo-snippet>
+    </div>
+
+    <div class="u-mb++">
+        <h2>Default with Back Button</h2>
+        <demo-snippet>
+            <template>
+                <div class="position-relative">
+                    <div class="navbar navbar--default">
+                        <div class="navbar__left">
+                            <button class="navbar__button navbar__button--back">
+                                <i class="fa fa-angle-left"></i>
+                                <span>Back</span>
+                            </button>
+                        </div>
+                        <div class="navbar__center">
+                            <span class="navbar__title">Navbar Title</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </demo-snippet>
+    </div>
+
+    <div class="u-mb++">
+        <h2>Default with Action Button</h2>
+        <demo-snippet>
+            <template>
+                <div class="position-relative">
+                    <div class="navbar navbar--default">
+                        <div class="navbar__left">
+                            <button class="navbar__button navbar__button--back">
+                                <i class="fa fa-lg fa-angle-left"></i>
+                                <span>Back</span>
+                            </button>
+                        </div>
+                        <div class="navbar__center">
+                            <span class="navbar__title">Navbar Title</span>
+                            <span class="navbar__subtitle">Subtitle</span>
+                        </div>
+                        <div class="navbar__right">
+                            <button class="navbar__button navbar__button--icon">
+                                <i class="fa fa-plus fa-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </demo-snippet>
+    </div>
+
+    <div class="u-mb++">
+        <h2>Default with Modal Actions</h2>
+        <demo-snippet>
+            <template>
+                <div class="position-relative">
+                    <div class="navbar navbar--default">
+                        <div class="navbar__center">
+                            <span class="navbar__title">Navbar Title</span>
+                        </div>
+                        <div class="navbar__content">
+                            <div>
+                                <button class="navbar__button navbar__button--back">
+                                    <i class="fa fa-angle-left"></i>
+                                    <span>Back</span>
+                                </button>
+                            </div>
+                            <button class="btn btn btn--primary">
+                                Done
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </demo-snippet>
+    </div>
+
+    <div class="u-mb++">
+        <h2>Default with Buttons</h2>
+        <demo-snippet>
+            <template>
+                <div class="position-relative">
+                    <div class="navbar navbar--default">
+
+                        <div class="navbar__left">
+                            <button class="navbar__button navbar__button--icon">
+                                <i class="fa fa-navicon fa-lg"></i>
+                            </button>
+                        </div>
+                        <div class="navbar__center">
+                            <span class="navbar__title">Navbar Title</span>
+                        </div>
+                        <div class="navbar__right">
+                            <button class="navbar__button navbar__button--icon">
+                                <i class="fa fa-plus fa-lg"></i>
+                            </button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </template>
+        </demo-snippet>
+    </div>
+    -->
+			<script src="http://localhost:35724/livereload.js?snipver=1"></script>
+		</body>
+	</html>

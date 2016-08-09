@@ -1,0 +1,64 @@
+{
+  "name": "px-table-view",
+  "version": "0.0.9",
+  "description": "A responsive mobile first table view list.",
+  "authors": [
+    "Jonnie Spratley <jonnie.spratley@ge.com>"
+  ],
+  "main": [
+    "px-table-view.html"
+  ],
+  "keywords": [
+    "px",
+    "px-mobile"
+  ],
+  "ignore": [
+    ".*",
+    "npm-debug.log",
+    "Gruntfile.js",
+    "bower_components",
+    "node_modules",
+    "test"
+  ],
+  "dependencies": {
+    "polymer": "~1.5.0",
+    "px-theme": "https://github.com/PredixDev/px-theme.git#~0.4.0",
+    "fastclick": "^1.0.6",
+    "iron-selector": "PolymerElements/iron-selector#^1.5.1",
+    "Sortable": "~1.4.2",
+    "polymer-font-awesome": "https://github.com/PredixDev/polymer-font-awesome.git",
+    "iron-resizable-behavior": "~1.0.3",
+    "hammerjs": "hammer.js#~2.0.8",
+    "px-partials": "~0.0.6",
+    "iron-checked-element-behavior": "PolymerElements/iron-checked-element-behavior#~1.0.4",
+    "iron-validatable-behavior": "PolymerElements/iron-validatable-behavior#~1.1.1"
+  },
+  "devDependencies": {
+    "px-demo-helpers": "https://github.com/PredixDev/px-demo-helpers.git",
+    "px-mobile-design": "https://github.com/PredixDev/px-mobile-design.git",
+    "px-navbar": "latest",
+    "px-card": "latest",
+    "px-toggle-design": "~0.2.12",
+    "px-forms-design": "~0.3.16",
+    "px-spacing-responsive-design": "^0.3.7",
+    "iron-component-page": "PolymerElements/iron-component-page#~v1.1.0",
+    "iron-ajax": "PolymerElements/iron-ajax#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#~1.2.3",
+    "jquery": "~2.2.4"
+  },
+  "resolutions": {
+    "px-theme": "~0.8.0",
+    "polymer-font-awesome": "master",
+    "polymer": "^1.5.0"
+  },
+  "homepage": "https://github.com/PredixDev/px-table-view",
+  "_release": "0.0.9",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.9",
+    "commit": "a8303c7f7e8aa20b2120fe7d480ac0fb248e4d88"
+  },
+  "_source": "https://github.com/PredixDev/px-table-view.git",
+  "_target": "~0.0.3",
+  "_originalSource": "px-table-view"
+}

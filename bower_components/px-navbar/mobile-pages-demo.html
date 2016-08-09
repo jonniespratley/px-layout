@@ -1,0 +1,136 @@
+<html>
+	<head>
+		<title>px-navbar mobile demo</title>
+		<!-- Sets initial viewport load and disables zooming  -->
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+		<!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script src="../webcomponentsjs/webcomponents.min.js"></script>
+		<link rel="import" href="../px-theme/px-theme.html">
+		<link rel="import" href="../px-theme/px-app.html">
+		<link rel="import" href="../px-page/px-pages.html">
+		<link rel="import" href="../px-drawer/px-drawer.html">
+		<link rel="import" href="px-navbar.html">
+		<style media="screen">
+			body,
+			html {
+				background: #efeff4 !important;
+				overflow: hidden !important;
+
+			}
+		</style>
+	</head>
+	<body unresolved>
+		<px-drawer id="myLeftDrawer" align="left" theme="dark" fixed>
+			<p>
+				This is the px-drawer component.
+			</p>
+		</px-drawer>
+		<px-drawer id="myOtherDrawer" align="bottom" theme="dark" fixed>
+			<div class="u-m">
+				<p>
+					This is content inside of the drawer
+				</p>
+			</div>
+		</px-drawer>
+		<px-pages id="pages" selected="0" debug class="u-bg--gray1">
+			<!-- TODO: Page 1 -->
+			<px-page id="page1" main title="px-navbar" >
+				<px-navbar id="navbar1" view-container="pages" fixed auto-hide scroll-target="page1">
+					<div left>
+						<button class="navbar__button" onclick="document.getElementById('myLeftDrawer').toggle()">
+							<i class="fa fa-lg fa-bars"></i>
+						</button>
+					</div>
+				</px-navbar>
+				<section class="viewport">
+					<h1>px-navbar</h1>
+					<p>The px-navbar enables navigation through an information hierarchy and, optionally, management of screen contents.</p>
+					<div class="flex">
+						<button class="btn btn--full" onclick="document.getElementById('pages').next()">Next</button>
+					</div>
+					<h2>Heading 2</h2>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+						dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</p>
+					<h3>Heading 3</h3>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+						dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</p>
+					<h4>Heading 4</h4>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+						dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</p>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+						dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</p>
+					<h5>Heading 5</h5>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+						dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</p>
+				</section>
+			</px-page>
+			<!-- TODO: Page 2 -->
+			<px-page id="page2" title="Page 2">
+				<px-navbar id="navbar2" view-container="pages"></px-navbar>
+				<section class="viewport">
+					<p>When the user goes to a new level in a navigation hierarchy, two things should happen:</p>
+					<p>
+						<ol>
+							<li>The navigation bar title should change to the new level’s title, if appropriate.</li>
+							<li>A back button should appear in the left end of the bar; it can be labeled with the previous level’s title if it adds value.</li>
+						</ol>
+					</p>
+					<div class="flex">
+						<button class="btn btn--full" onclick="document.getElementById('pages').next()">Next</button>
+					</div>
+				</section>
+			</px-page>
+			<!-- TODO: Page 3 -->
+			<px-page id="page3" title="Page 3">
+				<px-navbar id="navbar3" view-container="pages">
+					<div right>
+						<button class="navbar__button" onclick="document.getElementById('myOtherDrawer').toggle()">
+							<i class="fa fa-lg fa-ellipsis-v"></i>
+						</button>
+					</div>
+				</px-navbar>
+				<section class="viewport">
+					<p>In general, a navigation bar should contain no more than the view’s current title, the back button, and one control that manages the view’s contents.</p>
+					<p>
+						<blockquote>
+							<p>By default, the buttons are a minimum size of 44x44 (Per Apple Design Guidelines)</p>
+						</blockquote>
+					</p>
+					<div class="flex">
+						<button class="btn btn--full" onclick="document.getElementById('pages').next()">Next</button>
+					</div>
+				</section>
+			</px-page>
+			<!-- TODO: Page 4 -->
+			<px-page id="page4" title="Page 4">
+				<px-navbar id="navbar4" view-container="pages"></px-navbar>
+				<section class="viewport">
+					<p>The following items are configurable:</p>
+					<p>
+						<ol>
+							<li>title</li>
+							<li>subtitle</li>
+							<li>buttons on the left/right</li>
+						</ol>
+					</p>
+					<div class="flex">
+						<button class="btn btn--full" onclick="document.getElementById('pages').reset()">Back to Main</button>
+					</div>
+				</section>
+			</px-page>
+		</px-pages>
+		<script src="http://localhost:35724/livereload.js?snipver=1"></script>
+	</body>
+</html>

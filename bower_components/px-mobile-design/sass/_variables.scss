@@ -1,0 +1,17 @@
+@import "px-defaults-design/_settings.defaults.scss";
+
+@import "px-colors-design/_settings.colors.scss";
+@import '../_trumps.breakpoints.scss';
+//Prefix for utility classes
+$utility-prefix: 'u-';
+$layout-prefix : 'l-';
+$block-prefix  : 'b-';
+$helper-prefix : 'h-';
+
+$margin-step   : 5;
+$height-step   : 25;
+$width-step    : 25;
+$padding-step  : 5;
+
+//Global Namespace
+$namespace     : 'px';

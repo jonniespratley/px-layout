@@ -1,0 +1,48 @@
+<!doctype html>
+<html class="pxm">
+<head>
+  <meta charset="UTF-8">
+  <script src="/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="/web-component-tester/browser.js"></script>
+
+  <link rel="import" href="px-action-sheet.html">
+</head>
+<body>
+
+	<px-action-sheet id="px_action_sheet_1" title="Test Element"></px-action-sheet>
+
+	  <script>
+	   
+      suite('<px-action-sheet>', function () {
+        var element = document.getElementById('px_action_sheet_1');
+
+        test('renders', function () {
+          assert.ok(element);
+        });
+
+        test('can toggle - open', function () {
+          element.toggle();
+          assert(element.open === true);
+        });
+
+        test('can toggle - close', function () {
+          element.toggle();
+          assert(element.open === false);
+        });
+
+        test('can toggle - isOpen', function () {
+          var state = element.open;
+          element.open = !state;
+          assert(element.open === true);
+        });
+
+        test('Dialog Mask can close action sheet.', function () {
+          //element.isOpen = !element.isOpen;
+          element.open = true;
+          element.$._actionDialogMask.click();
+          assert(element.open === false);
+        });
+      });
+	  </script>
+</body>
+</html>

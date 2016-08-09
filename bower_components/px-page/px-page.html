@@ -1,0 +1,178 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="overthrow-import.html"/>
+<link rel="import" href="px-page-transitions.html"/>
+<link rel="import" href="px-page-behavior.html"/>
+
+
+<!--
+
+The `px-page` element provides a simple container that enables scrollable content. When used with the `px-navbar` element
+the page will update the `px-navbar` element with its title and/or back button.
+
+
+### Usage
+
+```
+
+```
+
+### Styling
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--px-page` | Mixin applied to component | {}
+
+@element px-page
+@demo demo.html
+@homepage index.html
+-->
+<dom-module id="px-page">
+  <template>
+    <style media="screen">
+      :host {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      :host.dialog {
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        position: fixed;
+        left: 0;
+        right: 0;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        z-index: 100;
+        background: #fff;
+        height: 100%;
+      }
+
+      :host.dialog:not(.is-open) {
+        z-index: -1;
+        -webkit-transform: translateY(100%);
+        transform: translateY(100%);
+      }
+
+      .overthrow,
+      :host .overthrow {
+        overflow: auto;
+        height: 100%;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .overthrow-enabled .page-content {
+        height: 100%;
+      }
+
+      /* This enables the page to allow scrolling */
+      :host ::content section {
+        height: 100%;
+      }
+
+    </style>
+    <div class="page-container">
+      <content id="navbarContent" select="px-navbar"></content>
+      <section class="page-content overthrow">
+        <content id="pageContent" select=":not(px-navbar)"></content>
+      </section>
+    </div>
+  </template>
+</dom-module>
+<script type="text/javascript">
+  Polymer({
+    is: 'px-page',
+    behaviors: [
+      Polymer.IronResizableBehavior,
+
+      PageBehavior
+    ],
+    properties: {
+
+      //The title for the page
+      title: {
+        type: String,
+        value: null
+      },
+      //Path to remote view that will be loaded
+      import: {
+        type: String,
+        notify: true,
+        value: null,
+        observer: '_tmplChanged'
+      },
+      //If the page is currently active in the viewport
+      active: {
+        type: Boolean,
+        value: false
+      },
+      //If the page is the main page
+      main: {
+        type: Boolean,
+        value: false
+      },
+      //If the page is a dialog
+      dialog: {
+        type: Boolean,
+        value: false
+      },
+      //with URL query parameters. If your page URL is "about.html?id=10&count=20&color=blue"
+      query: {
+        type: Object
+      },
+      //The context data object associated with the page
+      context: {
+        type: Object
+      },
+      //The page that came before this page
+      fromPage: {
+        type: Object
+      },
+      //The route to set in the windows hash
+      route: {
+        type: String
+      },
+      //Contains string URL of just loaded page
+      url: {
+        type: String
+      },
+      //reference to parent px-pages element
+      pages: {
+        type: Object
+      },
+      //reference to parent px-pages container
+      container: {
+        type: Object
+      }
+    },
+
+    /**
+     * A reference to the px-navbar element. (if it exists)
+     * @property navbar
+     * return Element
+     */
+    get navbar() {
+      return Polymer.dom(this.$.navbarContent).getDistributedNodes()[0];
+    },
+    _pagesContainer: null,
+    attached: function () {
+      this.toggleClass('page');
+      var root = Polymer.dom(this.root);
+      if (this.navbar) {
+        //console.warn('Page has navbar', this.navbar, this.parentNode.parentNode);
+
+        // TODO: Fix for shadow dom
+        if (root.parentNode && root.parentNode.parentNode.localName === 'px-pages') {
+          this.pagesContainer = root.parentNode.parentNode;
+          this.navbar.pagesContainer = this.pagesContainer;
+        }
+      }
+    },
+    _handleBack: function (e) {
+      if (this.pagesContainer) {
+        this.pagesContainer.back();
+      }
+    }
+  });
+</script>

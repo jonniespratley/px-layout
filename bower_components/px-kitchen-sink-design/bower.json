@@ -1,0 +1,40 @@
+{
+  "name": "px-kitchen-sink-design",
+  "version": "0.4.5",
+  "authors": [
+    "General Electric"
+  ],
+  "description": "All Predix Experience Sass modules imported, all feature flags enabled",
+  "main": "_px.scss",
+  "keywords": [
+    "px",
+    "sass",
+    "kitchen",
+    "sink"
+  ],
+  "license": "Apache 2",
+  "homepage": "https://github.com/PredixDev/px-kitchen-sink-design.git",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "px-box-design": "https://github.com/PredixDev/px-box-design.git#~0.3.12",
+    "px-code-design": "https://github.com/PredixDev/px-code-design.git#~0.2.10",
+    "px-flag-design": "https://github.com/PredixDev/px-flag-design.git#~0.2.11",
+    "px-forms-design": "https://github.com/PredixDev/px-forms-design.git#~0.3.15",
+    "px-headings-design": "https://github.com/PredixDev/px-headings-design.git#~0.2.12",
+    "px-iconography-design": "https://github.com/PredixDev/px-iconography-design.git#~0.2.9",
+    "px-input-group-design": "https://github.com/PredixDev/px-input-group-design.git#~0.2.11",
+    "px-layout-design": "https://github.com/PredixDev/px-layout-design.git#~0.3.12",
+    "px-meta-buttons-design": "https://github.com/PredixDev/px-meta-buttons-design.git#~0.5.4",
+    "px-meta-lists-design": "https://github.com/PredixDev/px-meta-lists-design.git#~0.3.4",
+    "px-tables-design": "https://github.com/PredixDev/px-tables-design.git#~0.3.12",
+    "px-toggle-design": "https://github.com/PredixDev/px-toggle-design.git#~0.2.11",
+    "px-starter-kit-design": "https://github.com/PredixDev/px-starter-kit-design.git#~0.5.4"
+  }
+}

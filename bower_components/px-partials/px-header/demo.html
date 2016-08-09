@@ -1,0 +1,157 @@
+<html>
+	<head>
+		<!-- TODO: Dependencies -->
+		<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>px-header demo</title>
+		<script src="../demo/demo.js"></script>
+		<link rel="import" href="../../px-theme/px-app.html">
+		<link rel="import" href="../../px-theme/px-theme.html">
+		<link rel="import" href="../../px-layout/px-layout.html">
+		<link rel="import" href="px-header.html">
+		<style media="screen">
+			body,
+			html {
+				background-color: #eee !important;
+			}
+			.box {
+				position: relative;
+				background: #111;
+			}
+			.bg-dark {
+				background-color: #333;
+			}
+		</style>
+		<link rel="import" href="px-header.html">
+
+	</head>
+	<body>
+		<div class="viewport u-pt">
+			<h1 class="beta">px-header</h1>
+			<p>
+				The
+				<code>px-header</code>
+				element provides a way to use layout headers.
+				<button type="button" onclick="showCode()" class="">Show code</button>
+				<button type="button" onclick="hideCode()" class="">Hide code</button>
+			</p>
+
+			<ol id="toc"></ol>
+			<script type="text/javascript">
+				document.addEventListener('WebComponentsReady', function(){
+					createToc('toc');
+				});
+			</script>
+
+
+			<h2>Default Example</h2>
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<div class="bg-dark">
+							<px-header></px-header>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+			<h2>Bare Example</h2>
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<div class="bg-dark">
+							<px-header title="" subtitle=" " powered=" "></px-header>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+			<h2>LA Example</h2>
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<px-layout flex>
+							<div class="bg-dark" content>
+								<px-header title="Seed Application" powered="Powered by Predix"></px-header>
+							</div>
+						</px-layout>
+					</template>
+				</demo-snippet>
+			</div>
+			<h2>GA Example</h2>
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<px-layout flex>
+							<div class="bg-dark" content>
+								<px-header title="Seed Application" subtitle="Powered by Predix"></px-header>
+							</div>
+						</px-layout>
+					</template>
+				</demo-snippet>
+			</div>
+			<h2>GA Example w/ User</h2>
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<px-layout flex>
+							<div class="bg-dark" content>
+								<px-header title="Seed Application" subtitle="Powered by Predix" username="John Sinclair"></px-header>
+							</div>
+						</px-layout>
+					</template>
+				</demo-snippet>
+			</div>
+			<h2>Vanilla Seed Example</h2>
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<template is="dom-bind" id="demo1">
+							<style is="custom-style">
+								.vanilla-seed {
+									--px-header-title-color: {
+										color: #fff;
+									}
+									--px-header-link-color: {
+										color: #fff;
+									}
+									--px-header: {
+										background-color: #0d5fb6;
+										color: #fff;
+									}
+								}
+							</style>
+							<px-layout>
+								<div class="" content>
+									<px-header selected="{{selected}}" nav-items="{{menu}}" title="Seed Application" username="John Sinclair" class="vanilla-seed"></px-header>
+								</div>
+							</px-layout>
+						</template>
+						<script type="text/javascript">
+							document.addEventListener('WebComponentsReady', function () {
+								var app = document.getElementById('demo1');
+								app.selected = 0;
+								app.menu = [
+									{
+										label: 'Dashboard',
+										href: '#dashboard'
+									}, {
+										label: 'Blank View',
+										href: '#blank'
+									}
+								];
+							});
+							['px-header-link-select', 'px-header-user-select'].forEach(function (evt, i) {
+								console.log('attaching event listener', evt, i);
+								document.addEventListener(evt, function (e) {
+									console.log(e.type, e);
+								});
+							});
+						</script>
+					</template>
+				</demo-snippet>
+			</div>
+		</div>
+	</body>
+</html>

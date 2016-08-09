@@ -1,0 +1,52 @@
+@import 'px-spacing-design/_trumps.spacing.scss';
+@import 'px-colors-design/_settings.colors.scss';
+@import "px-functions-design/_tools.functions.scss";
+
+//Action sheet z index
+$action-sheet-zindex                        : 500;
+
+//Action sheet transition
+$action-sheet-transition                    : all .3s;
+
+/// Button font color
+$action-sheet-button-font-color             : $select-blue-default;
+
+/// Button border color
+$action-sheet-button-border                 : none;
+
+/// Button corder radius
+$action-sheet-button-radius                 : 0;
+
+/// Active button background color
+$action-sheet-background-color              : $white;
+$action-sheet-button-background-color       : $white;
+
+/// Delete button font color
+$action-sheet-delete-button-font-color      : $red-light;
+
+/// Delete button background color
+$action-sheet-delete-button-background-color: $white;
+
+/// Label button font color
+$action-sheet-label-button-font-color       : $gray8;
+
+/// Label button background color
+$action-sheet-label-button-background-color : $white;
+
+/// Active button font color
+$action-sheet-active-button-font-color      : $select-blue-hover;
+
+///Action sheet button padding
+$action-sheet-button-padding                : $inuit-base-spacing-unit--small;
+
+///Action sheet button margin
+$action-sheet-button-margin                 : $inuit-base-spacing-unit--small;
+
+//Action sheet mask background color
+$action-sheet-mask-background-color         : rgba(0,0,0,0.2);
+
+//Action sheet mask transition
+$action-sheet-mask-transition               : all .3s;
+
+$action-sheet-border                        : none;
+$action-sheet-box-shadow            : 0 0 2px rgba(0, 0, 0, 0.2);

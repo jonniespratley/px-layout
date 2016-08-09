@@ -1,0 +1,102 @@
+<html>
+	<head>
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<!-- TODO: Dependencies -->
+		<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html"/>
+		<link rel="import" href="../../px-theme/px-app.html">
+		<link rel="import" href="../../px-theme/px-theme.html">
+		<link rel="import" href="../../px-layout/px-layout.html">
+		<link rel="import" href="px-footer.html">
+		<title>px-footer demo</title>
+		<script src="../demo/demo.js"></script>
+		<style media="screen">
+			body,
+			html {
+				background-color: #eee !important;
+			}
+			.box {
+				position: relative;
+				background: #111;
+			}
+			.bg-dark {
+				background-color: #333;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="viewport u-pt">
+			<h1 class="beta">px-footer</h1>
+			<p>
+				The
+				<code>px-footer</code>
+				element provides a way to use layout footers.
+				<button type="button" onclick="showCode()">Show code</button>
+				<button type="button" onclick="hideCode()">Hide code</button>
+			</p>
+			<ol id="toc"></ol>
+			<script type="text/javascript">
+				document.addEventListener('WebComponentsReady', function(){
+					createToc('toc');
+				});
+			</script>
+
+			<h2>Default example</h2>
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<div class="bg-dark">
+							<px-footer></px-footer>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+
+			<h2>Example w/ brand</h2>
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<div class="bg-dark">
+							<px-footer links>
+								 <div left class="muted">
+									 <px-brand wordmark size="125"></px-brand>
+								 </div>
+							 </px-footer>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+			<h2>Example w/o links</h2>
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<div class="bg-dark">
+							<px-footer links></px-footer>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+			<h2>Example w/ custom copywrite</h2>
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<div class="bg-dark">
+							<px-footer copywrite="2016 My Company"></px-footer>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+			<h2>Example w/ custom links</h2>
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<div class="bg-dark">
+							<px-footer links='[{"title": "About", "href": "about.html"}]'></px-footer>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+		</div>
+	</body>
+</html>

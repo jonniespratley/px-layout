@@ -1,0 +1,132 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel='stylesheet' href='//predixdev.github.io/px-library-design/css/style.css'>
+    <script src="../webcomponentsjs/webcomponents.min.js"></script>
+    <script src="../fastclick/lib/fastclick.js"></script>
+
+    <title>px-page | mobile-demo</title>
+
+    <link rel="import" href="px-pages.html">
+    <link rel="import" href="../px-table-view/px-table-view.html">
+    <link rel="import" href="../px-navbar/px-navbar.html">
+    <style>
+      body,
+      html {
+        position: relative;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body unresolved>
+    <template id="demoPages" is="dom-bind">
+      <style is="custom-style">
+        :root{
+          --px-page:{
+            transition: all 0.3s ease;
+          }
+
+          --px-page-current: {
+            background: white;
+          }
+
+          --px-page-next:{
+            background: green;
+          }
+
+          --px-page-previous: {
+
+          }
+        }
+      </style>
+
+
+      <div class="demo">
+        <px-pages id="appPages" selected="{{selected}}" selected-page="{{selectedPage}}">
+          <px-page id="Page0" title="Home" main>
+            <px-navbar view-container="appPages" fixed shadow auto-hide></px-navbar>
+            <ul id="list1" class="list-ui table-view table-view--small"></ul>
+          </px-page>
+
+          <px-page id="Page1" title="List">
+            <px-navbar view-container="appPages" back-label="Home" fixed shadow auto-hide></px-navbar>
+            <ul id="list2" class="list-ui table-view table-view--small"></ul>
+          </px-page>
+
+          <px-page id="Page2" title="Details">
+            <px-navbar view-container="appPages">
+              <div right>
+                <button class="navbar__button" type="button" onclick="document.getElementById('appPages').goto('Page3')">Edit</button>
+              </div>
+            </px-navbar>
+            <div class="content flex">
+              <div class="flex__item">
+                1
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                  dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+              </div>
+              <div class="flex__item">
+                2
+              </div>
+            </div>
+          </px-page>
+
+          <px-page id="Page3" title="Edit">
+            <px-navbar view-container="appPages" back-label="Cancel"></px-navbar>
+            <div class="content">
+              <h2>Edit Page</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+            </div>
+          </px-page>
+          <px-page id="Page4" title="Dialog" dialog>
+            <px-navbar view-container="appPages" back-label="Cancel"></px-navbar>
+            <div class="content">
+              <h2>Edit Page</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+            </div>
+          </px-page>
+        </px-pages>
+      </div>
+      <script type="text/javascript">
+        var pages = document.getElementById('appPages');
+        pages.addEventListener('change', function (e) {
+          console.log('Page Changed', e);
+        });
+
+        function createDemoList(id, label, count) {
+          var _out = [];
+          var a,
+            li,
+            list,
+            $el = document.querySelector(id);
+          for (var i = 0; i < count; i++) {
+            li = document.createElement('li');
+            li.className = 'table-row table-row--nav-right';
+            li.innerText = label + i;
+            li.addEventListener('click', function () {
+              pages.next();
+            });
+            $el.appendChild(li);
+          }
+        }
+        createDemoList('#list1', 'Category ', 100);
+        createDemoList('#list2', 'Sub Category ', 100);
+      </script>
+    </template>
+
+  </div>
+</body>
+
+</html>

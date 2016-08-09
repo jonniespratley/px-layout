@@ -1,0 +1,111 @@
+<html>
+	<head>
+		<title>px-button demo</title>
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<!-- TODO: Dependencies -->
+		<script src="../demo/demo.js"></script>
+		<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html"/>
+		<link rel="import" href="../../px-theme/px-app.html">
+		<link rel="import" href="../../px-theme/px-theme.html">
+		<link rel="import" href="../../px-layout/px-layout.html">
+		<link rel="import" href="px-button.html">
+		<style media="screen">
+			body,
+			html {
+				background: #eee !important;
+			}
+			.bg-dark {
+				background-color: #333;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="viewport u-pt">
+			<h1 class="beta">px-button</h1>
+			<p>
+				The
+				<code>px-button</code>
+				element provides a way to use Predix Design buttons.
+				<button type="button" onclick="showCode()">Show code</button>
+				<button type="button" onclick="hideCode()">Hide code</button>
+			</p>
+			<ol id="toc"></ol>
+			<script type="text/javascript">
+				document.addEventListener('WebComponentsReady', function () {
+					createToc('toc');
+				});
+			</script>
+			<h2>Default example</h2>
+			<demo-snippet>
+				<template id="">
+					<div class="flex flex--spaced flex--middle">
+						<px-button label="Button" modifier="bare"></px-button>
+						<px-button label="Button" modifier="disabled"></px-button>
+						<px-button label="Button"></px-button>
+						<px-button label="Button" modifier="tertiary"></px-button>
+						<px-button label="Button" modifier="primary"></px-button>
+					</div>
+				</template>
+			</demo-snippet>
+			<h2>Custom CSS</h2>
+			<demo-snippet>
+				<template id="">
+					<template is="dom-bind">
+						<style is="custom-style">
+							px-button.c{
+								--px-button-background-color: green;
+							}
+							px-button.c1{
+								--px-button:{
+									font-size: 4rem;
+									background-color: pink;
+								}
+							}
+						</style>
+						<div class="custom flex flex--spaced flex--middle">
+							<px-button label="Button" modifier="bare"></px-button>
+							<px-button label="Button" modifier="disabled"></px-button>
+							<px-button label="Button"></px-button>
+							<px-button label="Button" modifier="tertiary" class="c"></px-button>
+							<px-button label="Button" modifier="primary" class="c1"></px-button>
+						</div>
+					</template>
+				</template>
+			</demo-snippet>
+			<h2>Label w/ icon example</h2>
+			<demo-snippet>
+				<template id="">
+					<div class="flex flex--spaced flex--middle">
+						<px-button label="Button" modifier="small bare"></px-button>
+						<px-button label="Button" modifier="small disabled"></px-button>
+						<px-button label="Button" modifier="primary" icon="fa:fa-home"></px-button>
+						<px-button label="Button" modifier="large tertiary" icon="fa:fa-home"></px-button>
+						<px-button label="Button" modifier="huge" icon="fa:fa-home"></px-button>
+					</div>
+				</template>
+			</demo-snippet>
+			<h2>Icon example</h2>
+			<demo-snippet>
+				<template id="">
+					<div class="flex flex--middle flex--spaced">
+						<px-button icon="fa:fa-bar-chart" modifier="large bare icon disabled"></px-button>
+						<px-button icon="fa:fa-bar-chart" modifier="large icon disabled"></px-button>
+						<px-button icon="fa:fa-bar-chart" modifier="large icon"></px-button>
+						<px-button icon="fa:fa-bar-chart" modifier="large icon tertiary"></px-button>
+						<px-button icon="fa:fa-bar-chart" modifier="large icon primary"></px-button>
+					</div>
+					<br>
+					<div class="flex flex--middle flex--spaced">
+						<px-button icon="fa:fa-bar-chart" modifier="huge bare icon disabled"></px-button>
+						<px-button icon="fa:fa-bar-chart" modifier="huge icon disabled"></px-button>
+						<px-button icon="fa:fa-bar-chart" modifier="huge icon"></px-button>
+						<px-button icon="fa:fa-bar-chart" modifier="huge icon tertiary"></px-button>
+						<px-button icon="fa:fa-bar-chart" modifier="huge icon primary"></px-button>
+					</div>
+				</template>
+			</demo-snippet>
+		</div>
+	</body>
+</html>

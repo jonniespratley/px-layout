@@ -1,0 +1,226 @@
+<!-- build:remove -->
+<!DOCTYPE html>
+<html lang=en>
+  <head>
+    <meta charset=utf-8>
+    <title>Input Groups</title>
+    <link rel=stylesheet href=css/style.css>
+  </head>
+  <body>
+    <section class=viewport role=region>
+      <!-- /build -->
+      <h1>Input Groups</h1>
+      <div class="flex flex--justify flex--wrap flex--baseline">
+        <p>
+          To use this module, follow the instructions in the
+          <a href=https://github.com/PredixDev/px-input-group-design>README</a>.
+          <!-- build:remove -->
+          (For background on PXd, read the
+          <a href=https://github.com/PredixDev/px-getting-started>Getting Started</a>
+          documentation.)
+          <!-- /build -->
+        </p>
+        <a class="btn btn--primary" href=https://github.com/PredixDev/px-input-group-design>
+          <i class="fa fa-github u-mr--"></i>
+          px-input-group-design
+        </a>
+      </div>
+      <h2>How to Use</h2>
+      <p>Install via command line:</p>
+      <figure class="code u-mb+">
+        <code>
+          bower install --save https://github.com/PredixDev/px-input-group-design.git
+        </code>
+      </figure>
+      <p>Add to component Sass file:</p>
+      <figure class="code u-mb++">
+        <code>
+          @import "px-input-group-design/_objects.input-group.scss";
+        </code>
+      </figure>
+      <form>
+        <fieldset>
+          <figure class="code u-mt+ u-mb++">
+            <code>
+              &lt;&hellip; class="form-field input-group"&gt;
+              <br>
+              &nbsp;&nbsp;&lt;span class="input-group__addon"&gt;
+              <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&lt;i class="fa fa-&hellip;"&gt;&lt;/i&gt;
+              <br>
+              &nbsp;&nbsp;&lt;/span&gt;
+              <br>
+              &nbsp;&nbsp;&lt;input class=text-input type=&hellip;&gt;
+              <br>
+              &lt;/&hellip;&gt;
+            </code>
+          </figure>
+          <div class="form-field input-group">
+            <span class="input-group__addon">
+              <i class="fa fa-at"></i>
+            </span>
+            <input class=text-input type=text>
+          </div>
+          <figure class="code u-mb++">
+            <code>
+              &lt;&hellip; class="form-field input-group"&gt;
+              <br>
+              &nbsp;&nbsp;&lt;input class=text-input type=&hellip;&gt;
+              <br>
+              &nbsp;&nbsp;&lt;span class="input-group__addon"&gt;&hellip;&lt;/span&gt;
+              <br>
+              &lt;/&hellip;&gt;
+            </code>
+          </figure>
+          <div class="form-field input-group">
+            <input class=text-input type=text>
+            <span class="input-group__addon">.00</span>
+          </div>
+          <figure class="code u-mb++">
+            <code>
+              &lt;&hellip; class="form-field input-group"&gt;
+              <br>
+              &nbsp;&nbsp;&lt;span class="input-group__addon"&gt;&hellip;&lt;/span&gt;
+              <br>
+              &nbsp;&nbsp;&lt;input class=text-input type=&hellip;&gt;
+              <br>
+              &nbsp;&nbsp;&lt;span class="input-group__addon"&gt;&hellip;&lt;/span&gt;
+              <br>
+              &lt;/&hellip;&gt;
+            </code>
+          </figure>
+          <div class="form-field input-group">
+            <span class="input-group__addon">$</span>
+            <input class=text-input type=text>
+            <span class="input-group__addon">.00</span>
+          </div>
+          <figure class="code u-mb++">
+            <code>
+              &lt;&hellip; class="form-field input-group"&gt;
+              <br>
+              &nbsp;&nbsp;&lt;button class="btn input-group__addon" type=button&gt;&hellip;&lt;/button&gt;
+              <br>
+              &nbsp;&nbsp;&lt;input class=text-input type=&hellip;&gt;
+              <br>
+              &lt;/&hellip;&gt;
+            </code>
+          </figure>
+          <div class="form-field input-group">
+            <button class="btn input-group__addon" type=button>Go!</button>
+            <input class=text-input type=text>
+          </div>
+          <figure class="code u-mb++">
+            <code>
+              &lt;&hellip; class="form-field input-group"&gt;
+              <br>
+              &nbsp;&nbsp;&lt;input class=text-input type=&hellip;&gt;
+              <br>
+              &nbsp;&nbsp;&lt;button class="btn input-group__addon" type=button&gt;&hellip;&lt;/button&gt;
+              <br>
+              &lt;/&hellip;&gt;
+            </code>
+          </figure>
+          <div class="form-field input-group">
+            <input class=text-input type=text>
+            <button class="btn input-group__addon" type=button>Go!</button>
+          </div>
+          <figure class="code u-mb++">
+            <code>
+              &lt;&hellip; class="form-field input-group"&gt;
+              <br>
+              &nbsp;&nbsp;&lt;input class=text-input type=&hellip;&gt;
+              <br>
+              &nbsp;&nbsp;&lt;button class="btn btn--primary input-group__addon" type=button&gt;&hellip;&lt;/button&gt;
+              <br>
+              &lt;/&hellip;&gt;
+            </code>
+          </figure>
+          <div class="form-field input-group">
+            <input class=text-input type=text>
+            <button class="btn btn--primary input-group__addon" type=button>Go!</button>
+          </div>
+          <figure class="code u-mb++">
+            <code>
+              &lt;&hellip; class="form-field input-group"&gt;
+              <br>
+              &nbsp;&nbsp;&lt;button class="btn input-group__addon" type=button&gt;&hellip;&lt;/button&gt;
+              <br>
+              &nbsp;&nbsp;&lt;button class="btn input-group__addon" type=button&gt;&hellip;&lt;/button&gt;
+              <br>
+              &nbsp;&nbsp;&lt;input class=text-input type=&hellip;&gt;
+              <br>
+              &lt;/&hellip;&gt;
+            </code>
+          </figure>
+          <div class="form-field input-group">
+            <button class="btn input-group__addon" type=button>Search</button>
+            <button class="btn input-group__addon" type=button>Options</button>
+            <input class=text-input type=text>
+          </div>
+          <figure class="code u-mb++">
+            <code>
+              &lt;&hellip; class="form-field input-group"&gt;
+              <br>
+              &nbsp;&nbsp;&lt;input class=text-input type=&hellip;&gt;
+              <br>
+              &nbsp;&nbsp;&lt;button class="btn input-group__addon" type=button&gt;&hellip;&lt;/button&gt;
+              <br>
+              &nbsp;&nbsp;&lt;button class="btn input-group__addon" type=button&gt;&hellip;&lt;/button&gt;
+              <br>
+              &lt;/&hellip;&gt;
+            </code>
+          </figure>
+          <div class="form-field input-group">
+            <input class=text-input type=text>
+            <button class="btn input-group__addon" type=button>Options</button>
+            <button class="btn input-group__addon" type=button>Search</button>
+          </div>
+          <figure class="code u-mb++">
+            <code>
+              &lt;&hellip; class="form-field input-group"&gt;
+              <br>
+              &nbsp;&nbsp;&lt;button class="btn input-group__addon" type=button&gt;&hellip;&lt;/button&gt;
+              <br>
+              &nbsp;&nbsp;&lt;button class="btn input-group__addon" type=button&gt;&hellip;&lt;/button&gt;
+              <br>
+              &nbsp;&nbsp;&lt;button class="btn btn--tertiary input-group__addon" type=button&gt;&hellip;&lt;/button&gt;
+              <br>
+              &nbsp;&nbsp;&lt;input class=text-input type=&hellip;&gt;
+              <br>
+              &lt;/&hellip;&gt;
+            </code>
+          </figure>
+          <div class="form-field input-group">
+            <button class="btn input-group__addon" type=button>Search</button>
+            <button class="btn input-group__addon" type=button>Options</button>
+            <button class="btn btn--tertiary input-group__addon" type=button>More</button>
+            <input class=text-input type=text>
+          </div>
+          <figure class="code u-mb++">
+            <code>
+              &lt;&hellip; class="form-field input-group"&gt;
+              <br>
+              &nbsp;&nbsp;&lt;input class=text-input type=&hellip;&gt;
+              <br>
+              &nbsp;&nbsp;&lt;button class="btn input-group__addon" type=button&gt;&hellip;&lt;/button&gt;
+              <br>
+              &nbsp;&nbsp;&lt;button class="btn btn--primary input-group__addon" type=button&gt;&hellip;&lt;/button&gt;
+              <br>
+              &nbsp;&nbsp;&lt;button class="btn input-group__addon" type=button&gt;&hellip;&lt;/button&gt;
+              <br>
+              &lt;/&hellip;&gt;
+            </code>
+          </figure>
+          <div class="form-field input-group">
+            <input class=text-input type=text>
+            <button class="btn input-group__addon" type=button>More</button>
+            <button class="btn btn--primary input-group__addon" type=button>Search</button>
+            <button class="btn input-group__addon" type=button>Options</button>
+          </div>
+        </fieldset>
+      </form>
+    <!-- build:remove -->
+    </section>
+  </body>
+</html>
+<!-- /build -->

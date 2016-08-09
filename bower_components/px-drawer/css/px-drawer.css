@@ -1,0 +1,321 @@
+/*
+ * Copyright (c) 2016 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+/*
+ * Copyright (c) 2016 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+/**
+ * Margin and padding helper classes. Use these to tweak layout on a micro
+ * level.
+ *
+ * `.u-(m|p)(t|r|b|l|h|v)(-|+|0) {}` = utility - margin/padding top/right/bottom/left/horizontal/vertical less/more/none
+ */
+/**
+     * Margin helper classes.
+     *
+     * Add margins.
+     */
+.u-m {
+  margin: 1rem !important; }
+
+.u-mt {
+  margin-top: 1rem !important; }
+
+.u-mr {
+  margin-right: 1rem !important; }
+
+.u-mb {
+  margin-bottom: 1rem !important; }
+
+.u-ml {
+  margin-left: 1rem !important; }
+
+.u-mh {
+  margin-right: 1rem !important;
+  margin-left: 1rem !important; }
+
+.u-mv {
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important; }
+
+/*------------------------------------*    #PX-COLORS-DESIGN
+\*------------------------------------*/
+/**
+ * Brand Colors
+ */
+/**
+     * Primary
+     */
+/**
+     * Light
+     */
+/**
+     * Dark
+     */
+/**
+ * Monochromatic (gray10 is darkest, gray1 is lightest)
+ */
+/**
+ * Define grey = gray to avoid dev typos
+ */
+/**
+ * Buttons
+ */
+/**
+ * Selection
+ */
+/**
+ * Alerts
+ */
+/**
+ * Data Visualization
+ */
+/**
+     * Basic
+     */
+/**
+     * Light
+     */
+/**
+     * Dark
+     */
+.drawer {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  display: block;
+  position: absolute;
+  font-size: 15px;
+  text-align: left;
+  transition: all 0.5s cubic-bezier(0.1, 0.7, 0.1, 1);
+  visibility: hidden; }
+  .drawer--fixed {
+    position: fixed !important; }
+  .drawer * {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none; }
+  .drawer.is-open {
+    visibility: visible;
+    -webkit-transform: translate3d(0, 0, 0) !important;
+            transform: translate3d(0, 0, 0) !important; }
+    .drawer.is-open .drawer__mask {
+      opacity: 1;
+      visibility: visible; }
+  .drawer--shadow {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); }
+  .drawer__content {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: auto;
+    position: relative;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none; }
+  @media (min-width: 68.2666666667rem) {
+    .drawer .drawer--left,
+    .drawer .drawer--right {
+      max-width: 256px; } }
+
+.drawer--top {
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+  top: 0;
+  right: 0;
+  left: 0;
+  height: auto;
+  width: 100%;
+  width: var(--px-drawer-width, 100%); }
+  .drawer--top.is-open {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+  @media (max-width: 51.1333333333rem) {
+    .drawer--top {
+      max-height: 25%;
+      max-height: var(--px-drawer-height, 25%); } }
+  @media screen and (min-width: 51.2rem) and (max-width: 68.2rem) {
+    .drawer--top {
+      max-height: 25%;
+      max-height: var(--px-drawer-height, 25%); } }
+  @media screen and (min-width: 68.2666666667rem) and (max-width: 80rem) {
+    .drawer--top {
+      max-height: 25%;
+      max-height: var(--px-drawer-height, 25%); } }
+
+.drawer--bottom {
+  -webkit-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0);
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  width: var(--px-drawer-width, 100%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  height: 45%; }
+  .drawer--bottom.is-open {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    z-index: 500; }
+  @media (max-width: 51.1333333333rem) {
+    .drawer--bottom {
+      right: 0;
+      left: 0;
+      width: 100%;
+      height: 35%;
+      height: var(--px-drawer-height, 35%); } }
+  @media screen and (min-width: 51.2rem) and (max-width: 68.2rem) {
+    .drawer--bottom {
+      right: 15%;
+      left: 15%;
+      width: auto;
+      height: 35%;
+      height: var(--px-drawer-height, 35%); } }
+  @media (min-width: 68.2666666667rem) {
+    .drawer--bottom {
+      width: auto;
+      height: 25%;
+      height: var(--px-drawer-height, 25%);
+      right: 25%;
+      left: 25%; } }
+  .drawer--bottom--full-width {
+    width: 100% !important;
+    left: 0;
+    right: 0; }
+
+.drawer--left {
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+  /*
+    @include media-breakpoint-down ('sm') {
+      width: $drawer-width-small;
+      width: var(--px-drawer-width, $drawer-width-small);
+    }
+
+    @include media-breakpoint ('md') {
+      width: $drawer-width-medium;
+      width: var(--px-drawer-width, $drawer-width-medium);
+    }
+
+    @include media-breakpoint ('lg') {
+      max-width: $drawer-max-width;
+      width    : $drawer-width-large;
+      width    : var(--px-drawer-width, $drawer-width-large);
+    }
+    */ }
+  .drawer--left.is-open {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+
+.drawer--right {
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: var(--px-drawer-height, 100%);
+  margin-right: 0;
+  max-width: var(--px-drawer-max-width, 256px);
+  text-align: left; }
+  .drawer--right.is-open {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+  @media (max-width: 51.1333333333rem) {
+    .drawer--right {
+      width: 256px;
+      width: var(--px-drawer-width, 256px); } }
+  @media screen and (min-width: 51.2rem) and (max-width: 68.2rem) {
+    .drawer--right {
+      width: 256px;
+      width: var(--px-drawer-width, 256px); } }
+  @media screen and (min-width: 68.2666666667rem) and (max-width: 80rem) {
+    .drawer--right {
+      max-width: 256px;
+      width: 256px;
+      width: var(--px-drawer-width, 256px); } }
+
+.drawer--mini {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  transition: all 0.5s cubic-bezier(0.1, 0.7, 0.1, 1);
+  position: static;
+  visibility: visible;
+  float: left;
+  width: 44px;
+  overflow: hidden;
+  text-align: left; }
+  .drawer--mini .hidden-mini-closed,
+  .drawer--mini .table-row__content {
+    transition: all 0.5s cubic-bezier(0.1, 0.7, 0.1, 1); }
+  @media screen and (max-width: 21.3333333333rem) {
+    .drawer--mini {
+      -webkit-transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0); } }
+  .drawer--mini.is-open {
+    width: 22%;
+    min-width: auto;
+    max-width: 256px; }
+    @media (max-width: 51.1333333333rem) {
+      .drawer--mini.is-open {
+        width: 80%; } }
+    @media screen and (min-width: 68.2666666667rem) and (max-width: 80rem) {
+      .drawer--mini.is-open {
+        width: 25%; } }
+    @media screen and (min-width: 51.2rem) and (max-width: 68.2rem) {
+      .drawer--mini.is-open {
+        width: 40%; } }
+    .drawer--mini.is-open .hidden-mini-closed,
+    .drawer--mini.is-open .table-row__content {
+      visibility: visible;
+      opacity: 1; }
+  .drawer--mini:not(.is-open) {
+    transition: all 0.5s cubic-bezier(0.1, 0.7, 0.1, 1); }
+    .drawer--mini:not(.is-open):before {
+      content: ''; }
+    .drawer--mini:not(.is-open) .hidden-mini-closed,
+    .drawer--mini:not(.is-open) .table-row__content {
+      opacity: 0;
+      visibility: hidden;
+      overflow: hidden; }
+
+.drawer--static {
+  z-index: auto;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  transition: all 0.5s cubic-bezier(0.1, 0.7, 0.1, 1);
+  position: inherit;
+  visibility: visible;
+  float: left;
+  -webkit-flex: 1 0 256px;
+      -ms-flex: 1 0 256px;
+          flex: 1 0 256px; }
+  @media screen and (min-width: 68.2666666667rem) and (max-width: 80rem) {
+    .drawer--static {
+      margin-top: 0; } }
+  .drawer--static.drawer--right {
+    float: right;
+    position: static;
+    margin-right: 0 !important; }
+
+.drawer {
+  background-color: var(--px-drawer-background-color, #242326);
+  color: var(--px-drawer-font-color, #efeff4); }
+  .drawer--dark {
+    color: var(--px-drawer-dark-font-color, white);
+    background-color: var(--px-drawer-dark-background-color, #242326); }
+    .drawer--dark {
+      color: var(--px-drawer-dark-font-color, white); }

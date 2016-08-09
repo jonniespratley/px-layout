@@ -1,0 +1,494 @@
+<!--
+/*
+ * Copyright (c) 2016 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+ -->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../iron-fit-behavior/iron-fit-behavior.html">
+<link rel="import" href="px-drawer-styles.html">
+<!--
+`px-drawer` is a navigation drawer that can slide in from the left, right, top or bottom.
+
+[![Build Status](https://travis-ci.org/PredixDev/px-drawer.svg?branch=master)](https://travis-ci.org/PredixDev/px-drawer)
+
+
+For demo visit <a href="demo.html" target="_blank">Full demo here</a> or <a href="mobile-demo.html" target="_blank">Mobile demo here</a>
+
+
+### Usage
+
+```
+
+  <style is="custom-style">
+    :root{
+      --px-drawer:{
+        background-color: #000;
+      }
+    }
+  </style>
+  <px-drawer id="drawer1" fixed overlay>
+    <p>
+      This is content inside of the drawer
+    </p>
+  </px-drawer>
+  <button onclick="document.getElementById('drawer1').toggle()">
+    Toggle
+  </button>
+```
+
+### Styling
+
+Custom property | Description | Default
+------------ | ------------- | ------------
+`--px-drawer`   | Style mixin to be applied to the element | {}
+`--px-drawer-content`   | Style mixin to be applied to the content | {}
+`--px-drawer-background-color` | The background-color of the drawer  |  `#242326` *(gray10)*
+`--px-drawer-width` | The width of the drawer | `256px`
+`--px-drawer-height` | The height of the drawer | `100vh`
+`--px-drawer-overlay-background` | The background color of the overlay | `rgba(0, 0, 0, 0.5))`
+
+@element px-drawer.html
+@blurb px-drawer A responsive drawer.
+@demo demo.html
+@demo mobile-demo.html
+@homepage index.html
+-->
+<dom-module id="px-drawer">
+  <style include="px-drawer-css"></style>
+  <template strip-whitespace>
+    <style>
+      :host {
+        display: block;
+      }
+      :host .drawer {
+        z-index: 20;
+        background-color: var(--px-drawer-background-color, #242326);
+        width: var(--px-drawer-width, 256px);
+        height: var(--px-drawer-height, 100%);
+        @apply(--px-drawer);
+      }
+      :host .drawer--static {
+        height: 100vh;
+      }
+      :host([mini]) .drawer__content ::content {
+        --px-table-view-title: {
+          display: none;
+        }
+      }
+      :host([mini]) .drawer,
+      :host([mini][persistent]) .drawer {
+        width: var(--px-drawer-mini-width, 50px);
+      }
+      :host([mini][opened]) .drawer {
+        width: var(--px-drawer-mini-width-opened, auto);
+      }
+      :host ::content .drawer__spacer {
+        min-height: 56px;
+      }
+      :host .drawer__content {
+        overflow-x: hidden;
+        @apply(--px-drawer-content);
+      }
+      :host([swipe-open]) > .drawer::after {
+        position: fixed;
+        top: 56px;
+        bottom: 0;
+        left: 100%;
+        visibility: visible;
+        width: 20px;
+        content: '';
+      }
+      :host .drawer__overlay {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transition: opacity 0.2s ease;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        opacity: 0;
+        background: var(--px-drawer-overlay-background, rgba(0, 0, 0, 0.5));
+        z-index: -1;
+        visibility: hidden;
+        display: none;
+        @apply(--px-drawer-overlay);
+      }
+      :host([type=persistent]) {
+        background-color: crimson;
+      }
+      :host([opened]) .drawer {
+        @apply(--px-drawer-open);
+      }
+      :host([opened][overlay]) > .drawer__overlay {
+        opacity: 1;
+        z-index: 15;
+        visibility: visible;
+        display: block;
+      }
+      :host([opened][persistent]) > .drawer__overlay {
+        visibility: hidden;
+        display: none;
+        pointer-events: none;
+        opacity: 0;
+      }
+    </style>
+    <div id="overlay" class="drawer__overlay" on-tap="toggle" hidden$="{{!overlay}}"></div>
+    <div id="drawer" class="drawer">
+      <div id="drawerContent" class="drawer__content">
+        <content id="contentContainer" select="*"></content>
+      </div>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'px-drawer',
+      behaviors: [
+        Polymer.IronResizableBehavior, Polymer.IronFitBehavior
+      ],
+      properties: {
+        /**
+         * The state of the drawer
+         */
+        opened: {
+          type: Boolean,
+          value: false,
+          notify: true,
+          reflectToAttribute: true,
+          observer: '_openHandler'
+        },
+        /**
+         * Persistent navigation drawers can toggle open or closed.
+         * Persistent navigation drawers are acceptable for all sizes larger than mobile.
+         */
+        persistent: {
+          type: Boolean,
+          notify: true,
+          reflectToAttribute: true
+        },
+        /**
+         * To position the drawer in fixed mode.
+         */
+        fixed: {
+          type: Boolean,
+          value: false
+        },
+        /**
+         * To position the drawer in mini mode.
+         * The persistent navigation drawer changes its width.
+         * Its resting state is as a mini-drawer at the same elevation as the content
+         * When expanded, it appears as the standard persistent navigation drawer.
+         */
+        mini: {
+          type: Boolean
+        },
+        /**
+         * Enable overlay when drawer is opened. (Only when closed)
+         */
+        overlay: {
+          type: Boolean,
+          value: true
+        },
+        /**
+         * The alignment of the drawer on the screen (`left`, `right`, `top`, `bottom`)
+         */
+        align: {
+          type: String,
+          reflectToAttribute: true,
+          notify: true,
+          value: 'left'
+        },
+        /**
+         * The type of drawer (`temporary`, `persistent`, `mini`)
+         */
+        type: {
+          type: String,
+          value: 'temporary',
+          notify: true,
+          reflectToAttribute: true,
+          observer: '_typeHandler'
+        },
+        /**
+        * Create an area at the edge of the screen to swipe open the drawer.
+        */
+        swipeOpen: {
+          type: Boolean,
+          value: true,
+          reflectToAttribute: true
+        },
+        /**
+         * The modifiers to apply to the element (bare, tiny, small, large, huge, etc)
+         */
+        modifier: {
+          type: String,
+          notify: true,
+          reflectToAttribute: true,
+          observer: '_handleModifier'
+        }
+      },
+      listeners: {
+        'drawer.track': '_handleTrack',
+        'overlay.tap': 'toggle',
+        'drawerContent.tap': 'toggle',
+        'iron-resize': '_resizeHandler'
+      },
+      observers: ['resetLayout(fixed)'],
+      _boundEscKeydownHandler: null,
+      ready: function () {
+        this.setScrollDirection('y');
+      },
+      attached: function () {
+        Polymer.RenderStatus.afterNextRender(this, function () {});
+        this._init();
+      },
+      /**
+       * Handle setting up the UI with the proper classes.
+       */
+      _init: function () {
+        document.addEventListener('keydown', this._escKeydownHandler.bind(this));
+        this.toggleClass('drawer--' + this.align, true, this.$.drawer);
+        if (this.fixed) {
+          this.toggleClass('drawer--fixed', true, this.$.drawer);
+        }
+        if (this.persistent) {
+          this.toggleClass('drawer--temporary', true, this.$.drawer);
+          this.toggleClass('drawer--persistent', true, this.$.drawer);
+        }
+        this.debounce('resetLayout', function () {
+          this.fire('px-drawer-layout-reset');
+        }, 500);
+      },
+      detached: function () {
+        if (this._boundEscKeydownHandler) {
+          document.removeEventListener('keydown', this._boundEscKeydownHandler);
+        }
+      },
+      _startX: 0,
+      _startY: 0,
+      _dist: 0, //the distance the swipe
+      _threshold: 40, //min distance for swipe
+      _allowedTime: 400, //max time to travel
+      _restraint: 80, // maximum distance allowed at the same time in perpendicular direction
+      _startTime: 0, //the start time of the swipe
+      _swipeDir: null, //direction of the swipe
+      _handleTrack: function (e) {
+        e.preventDefault();
+        switch (e.detail.state) {
+          case 'start':
+            this._handleTrackStart(e);
+            break;
+          case 'move':
+            this._handleTrackMove(e);
+            break;
+          case 'end':
+            this._handleTrackEnd(e);
+            break;
+          default:
+        }
+      },
+      _handleTrackStart: function (e) {
+        e.preventDefault();
+        var touchobj = e.detail;
+        this._swipeDir = 'none';
+        this._startX = touchobj.sourceEvent.pageX,
+        this._startY = touchobj.sourceEvent.pageY;
+        this._startTime = new Date().getTime();
+        this._dist = 0;
+      },
+      _handleTrackMove: function (e) {},
+      /**
+       * This method runs when tracking has ended
+       * and returns the direction the swipe was.
+       */
+      _handleTrackEnd: function (e) {
+        e.preventDefault();
+        var swipedir = null;
+        var touchobj = e.detail.sourceEvent;
+        var allowedTime = this._allowedTime;
+        var startY = this._startY;
+        var startX = this._startX;
+        var restraint = this._restraint;
+        var startTime = this._startTime;
+        var threshold = this._threshold;
+        var distX = touchobj.pageX - startX; // get horizontal dist traveled by finger while in contact with surface
+        var distY = touchobj.pageY - startY; // get vertical dist traveled by finger while in contact with surface
+        var elapsedTime = new Date().getTime() - startTime;
+        if (elapsedTime <= allowedTime) {
+          if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint) { // 2nd condition for horizontal swipe met
+            swipedir = (distX < 0)
+              ? 'left'
+              : 'right' // if dist traveled is negative, it indicates left swipe
+          } else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint) { // 2nd condition for vertical swipe met
+            swipedir = (distY < 0)
+              ? 'up'
+              : 'down' // if dist traveled is negative, it indicates up swipe
+          }
+        }
+        this._handleTrackComplete(swipedir);
+      },
+      _handleTrackComplete: function (swipedir) {
+        switch (swipedir) {
+          case 'up':
+            if (this.align === 'bottom') {
+              this.toggle();
+            }
+            break;
+          case 'down':
+            if (this.align === 'bottom') {
+              this.toggle();
+            }
+            break;
+          case 'left':
+            if (this.align === 'left') {
+              this.toggle();
+            }
+            break;
+          case 'right':
+            this.toggle();
+            break;
+        }
+      },
+      /**
+        * Handle toggling the drawer open or close.
+        * @event px-drawer-toggle
+        */
+      toggle: function (type) {
+        // TODO: temporary drawers open and close
+        if (!this.persistent) {
+          this.opened = !this.opened;
+          this.fire('px-drawer-toggle', this.opened);
+        }
+      },
+      /**
+       * Handle when a click is outside the drawer.
+       */
+      _handleOffClick: function (e) {
+        if (this.opened) {
+          this.close();
+        }
+      },
+      /**
+       * Handle when the drawer opened state is changed.
+       */
+      _openHandler: function (newVal, oldVal) {
+        this.toggleClass('is-open', newVal, this.$.drawer);
+        this.toggleClass('is-open', newVal, this.$.overlay);
+      },
+      /**
+       * Handle when the drawer type is changed.
+       */
+      _typeHandler: function (newVal, oldVal) {
+        this.toggleClass('drawer--' + oldVal, false, this.$.drawer);
+        this.toggleClass('drawer--' + newVal, true, this.$.drawer);
+      },
+      /**
+       * Handle when the modifier changes.
+       */
+      _handleModifier: function (newVal, oldVal) {
+        var _this = this,
+          klass,
+          types;
+        klass = 'drawer--' + oldVal;
+        _this.toggleClass(klass, false, _this.$.drawer);
+        if (_this.modifier) {
+          types = _this.modifier.split(' ');
+          for (var i = 0; i < types.length; i++) {
+            klass = 'drawer--' + types[i];
+            _this.toggleClass(klass, true, _this.$.drawer);
+          }
+        }
+      },
+      /**
+       * Gets the width of the drawer.
+       *
+       * @return {Number} The width of the drawer in pixels.
+       */
+      getWidth: function () {
+        return this.$.drawerContent.offsetWidth;
+      },
+      /**
+       * Opens the drawer.
+       * @event px-drawer-open
+       */
+      open: function () {
+        if (!this.persistent) {
+          this.opened = true;
+          this.fire('px-drawer-open', this);
+        }
+      },
+      /**
+       * Closes the drawer.
+       * @event px-drawer-close
+       */
+      close: function () {
+        if (!this.persistent) {
+          this.opened = false;
+          this.fire('px-drawer-close', this);
+        }
+      },
+      /**
+       * Handle when the esc key is pressed.
+       */
+      _escKeydownHandler: function (event) {
+        var ESC_KEYCODE = 27;
+        if (event.keyCode === ESC_KEYCODE && !this.persistent) {
+          event.preventDefault();
+          this.close();
+        }
+      },
+      /**
+       * Resets the layout. If you changed the size of app-header via CSS
+       * you can notify the changes by either firing the `iron-resize` event
+       * or calling `resetLayout` directly.
+       *
+       * @method resetLayout
+       */
+      /**
+        * Fired when drawer is reset
+        * @event px-drawer-layout-reset
+        */
+      resetLayout: function () {
+        this.debounce('_resetLayout', function () {
+          this.fire('px-drawer-reset-layout', this);
+        }, 1);
+      },
+      /**
+       * Handle when iron-resize event fires.
+       */
+      _resizeHandler: function () {
+        //this.resetLayout();
+      },
+      /**
+       * Handle moving the drawer
+       * @param translateX
+       * @private
+       */
+      _moveDrawer: function (translateX) {
+        var _content = this.$.drawer;
+        this.transform(this._transformForTranslateX(translateX), _content);
+        this.toggleClass('is-open', this.opened, _content);
+        this.toggleClass('transition', this._transition, _content);
+        this.toggleClass('dragging', this._dragging, _content);
+      },
+      /**
+       * Handle transforming the element.
+       * @param translateX
+       * @returns {*}
+       * @private
+       */
+      _transformForTranslateX: function (translateX) {
+        if (translateX === null) {
+          return 'translate3d(0, 0, 0)';
+        }
+        return 'translate3d(' + translateX + 'px, 0, 0)';
+      }
+    });
+  </script>
+</dom-module>

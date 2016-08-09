@@ -1,0 +1,21 @@
+{
+  "name": "overthrow",
+  "version": "0.7.1",
+  "main": "dist/overthrow.js",
+  "sidescroller": "dist/overthrow.sidescroller.js",
+  "ignore": [
+    "examples",
+    "test",
+    "index.html"
+  ],
+  "homepage": "https://github.com/filamentgroup/Overthrow",
+  "_release": "0.7.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.7.1",
+    "commit": "a719a371cba21d2969be30e138741e5bfef0e37f"
+  },
+  "_source": "https://github.com/filamentgroup/Overthrow.git",
+  "_target": "~0.7.1",
+  "_originalSource": "overthrow"
+}

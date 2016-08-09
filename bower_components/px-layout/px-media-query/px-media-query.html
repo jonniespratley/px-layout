@@ -1,0 +1,138 @@
+<link rel="import" href="../../polymer/polymer.html">
+<!--
+The `px-media-query` element can be used to data bind to a CSS media query.
+
+* The `query` property is a bare CSS media query or the key of the `namedQueries` object.
+* The `query-matches` property is a boolean representing whether the page matches that media query.
+
+### Usage
+
+```
+<px-media-query query="(min-width: 600px)" query-matches="{{queryMatches}}"></px-media-query>
+```
+
+### Usage with named query
+
+```
+<px-media-query query="sm" query-matches="{{queryMatches}}"></px-media-query>
+```
+
+
+> Note: This is a fork of `iron-media-query`
+
+@demo ./px-media-query/demo.html
+@element px-media-query
+-->
+<dom-module id="px-media-query">
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+  <template>
+    px-media-query
+  </template>
+  <script>
+    Polymer({
+      is: 'px-media-query',
+      properties: {
+        /**
+       * The Boolean return value of the media query.
+       */
+        queryMatches: {
+          type: Boolean,
+          value: false,
+          readOnly: true,
+          notify: true
+        },
+        /**
+       * The CSS media query to evaluate.
+       */
+        query: {
+          type: String,
+          observer: 'queryChanged'
+        },
+        /**
+         * The set of pre-defined named media queries.
+         */
+        namedQueries: {
+          type: Object,
+          value: {
+            xs: '(max-width: 21.33rem)',
+            sm: '(min-width: 22rem) and (max-width: 49.06rem)',
+            md: '(min-width: 51.2rem) and (max-width: 68.2rem)',
+            lg: '(min-width: 68.26rem) and (max-width: 80rem)',
+            xl: '(min-width: 85.33rem)'
+          }
+        },
+        /**
+       * If true, the query attribute is assumed to be a complete media query
+       * string rather than a single media feature.
+       */
+        full: {
+          type: Boolean,
+          value: false
+        },
+        /**
+       * @type {function(MediaQueryList)}
+       */
+        _boundMQHandler: {
+          value: function () {
+            return this.queryHandler.bind(this);
+          }
+        },
+        /**
+       * @type {MediaQueryList}
+       */
+        _mq: {
+          value: null
+        }
+      },
+      attached: function () {
+        this.style.display = 'none';
+        this.queryChanged();
+      },
+      detached: function () {
+        this._remove();
+      },
+      _add: function () {
+        if (this._mq) {
+          this._mq.addListener(this._boundMQHandler);
+        }
+      },
+      _remove: function () {
+        if (this._mq) {
+          this._mq.removeListener(this._boundMQHandler);
+        }
+        this._mq = null;
+      },
+      /**
+       * Handles the change in the media query.
+       */
+      queryChanged: function () {
+        this._remove();
+        var query = this.query;
+        if (this.namedQueries[query]) {
+          query = this.namedQueries[query];
+        }
+        if (!query) {
+          return;
+        }
+        if (!this.full && query[0] !== '(') {
+          query = '(' + query + ')';
+        }
+        this._mq = window.matchMedia(query);
+        this._add();
+        this.queryHandler(this._mq);
+      },
+      /**
+       * Fires when the media query changes.
+       * @event px-media-query-change
+       */
+      queryHandler: function (mq) {
+        this.fire('px-media-query-change', mq);
+        this._setQueryMatches(mq.matches);
+      }
+    });
+  </script>
+</dom-module>

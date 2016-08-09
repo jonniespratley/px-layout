@@ -1,0 +1,68 @@
+{
+  "name": "px-partials",
+  "version": "0.0.8",
+  "homepage": "https://github.com/PredixDev/px-partials",
+  "authors": [
+    "Jonnie Spratley <jonnie.spratley@ge.com>"
+  ],
+  "description": "HTML Partials",
+  "main": "px-partials.html",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "OSS_Notice.pdf",
+    "scripts",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "~1.5.0",
+    "iron-selector": "*",
+    "px-theme": "*",
+    "polymer-font-awesome": "https://github.com/PredixDev/polymer-font-awesome.git#master",
+    "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#^1.0.6",
+    "iron-behaviors": "PolymerElements/iron-behaviors#^1.0.16",
+    "px-forms-design": "https://github.com/PredixDev/px-forms-design.git#^0.3.16",
+    "iron-label": "PolymerElements/iron-label#^1.0.2",
+    "iron-form": "^1.1.0",
+    "px-input-group-design": "https://github.com/PredixDev/px-input-group-design.git#^0.2.12",
+    "paper-input": "PolymerElements/paper-input#^1.1.14"
+  },
+  "devDependencies": {
+    "px-mobile-design": "*",
+    "px-spacing-responsive-design": "~0.3.7",
+    "px-widths-responsive-design": "~0.3.8",
+    "px-box-sizing-design": "~0.2.7",
+    "px-helpers-design": "~0.3.5",
+    "px-flexbox-design": "~0.3.8",
+    "px-colors-design": "~0.2.16",
+    "px-normalize-design": "~0.3.8",
+    "px-viewport-design": "~0.4.5",
+    "inuit-clearfix": "~0.2.2",
+    "px-buttons-design": "~0.4.23",
+    "px-iconography-design": "~0.2.10",
+    "px-code-design": "~0.2.11",
+    "px-typography-design": "~0.3.4",
+    "iron-component-page": "PolymerElements/iron-component-page#~1.0.5",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.2.3",
+    "px-headings-design": "~0.2.13"
+  },
+  "resolutions": {
+    "polymer": "~1.5.0",
+    "px-theme": "~0.8.0",
+    "polymer-font-awesome": "master",
+    "px-layout": "*"
+  },
+  "_release": "0.0.8",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.8",
+    "commit": "d3182a5a7476c998a5324ce696ec6e71fbc2ebf8"
+  },
+  "_source": "https://github.com/PredixDev/px-partials.git",
+  "_target": "~0.0.4",
+  "_originalSource": "px-partials"
+}

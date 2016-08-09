@@ -1,0 +1,167 @@
+<html>
+	<head>
+		<title>px navbar demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+		<!-- TODO: Dependencies -->
+		<script src="../../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html"/>
+
+		<!-- TODO: pxm components -->
+
+		<link rel="import" href="../px-navbar.html">
+		<script src="demo.js"></script>
+		<style media="screen">
+			.box {
+				background: transparent;
+				border: none;
+				padding: 10px;
+			}
+
+			.position-relative {
+				position: relative;
+			}
+
+			.position-relative {
+				min-height: 75px;
+			}
+
+			body {
+				background: #efeff4;
+				overflow: hidden;
+				overflow-y: scroll;
+				overflow-y: auto;
+				-webkit-overflow-scrolling: touch;
+			}
+
+		</style>
+
+	</head>
+
+	<body>
+		<div class="viewport">
+			<h1>px-navbar</h1>
+			<p>The px-navbar component is a responsive mobile first navigation bar.</p>
+			<p>
+				Visit the
+				<a href="index.html" target="_blank">demo</a>
+				on a mobile device.
+			</p>
+		</div>
+
+		<div class="u-m">
+			<demo-snippet>
+				<template>
+					<link rel="import" href="../../px-theme/px-theme.html">
+					<link rel="import" href="../../px-theme/px-app.html">
+					<link rel="import" href="../../px-page/px-pages.html">
+					<link rel="import" href="../../px-table-view/px-table-view.html">
+
+					<style media="screen">
+					.box{
+						position: relative;
+					}
+						.context-browser{
+							display: flex;
+							flex-direction: column;
+						}
+						.context-browser__crumbs a{
+							text-decoration: none;
+							color: #999;
+						}
+						.context-browser__crumbs{
+							background: #ccc;
+
+						}
+						.context-browser__content{
+							overflow: auto;
+						}
+						px-pages{
+							min-height: auto;
+							height: 30vh;
+						}
+					</style>
+					<template id="demo" is="dom-bind">
+
+						<div class="box box--flush">
+							<px-navbar id="navbar1">
+								<div class="navbar__left">
+									<!-- empty -->
+								</div>
+								<!-- Current Context -->
+								<div class="navbar__center">
+									<button class="navbar__button">
+										<span class="u-mr-">{{selectedContext.displayName}}</span>
+										<i hidden$="{{contextBrowserVisible}}" class="fa fa-lg fa-caret-down u-mt-"></i>
+									</button>
+								</div>
+								<div class="navbar__right">
+									<!-- empty -->
+								</div>
+							</px-navbar>
+
+							<section class="context-browser has-navbar">
+								<ul class="context-browser__crumbs u-p list-bare flex flex--col flex--wrap">
+									<li><a href="#">United States</a></li>
+								</ul>
+								<div class="context-browser__content">
+
+									<!-- TODO: Context Pages -->
+									<px-pages id="contextPages">
+										<px-page id="page1" main="true">
+											<!-- Context List -->
+											<ul class="table-view table-view--tiny">
+												<template id="nodesTemplate" is="dom-repeat" items="{{nodes}}">
+													<li class="table-row table-row--chevron" on-click="checkNode">
+												    <div class="table-row__content">
+												      <span class="table-row__title">{{item.displayName}}</span>
+												    </div>
+												  </li>
+												</template>
+											</ul>
+										</px-page>
+									</px-pages>
+								</div>
+							</section>
+						</div>
+					</template>
+					<script type="text/javascript">
+						var app = document.getElementById('demo');
+						app.selectedContext = {displayName: 'Select Context'};
+
+						app.contextBrowserVisible = false;
+
+						app.toggleBrowser = function(){
+							app.contextBrowserVisible = !app.contextBrowserVisible;
+						};
+
+						var selectedNode = {};
+						var currentNode = {};
+						//Check if node has children
+						app.checkNode = function(e){
+							selectedNode = e.model.item;
+							console.log('checkNode', e, app.selectedContext);
+						};
+
+
+
+
+						loadDemoData('data.json')
+							.then(function(data) {
+								return createResourceTree({
+									rows: data
+								});
+							})
+							.then(function(tree) {
+								app.tree = tree;
+								app.nodes = tree.getChildren('resource-united-states');
+								console.log(tree);
+							});
+					</script>
+				</template>
+			</demo-snippet>
+		</div>
+<script src="http://localhost:35724/livereload.js?snipver=1"></script>
+	</body>
+</html>

@@ -1,0 +1,46 @@
+{
+  "name": "px-drawer",
+  "version": "0.0.1",
+  "authors": [
+    "Jonnie Spratley <jonnie.spratley@ge.com>"
+  ],
+  "description": "A responsive mobile first web component for hiding content off screen.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PredixDev/px-drawer.git"
+  },
+  "main": "px-drawer.html",
+  "keywords": [
+    "px",
+    "px-mobile"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "~1.5.0",
+    "px-navbar": "https://github.com/PredixDev/px-navbar.git",
+    "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#~1.0.3",
+    "iron-fit-behavior": "PolymerElements/iron-fit-behavior#~1.2.3",
+    "px-layout": "~0.0.3"
+  },
+  "devDependencies": {
+    "px-mobile-design": "https://github.com/PredixDev/px-mobile-design.git",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.2.3",
+    "px-spacing-design": "https://github.com/PredixDev/px-spacing-design.git",
+    "px-table-view": "https://github.com/PredixDev/px-table-view.git",
+    "px-colors-design": "^0.2.16",
+    "px-spacing-responsive-design": "^0.3.7",
+    "iron-component-page": "~1.1.7"
+  },
+  "resolutions": {
+    "polymer": "~v1.5.0",
+    "px-theme": "~0.8.0",
+    "polymer-font-awesome": "master"
+  }
+}

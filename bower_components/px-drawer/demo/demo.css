@@ -1,0 +1,12 @@
+body,
+html {
+  background-color: #eee !important;
+}
+body:not([style-scope]):not(.style-scope) {
+  margin-bottom: 0 !important;
+}
+.demo-container {
+  position: relative;
+  overflow: hidden;
+  min-height: 50vh;
+}

@@ -1,0 +1,214 @@
+<!--
+/*
+ * Copyright (c) 2016 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+ -->
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../px-media-query/px-media-query.html">
+
+<!--
+The `px-header-layout` aims to help Industrial Internet developers create responsive layouts. This element is used to layout `px-header` and `px-footer` with other content.
+When the viewport is less than the `responsiveWidth` the header will be hidden.
+
+[![Build Status](https://travis-ci.org/PredixDev/px-layout.svg?branch=master)](https://travis-ci.org/PredixDev/px-layout)
+
+### Usage
+
+```
+<px-header-layout>
+  <px-header></px-header>
+  <section content>
+    main content
+  </section>
+  <px-footer></px-footer>
+</px-header-layout>
+```
+
+### Content attributes
+
+Attribute | Description
+----------------|-------------
+`content` | The layouts content.
+
+### Styling
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--px-header-layout` | Mixin applied to component | {}
+`--px-header-layout-content` | Mixin applied to content | {}
+
+@element px-header-layout
+@demo ./px-header-layout/demo.html
+@homepage index.html
+-->
+<dom-module id="px-header-layout">
+  <style include="px-layout-css"></style>
+  <template strip-whitespace>
+    <style>
+      :host {
+        display: block;
+        position: relative;
+      }
+      :host .l-header-layout {
+        position: relative;
+        transition: all 0.3s;
+        @apply(--px-header-layout);
+      }
+      :host .full-height{
+        min-height: 100vh;
+      }
+      :host .l-header-layout__content {
+        position: relative;
+        @apply(--px-header-layout-content);
+      }
+      :host([full-width]) .viewport{
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <div id="container" class="l-header-layout viewport">
+      <div class="l-header-layout__header" hidden$="{{narrow}}">
+        <content id="headerContent" select="px-header"></content>
+      </div>
+
+      <content id="drawerContent" select="px-drawer"></content>
+
+      <div id="contentContainer" class="l-header-layout__container">
+        <div class="l-header-layout__navbar">
+          <content id="navbarContent" select="px-navbar"></content>
+        </div>
+        <div class="l-header-layout__content full-height">
+          <content id="content" select=":not(px-header):not(px-footer):not(px-navbar)"></content>
+        </div>
+      </div>
+
+      <div class="l-header-layout__footer" hidden$="{{narrow}}">
+        <content id="footerContent" select="px-footer"></content>
+      </div>
+    </div>
+    <px-media-query query="[[_computeMediaQuery(forceNarrow, responsiveWidth)]]" on-query-matches-changed="_onQueryMatchesChanged"></px-media-query>
+  </template>
+  <script>
+    Polymer({
+      is: 'px-header-layout',
+      behaviors: [Polymer.IronResizableBehavior],
+      properties: {
+        /**
+       * If true, ignore `responsiveWidth` setting and force the narrow layout.
+       */
+        forceNarrow: {
+          type: Boolean,
+          value: false
+        },
+        /**
+       * If the viewport's width is smaller than this value, the panel will change to narrow
+       * layout. In this mode the drawer will be closed.
+       */
+        responsiveWidth: {
+          type: String,
+          value: '425px'
+        },
+        /**
+        * Returns true if it is in narrow layout. This is useful if you need to show/hide
+        * elements based on the layout.
+        */
+        narrow: {
+          type: Boolean,
+          readOnly: true,
+          notify: true
+        }
+      },
+      /**
+      * A reference to the px-header element. (if it exists)
+      * @property header
+      * return Element
+      */
+      get header() {
+        return Polymer.dom(this.$.headerContent).getDistributedNodes()[0];
+      },
+      /**
+      * A reference to the px-footer element. (if it exists)
+      * @property footer
+      * return Element
+      */
+      get footer() {
+        return Polymer.dom(this.$.footerContent).getDistributedNodes()[0];
+      },
+      /**
+      * A reference to the px-navbar element. (if it exists)
+      * @property navbar
+      * return Element
+      */
+      get navbar() {
+        return Polymer.dom(this.$.navbarContent).getDistributedNodes()[0];
+      },
+      /**
+      * A reference to the px-drawer element. (if it exists)
+      * @property drawer
+      * return Element
+      */
+      get drawer() {
+        return Polymer.dom(this.$.drawerContent).getDistributedNodes()[0];
+      },
+      listeners: {
+          'tap': '_tapHandler'
+      },
+      observers: ['resetLayout(narrow, isAttached)'],
+      attached: function () {
+        this.async(function () {
+          if (this.navbar) {
+            //this.$$('.l-header-layout__content').style.paddingTop = this.navbar.getHeight() + 'px';
+            this.toggleClass('has-navbar', true, this.$$('.l-header-layout__container'));
+          }
+        });
+      },
+      /**
+       * Handle resetting the layout and either hiding or revealing the drawer.
+       * @event px-layout-reset
+       */
+      resetLayout: function () {
+        this.debounce('_resetLayout', function () {
+          if (!this.isAttached) {
+            console.warn('notAttached');
+            return;
+          }
+          this.toggleClass('is-narrow', this.narrow);
+          this.notifyResize();
+        });
+      },
+      /**
+       * Handle when the media query changes.
+       * @event px-media-query
+       */
+      _onQueryMatchesChanged: function (event) {
+        this.fire('px-media-query', event.detail.value);
+        this._setNarrow(event.detail.value);
+      },
+      _computeMediaQuery: function (forceNarrow, responsiveWidth) {
+        return forceNarrow
+          ? '(min-width: 0px)'
+          : '(max-width: ' + responsiveWidth + ')';
+      },
+      /**
+       * Handle when a tap event occurs, when if the element as a `drawer-toggle` attribute
+       ( toggle the drawer.
+       */
+      _tapHandler: function (e) {
+        var target = Polymer.dom(e).localTarget;
+        if (target && target.hasAttribute('drawer-toggle') || target && target.parentElement.hasAttribute('drawer-toggle')) {
+          this.drawer.toggle();
+        }
+      }
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,66 @@
+@import "_variables.scss";
+@import "_mixins.scss";
+
+/// Height / Width
+.u-h--full {
+  height: 100%;
+}
+
+.u-w--full {
+  width: 100%;
+}
+
+.u-round {
+  border-radius: 50%;
+}
+
+// Visibility
+// ------------------------------------------
+.hidden {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
+// Positions
+// ------------------------------------------
+.u-pos--center {
+  @include centerer();
+}
+
+.u-fixed {
+  position: fixed;
+}
+
+.u-fixed--top {
+  top     : 0;
+  left    : 0;
+  right   : 0;
+  position: fixed;
+}
+
+.u-fixed--bottom {
+  bottom  : 0;
+  left    : 0;
+  right   : 0;
+  position: fixed;
+}
+
+.u-absolute {
+  position: absolute;
+}
+
+.u-absolute--bottom {
+  bottom  : 0;
+  left    : 0;
+  right   : 0;
+  position: absolute;
+}
+
+.u-absolute--top {
+  top     : 0;
+  left    : 0;
+  right   : 0;
+  position: absolute;
+}

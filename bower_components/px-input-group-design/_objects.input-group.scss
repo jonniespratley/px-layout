@@ -1,0 +1,70 @@
+////
+/// PX-INPUT-GROUP-DESIGN
+/// Defines simple input groups
+/// @group px-input-group-design
+////
+
+@import "px-forms-design/_base.forms.scss";
+@import "px-buttons-design/_objects.buttons.scss";
+
+/// @type String [default] - Prepend value for all generated classes
+$inuit-input-group-namespace    : $inuit-namespace !default;
+
+/// @type Color [default] - Font color
+$inuit-input-group-color        : $gray5 !default;
+
+/// @type Color [default] - Icon color
+$inuit-input-group-color--icon  : $gray7 !default;
+  
+.#{$inuit-input-group-namespace}input-group,
+%#{$inuit-input-group-namespace}input-group {
+  display: flex;
+  .#{$inuit-forms-namespace}text-input {
+    flex: 1;
+    z-index: 2;
+    &:first-child {
+      margin-right: -1px;
+    }
+    &:last-child {
+      margin-left: -1px;
+    }
+  }
+  .#{$inuit-btn-namespace}btn + .#{$inuit-btn-namespace}btn {
+    margin-left: -1px;
+  }
+}
+
+.#{$inuit-input-group-namespace}input-group__addon,
+%#{$inuit-input-group-namespace}input-group__addon {
+  padding-right: $inuit-base-spacing-unit--small;
+  padding-left: $inuit-base-spacing-unit--small;
+  &.#{$inuit-btn-namespace}btn {
+    border-radius: 0;
+    box-shadow: none;
+  }
+  &:not(.#{$inuit-btn-namespace}btn) {
+    height: 2em;
+    border: $inuit-forms-border--outer;
+    box-shadow: $inuit-forms-border--inner;
+    line-height: 2;
+    background-color: $inuit-forms-background;
+    color: $inuit-input-group-color;
+  }
+  &:first-child {
+    border-right-width: 0;
+    &.#{$inuit-btn-namespace}btn {
+      border-width: 1px;
+      border-radius: 3px 0 0 3px;
+    }
+  }
+  &:last-child {
+    border-left-width: 0;
+    &.#{$inuit-btn-namespace}btn {
+      border-width: 1px;
+      border-radius: 0 3px 3px 0;
+    }
+  }
+  .fa {
+    color: $inuit-input-group-color--icon;
+  }
+}

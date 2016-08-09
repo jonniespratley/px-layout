@@ -1,0 +1,119 @@
+<html>
+	<head>
+		<title>px-icon demo</title>
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<script src="../demo/demo.js"></script>
+		<script src="../demo/FontAwesome.js"></script>
+		<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html"/>
+		<link rel="import" href="../../px-theme/px-app.html">
+		<link rel="import" href="../../px-theme/px-theme.html">
+		<link rel="import" href="../../px-layout/px-layout.html">
+		<link rel="import" href="px-icon.html">
+		<style media="screen">
+			body,
+			html {
+				background: #eee !important;
+			}
+			.bg-dark {
+				background-color: #333;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="viewport u-pt">
+			<h1 class="beta">px-icon</h1>
+			<p>
+				The
+				<code>px-icon</code>
+				element provides a way to use Predix Design icons.
+				<button type="button" onclick="showCode()">Show code</button>
+				<button type="button" onclick="hideCode()">Hide code</button>
+			</p>
+			<ol id="toc"></ol>
+			<script type="text/javascript">
+				document.addEventListener('WebComponentsReady', function () {
+					createToc('toc');
+				});
+			</script>
+			<h2>Sizing example</h2>
+			<demo-snippet>
+				<template id="">
+					<div class="flex flex--spaced flex--middle flex--wrap">
+						<px-icon size="16" icon="fa:fa-tachometer"></px-icon>
+						<px-icon size="32" icon="fa:fa-tachometer"></px-icon>
+						<px-icon size="56" icon="fa:fa-tachometer"></px-icon>
+						<px-icon size="72" icon="fa:fa-tachometer"></px-icon>
+						<px-icon size="125" icon="fa:fa-tachometer"></px-icon>
+						<px-icon size="256" icon="fa:fa-tachometer"></px-icon>
+						<px-icon size="512" icon="fa:fa-tachometer"></px-icon>
+					</div>
+				</template>
+			</demo-snippet>
+			<h2>Color example</h2>
+			<demo-snippet>
+				<template id="">
+					<template is="dom-bind">
+						<div class="flex flex--spaced flex--middle flex--wrap">
+							<px-icon size="16" color="red" icon="fa:fa-tachometer"></px-icon>
+							<px-icon size="32" color="orange" icon="fa:fa-tachometer"></px-icon>
+							<px-icon size="56" color="yellow" icon="fa:fa-tachometer"></px-icon>
+							<px-icon size="72" color="green" icon="fa:fa-tachometer"></px-icon>
+							<px-icon size="125" color="blue" icon="fa:fa-tachometer"></px-icon>
+							<px-icon size="256" color="indigo" icon="fa:fa-tachometer"></px-icon>
+							<px-icon size="512" color="violet" icon="fa:fa-tachometer"></px-icon>
+						</div>
+					</template>
+				</template>
+			</demo-snippet>
+			<h2>Available icons</h2>
+			<demo-snippet>
+				<template id="">
+					<template id="demo-icons" is="dom-bind">
+						<style media="screen">
+							.icons li{
+								display: flex;
+								flex-direction: column;
+								padding: 1rem;
+								text-align: center;
+							}
+						</style>
+						<ul class="icons list-bare flex flex--wrap flex--justify">
+							<template is="dom-repeat" items="[[icons]]">
+								<li>
+									<px-icon icon$="{{item.icon}}"></px-icon>
+									<span>{{item.icon}}</span>
+								</li>
+							</template>
+						</ul>
+					</template>
+				</template>
+			</demo-snippet>
+			<script type="text/javascript">
+				function sortIcons(arr) {
+					var _out = [];
+					for (var i = 0; i < arr.length; i++) {
+						_out.push(arr[i].id);
+					}
+					return _out.sort();
+				}
+				document.addEventListener('WebComponentsReady', function () {
+					var ficons = sortIcons(window.FONT_AWESOME.icons),
+						len = ficons.length,
+						icon = null,
+						tmpl = document.getElementById('demo-icons'),
+						icons = [];
+					for (var i = 0; i < len; i++) {
+						icon = ficons[i];
+						icons.push({
+							icon: 'fa:fa-' + icon
+						});
+						console.log('Adding icon', icon);
+					}
+					tmpl.icons = icons;
+				});
+			</script>
+		</div>
+	</body>
+</html>

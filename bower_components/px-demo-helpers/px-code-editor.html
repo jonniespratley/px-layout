@@ -1,0 +1,249 @@
+<link rel="import" href="../polymer/polymer.html">
+<!-- TODO: Editor -->
+<link rel="import" href="../juicy-ace-editor/juicy-ace-editor.html">
+<script src="../ace-builds/src-min-noconflict/ext-beautify.js"></script>
+<script src="../ace-builds/src-min-noconflict/ext-statusbar.js"></script>
+<script src="../ace-builds/src-min-noconflict/ext-language_tools.js"></script>
+
+</script>
+<!--
+## Usage
+To use this component in your custom component do the following:
+```
+<px-code-editor id="myEditor">
+  This is code.
+</px-code-editor>
+```
+@element px-code-editor.html
+@blurb px-code-editor Element to edit and preview code.
+@demo demo.html
+@homepage index.html
+-->
+<dom-module id="px-code-editor">
+	<style>
+		:host {
+			display: block;
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+		:host .files-list {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+			font-size: 0.8em;
+		}
+		:host .files-list li a {
+			white-space: nowrap;
+			color: #fff;
+		}
+		:host .selected {
+			background-color: #eee;
+		}
+		:host .full-height {
+			height: 100%;
+		}
+		:host .height-500 {
+			min-height: 500px;
+		}
+		:host .height-800 {
+			min-height: 800px;
+		}
+		:host .overflow-auto {
+			overflow: auto;
+		}
+		:host .overflow-hidden {
+			overflow: hidden;
+		}
+		:host .position-relative {
+			position: relative;
+		}
+		:host .editor-container{
+			@apply(--px-code-editor-container);
+		}
+		:host .output{
+			@apply(--px-code-editor-output);
+		}
+		:host .editor{
+			@apply(--px-code-editor);
+		}
+		:host .flex{
+			display: flex;
+		}
+		:host .flex__item{
+			flex: 1;
+		}
+		:host .editor-container{
+			@apply(--px-code-editor-container);
+		}
+	</style>
+	<template>
+		<div id="editorContainer" class="flex full-height flex--row editor-container">
+			<div class="editor flex__item overflow-auto height-500 full-height">
+				<juicy-ace-editor id="aceEditor" theme$="{{theme}}" mode$="{{mode}}" fontsize$="{{fontsize}}" readonly$="{{readonly}}" softtabs$="{{softtabs}}" tabsize$="{{tabsize}}" wrapmode$="{{wrapmode}}" class="position-relative full-height"></juicy-ace-editor>
+			</div>
+			<div id="outputWrap" class="output flex__item col-6 background-color-white full-height overflow-auto">
+				<content id="content" class=" height-500 "></content>
+			</div>
+		</div>
+	</template>
+	<script type="text/javascript">
+		Polymer({
+			is: "px-code-editor",
+			properties: {
+				//Readonly editor
+				readonly: {
+					type: Boolean,
+					value: false
+				},
+				fontsize: {
+					type: String,
+					value: '12px'
+				},
+				softtabs: {
+					type: Boolean,
+					value: true
+				},
+				wrapmode: {
+					type: Boolean,
+					value: true
+				},
+				tabsize: {
+					type: String,
+					value: '2'
+				},
+				//The editor mode
+				mode: {
+					type: String,
+					value: 'ace/mode/html'
+				},
+				//The syntax theme to use.
+				theme: {
+					type: String,
+					value: 'ace/theme/monokai'
+				},
+				//The output code.
+				output: {
+					type: String,
+					value: 'output'
+				},
+				//The input code.
+				code: {
+					type: String,
+					observer: '_handleCodeChange'
+				},
+				//The number of ms to debounce the renderer
+				debounce: {
+					type: Number,
+					value: 1500
+				},
+				//The position of the code editor. (top/bottom/left/right)
+				layout: {
+					type: String,
+					value: 'bottom',
+					observer: '_handleLayoutChange'
+				},
+				options: {
+					type: Object
+				}
+			},
+			created: function () {
+				//console.warn(this.tagName, 'created');
+			},
+			ready: function () {
+				//console.warn(this.tagName, 'created');
+				var _this = this;
+					this.async(function(){
+						var aceEditor = this.$.aceEditor;
+						aceEditor.$blockScrolling = Infinity;
+						this._editor = aceEditor.editor;
+
+						this.debounce('initEditor', function () {
+							aceEditor.addEventListener('change', function (e) {
+								_this.debounce('render', function () {
+									_this.$.outputWrap.innerHTML = e.target.value;
+									_this.output = e.target.value;
+								}, _this.debounce);
+							});
+						}, 50);
+					}, 100);
+			},
+			attached: function () {
+
+
+				this.async(function() {
+					this._editor.setOptions({
+		        enableBasicAutocompletion: true,
+		        enableSnippets: true,
+		        enableLiveAutocompletion: false
+	    		});
+					//this._customAutoComplete();
+					this._customSnippets();
+				}, 500);
+
+			},
+			selectTemplate: function (e) {
+				e.preventDefault();
+				this._clearSelected();
+				e.target.parent().parent().toggleClass('selected');
+				this.selectedFile = e.model.item;
+				this.$.aceEditor.value = this.selectedFile.doc.data;
+			},
+			_handleCodeChange: function (newVal, oldVal) {
+			//	console.warn('Code Changed', newVal);
+				this.$.aceEditor.value = newVal;
+			},
+			_handleLayoutChange: function (newVal, oldVal) {
+				var self = this;
+				var classMap = {
+					top: 'flex--col',
+					bottom: 'flex--col--rev',
+					left: 'flex--row',
+					right: 'flex--row--rev'
+				};
+				self.toggleClass(classMap[oldVal], false, self.$.editorContainer);
+				self.toggleClass(classMap[newVal], true, self.$.editorContainer);
+				/*
+        switch(newVal){
+          case 'top':
+          self.toggleClass(classMap[newVal], !self.$.editorContainer.classList.contains(classMap[oldVal]), self.$.editorContainer);
+          break;
+          case 'bottom':
+          self.toggleClass('flex--col--rev', true, self.$.editorContainer);
+          break;
+          case 'left':
+          self.toggleClass('flex--row', true, self.$.editorContainer);
+          break;
+          case 'right':
+          self.toggleClass('flex--row--rev', true, self.$.editorContainer);
+          break;
+          default:
+          self.toggleClass('flex--row', true, self.$.editorContainer);
+          break;
+        }*/
+			},
+
+			_customAutoComplete: function(){
+				var langTools = ace.require("ace/ext/language_tools");
+				// uses http://rhymebrain.com/api.html
+				 var customCompleter = {
+						 getCompletions: function(editor, session, pos, prefix, callback) {
+							 console.log('getCompletions', editor, session, pos, prefix);
+								 if (prefix.length === 0) {
+									 callback(null, []); return
+								 }
+
+						 }
+				 }
+				 langTools.addCompleter(customCompleter);
+
+
+			},
+			_customSnippets: function(){
+				var snippetManager = ace.require("ace/snippets").snippetManager;
+				var snippet = '<px-card header-text="${1}"></px-card>';
+				snippetManager.insertSnippet(editor, snippet);
+			}
+		});
+	</script>
+</dom-module>

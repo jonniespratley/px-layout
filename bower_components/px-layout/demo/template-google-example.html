@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>template-google-example</title>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="demo.css">
+    <link rel='stylesheet' href='//predixdev.github.io/px-library-design/css/style.css'>
+
+    <script src="../../webcomponentsjs/webcomponents.js"></script>
+
+    <link rel="import" href="../px-layout.html">
+    <link rel="import" href="../../px-card/px-card.html">
+    <link rel="import" href="../../px-table-view/px-table-view.html">
+
+  </head>
+
+  <body unresolved class="responsive-demo">
+    <template id="app" is="dom-bind">
+      <style is="custom-style">
+        :root {
+          --px-navbar: {
+            background-color: #e91e63;
+          }
+          --px-table-row: {
+            color: #747474;
+          }
+        }
+
+        #googleMenu .custom-selected {
+          background: #f3f3f3;
+          color: #e91e63 !important;
+        }
+
+
+
+        .box {
+          position: relative;
+        }
+
+        :root .navbar__title {
+          color: #fff;
+          font-size: 1.5rem;
+          margin-left: 1rem;
+        }
+        :root .spacer {
+          height: 56px;
+        }
+
+      </style>
+
+      <px-drawer-layout id="layout">
+        <px-drawer>
+          <div class="sidebox">
+            <div class="spacer"></div>
+            <px-table-view id="googleMenu" class="googleMenu" selected="0">
+              <iron-selector attr-for-selected="title" selected="{{selected}}" selected-class="custom-selected" content>
+
+                <px-table-row title="Inbox" modifier="tappable" icon="fa:fa-inbox"></px-table-row>
+                <px-table-row title="Starred" modifier="tappable" icon="fa:fa-star"></px-table-row>
+                <px-table-row title="All mail" modifier="tappable" icon="fa:fa-envelope"></px-table-row>
+                <px-table-row title="Trash" modifier="tappable" icon="fa:fa-trash"></px-table-row>
+                <px-table-row title="Spam" modifier="tappable" icon="fa:fa-flag"></px-table-row>
+              </iron-selector>
+
+            </px-table-view>
+          </div>
+        </px-drawer>
+
+        <section class="" content>
+          <px-navbar shadow>
+            <div left>
+              <span class="navbar__title u-mt">Inbox</span>
+            </div>
+          </px-navbar>
+          <div class="box">
+
+            <p>
+              &nbsp;
+            </p>
+            <p>
+              &nbsp;
+            </p>
+            <p>
+              &nbsp;
+            </p>
+            <p>
+              &nbsp;
+            </p>
+            <p>
+              &nbsp;
+            </p>
+            <p>
+              &nbsp;
+            </p>
+            <p>
+              &nbsp;
+            </p>
+            <p>
+              &nbsp;
+            </p>
+
+          </div>
+        </section>
+
+      </px-drawer-layout>
+
+    </template>
+    <script type="text/javascript">
+      document.addEventListener('WebComponentsReady', function () {
+        /* Create the unit divs for the demo */
+        var lorem = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure d' +
+            'olor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+        var content = document.getElementById('content');
+        var child;
+        var div;
+        var units = 100;
+        var i = 0;
+
+        for (; i <= units; i++) {
+          child = document.createElement('p');
+          child.innerHTML = lorem;
+          //  content.appendChild(child);
+          console.log('Creating div', i);
+        }
+      });
+    </script>
+    <script src="http://localhost:35724/livereload.js?snipver=1"></script>
+  </body>
+
+</html>

@@ -1,0 +1,57 @@
+<html>
+
+	<head>
+		<!-- TODO: Dependencies -->
+		<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html" />
+		<link rel='stylesheet' href='https://predixdev.github.io/px-library-design/css/style.css'>
+		<title>px-header demo</title>
+		<style media="screen">
+			.box{
+				position: relative;
+				background: #111;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="viewport">
+			<h2>px-header</h2>
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<div class="box box--tiny">
+							<link rel="import" href="../px-partials.html">
+							<px-header title="My App" subtitle="My Product"></px-header>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<div class="box box--tiny">
+							<link rel="import" href="../px-partials.html">
+							<px-header title="My App" subtitle=" "></px-header>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<div class="box box--tiny">
+							<link rel="import" href="../px-partials.html">
+							<px-header title="" subtitle=" " powered=" "></px-header>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+
+		</div>
+
+	</body>
+</html>

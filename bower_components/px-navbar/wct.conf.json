@@ -1,0 +1,22 @@
+{
+	"suites": ["test/px-navbar-test-fixture.html"],
+	"verbose": true,
+	"plugins": {
+		"sauce": {
+			"disabled": true
+		},
+		"local": {
+			"browsers": [
+				"chrome"
+			]
+		},
+		"istanbul": {
+			"dir": "./coverage",
+			"reporters": ["text-summary", "lcov"],
+			"include": [
+				"/px-*.html"
+			],
+			"exclude": []
+		}
+	}
+}

@@ -1,0 +1,14 @@
+<script src="../overthrow/src/overthrow-detect.js"></script>
+<script src="../overthrow/src/overthrow-polyfill.js"></script>
+<script src="../overthrow/src/overthrow-toss.js"></script>
+<script src="../overthrow/src/overthrow-init.js"></script>
+
+
+<script>
+  if (typeof overthrow === 'undefined') {
+    var script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/overthrow/0.7.0/overthrow.min.js';
+    document.head.appendChild(script);
+    console.warn('Loading Overthrow.js from CDN');
+  }
+</script>

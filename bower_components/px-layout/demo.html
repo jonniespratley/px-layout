@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>px-layout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="demo/demo.css">
+
+
+    <script src="../webcomponentsjs/webcomponents.min.js"></script>
+
+    <script src="demo/demo.js"></script>
+
+    <link rel="import" href="../px-demo-helpers/px-demo-helpers.html"/>
+    <link rel="import" href="../iron-demo-helpers/demo-snippet.html"/>
+
+    <link rel="import" href="../px-theme/px-app.html">
+    <link rel="import" href="../px-theme/px-theme.html">
+
+    <link rel="import" href="px-layou-partials.html">
+    <link rel="import" href="px-layout.html">
+
+    <script type="text/javascript">
+      function toggleDebug(name) {
+        document.body.className = name;
+        console.log('toggling', name);
+      }
+    </script>
+    <style media="screen">
+      body,
+      html {
+        overflow: auto !important;
+        background-color: #eee !important;
+      }
+      .responsive-demo{
+        overflow: hidden;
+        position: relative;
+      }
+      #flexbox .flex * {
+        text-align: center;
+        padding: 1rem;
+      }
+      .responsive-demo div {}
+      .scrollable {
+        height: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 10%;
+      }
+      .img-responsive {
+        width: 100%;
+        max-width: 100%;
+      }
+    </style>
+  </head>
+  <body class="debug-new-breakpoints scrollable u-p-" unresolved>
+
+
+    <div class="hero">
+      <div class="u-mb">
+        <h1 class="alpha">px-layout</h1>
+        <p>
+          A collection of elements, along with guidelines and templates that can be used to structure your Industrial Internet app's layout.
+        </p>
+      </div>
+    </div>
+
+
+    <device-layout-viewer device="all" src="./demo/template-drawer-layout.html"></device-layout-viewer>
+
+
+    <!-- TODO: Laytout -->
+    <article class="viewport">
+
+      <!-- TODO: Usage -->
+
+      <px-box-section title="Installation">
+          <pre><code>$ bower install px-layout --save</code></pre>
+
+          <helper-badge repo="px-layout" org="PredixDev"></helper-badge>
+      </px-box-section>
+
+      <px-box-section id="usage" title="Usage" header-class="beta">
+        <p>
+          The markup structure of an application can become very messy and deeply nested.
+          So we have identified the essential elements that are needed to create responsive Industrial Internet applications.
+        </p>
+        <h3>Bundled layouts</h3>
+        <ul>
+          <li>
+            <a href="./px-drawer-layout/demo.html" target="_blank">px-drawer-layout</a>
+          </li>
+          <li>
+            <a href="./px-header-layout/demo.html" target="_blank">px-header-layout</a>
+          </li>
+        </ul>
+
+        <h3>Bundled elements</h3>
+        <ul class="">
+          <li>
+            <a href="../px-partials/index.html#px-button" target="_blank">px-button</a>
+          </li>
+          <li>
+            <a href="../px-partials/index.html#px-brand" target="_blank">px-brand</a>
+          </li>
+          <li>
+            <a href="../px-partials/index.html#px-header" target="_blank">px-header</a>
+          </li>
+          <li>
+            <a href="../px-partials/index.html#px-footer" target="_blank">px-footer</a>
+          </li>
+          <li>
+            <a href="../px-partials/index.html#px-icon" target="_blank">px-icon</a>
+          </li>
+          <li>
+            <a href="../px-partials/index.html#px-title-bar" target="_blank">px-title-bar</a>
+          </li>
+          <li>
+            <a href="../px-navbar" target="_blank">px-navbar</a>
+          </li>
+          <li>
+            <a href="../px-drawer" target="_blank">px-drawer</a>
+          </li>
+        </ul>
+
+
+        <h2>Quick Start</h2>
+
+
+        <!--
+        <demo-snippet>
+          <template>
+          <pre>
+            //README.md code
+          </pre>
+          </template>
+        </demo-snippet>
+
+        <p data-height="450" data-theme-id="24073" data-slug-hash="XKgdOV" data-default-tab="html,result" data-user="jonniespratley" data-embed-version="2" data-editable="true" class="codepen">See the Pen <a href="http://codepen.io/jonniespratley/pen/XKgdOV/">demo - template-catalog</a> by Jonnie Spratley (<a href="http://codepen.io/jonniespratley">@jonniespratley</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+        <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+-->
+
+
+        <p>
+          The following markup is a basic example of usage. Open in
+          <a href="demo/template-basic.html" target="_blank">new window</a>
+        </p>
+
+        <h2>px-drawer-layout</h2>
+        <demo-snippet>
+          <template>
+            <div class="responsive-demo"  style="height: 400px;">
+              <px-drawer-layout id="layout" class="u-bg-gray9">
+                <px-drawer>
+                  <div>
+                    This is the drawer
+                  </div>
+                </px-drawer>
+                <section>
+                  <px-button icon="fa:fa-bars" drawer-toggle></px-button>
+                  This is the content
+                </section>
+              </px-drawer-layout>
+            </div>
+          </template>
+        </demo-snippet>
+
+<!--
+        <h2>px-header-layout</h2>
+        <demo-snippet>
+          <template>
+            <article class="u-bg-gray9" style="height: 600px;">
+
+              <px-layout id="layoutx" type="full">
+                <px-header title="My App"></px-header>
+                <px-layout-item role="primary-content" class="l-bg-white">
+                  <px-navbar>
+                    <button class="navbar__left navbar__button" onclick="document.getElementById('layoutx').toggle('primarySidebar');">
+                      <i class="fa fa-lg fa-navicon"></i>
+                    </button>
+                  </px-navbar>
+
+                  <section class="has-navbar l-full-height">
+                    <div class="u-m">
+                      <px-title-bar title="Primary Content"></px-title-bar>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                      </p>
+                    </div>
+                  </section>
+                </px-layout-item>
+
+                <px-footer copywrite="2016 Demos"></px-footer>
+              </px-layout>
+            </article>
+          </template>
+        </demo-snippet>
+-->
+      </px-box-section>
+      <template id="pxExamples" is="dom-bind">
+        <px-box-section id="examples" title="Templates">
+          <h2>Layout Templates</h2>
+          <p>
+            The templates are a means to define, illustrate and share best practices in <code>px-layout</code>. Select a template and customize to suit your needs.
+          </p>
+
+          <ol class="">
+            <li>Identify the layout pattern for your app</li>
+            <li>Use the px-layout component</li>
+            <li>Select the type you perfer</li>
+            <li>Replace old markup with new markup</li>
+          </ol>
+          <h3>Examples</h3>
+
+          <ol class="">
+            <template is="dom-repeat" items="{{examples}}">
+              <li>
+                <px-icon
+                  color$="{{item.color}}"
+                  icon$="{{item.icon}}"
+                  icon-size="16"></px-icon>
+                <a href$="demo/{{item.href}}" target="_blank">{{item.title}}</a>
+              </li>
+            </template>
+          </ol>
+        </px-box-section>
+      </template>
+
+      <script type="text/javascript">
+        document.addEventListener('WebComponentsReady', function () {
+          document.getElementById('pxExamples').examples = window.EXAMPLES;
+        });
+      </script>
+
+
+      <px-box-section id="docs" title="Documentation">
+        <h2>Documentation</h2>
+        <p>
+          More documentation can be found below:
+        </p>
+        <ul>
+          <li>
+            <a href="./demo/demo-breakpoints.html" target="_blank">Breakpoints</a>
+          </li>
+          <li>
+            <a href="./demo/demo-flexbox.html" target="_blank">Flexbox</a>
+          </li>
+          <li>
+            <a href="./demo/demo-layout.html" target="_blank">Layout</a>
+          </li>
+        </ul>
+      </px-box-section>
+
+
+    </article>
+
+  </body>
+</html>

@@ -1,0 +1,192 @@
+<!--
+/*
+ * Copyright (c) 2016 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+ -->
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-selector/iron-selector.html">
+<link rel="import" href="../px-brand/px-brand.html">
+<link rel="import" href="../px-partials-styles.html">
+<!--
+The `px-header` element provides an easy way to create the header commonly used in Predix apps.
+
+
+### Usage
+
+```
+<px-header title="My Application Name" subtitle="My Product Name"></px-header>
+```
+
+### Styling
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--px-header` | Mixin applied to the element | {}
+`--px-header-avatar` | Mixin applied to the avatar | {}
+`--px-header-brand` | Mixin applied to the brand | {}
+`--px-header-link` | Mixin applied to the links | {}
+`--px-header-nav` | Mixin applied to the nav | {}
+`--px-header-subtitle` | Mixin applied to the subtitle | {}
+`--px-header-title` | Mixin applied to the title | {}
+
+
+
+@element px-header
+@demo px-header/demo.html
+@homepage index.html
+-->
+<dom-module id="px-header">
+	<!-- <link rel="import" type="css" href="../css/px-partials.css"> -->
+<style include="px-partials-css"></style>
+	<template strip-whitespace>
+		<style>
+			:host {
+				display: block;
+			}
+			:host .c-header {
+				@apply(--px-header);
+			}
+			:host .c-header__brand {
+				@apply(--px-header-brand);
+			}
+			:host .c-header__nav {
+				@apply(--px-header-nav);
+			}
+			:host .c-header__title {
+				@apply(--px-header-title);
+			}
+			:host .c-header__subtitle {
+				@apply(--px-header-subtitle);
+			}
+			:host .c-header__circle {
+				@apply(--px-header-avatar);
+			}
+			:host .c-header__link {
+				@apply(--px-header-link);
+			}
+
+		</style>
+		<div class="c-header">
+			<div class="c-header__left">
+				<div class="c-header__brand">
+					<template is="dom-if" if="{{!bare}}">
+						<span class="c-header__logo">
+							<px-brand monogram size="24"></px-brand>
+							<template is="dom-if" if="{{!predix}}">
+								<px-brand predix size="32"></px-brand>
+							</template>
+						</span>
+					</template>
+					<content id="brandContent" select="[brand]"></content>
+				</div>
+				<span class="c-header__title epsilon">{{title}}</span>
+				<template is="dom-if" if="{{subtitle}}">
+					<span class="c-header__seperator is-hidden@sm-" hidden$="{{!subtitle}}"></span>
+					<span class="c-header__subtitle  is-hidden@sm-" hidden$="{{!subtitle}}">{{subtitle}}</span>
+				</template>
+				<content id="leftContent" select="[left]"></content>
+			</div>
+
+			<div class="c-header__right">
+				<nav class="c-header__nav">
+					<iron-selector selected="{{selected}}"  selected-class="c-header__link--selected">
+						<template is="dom-repeat" items="{{navItems}}">
+							<a class="c-header__link" title$="[[item.label]]" on-tap="_handleTap">{{item.label}}</a>
+						</template>
+					</iron-selector>
+				</nav>
+        <div class="">
+					<template is="dom-if" if="{{username}}">
+	          <a class="c-header__link user" on-tap="_handleUserTap">
+	            <span class="c-header__circle">
+	              <i class="fa fa-lg fa-user"></i>
+	            </span>
+	            <span class="c-header__username is-hidden@xs-">
+	              {{username}}
+	            </span>
+	          </a>
+	        </template>
+        </div>
+				<content id="rightContent" select="[right]"></content>
+				<span class="c-header__powered is-hidden@xs-" hidden$="{{!powered}}">{{powered}}</span>
+			</div>
+
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'px-header',
+			hostAttributes: {
+				role: 'header'
+			},
+			properties: {
+				/**
+				 * The title to display
+				 */
+				title: {
+					type: String,
+					value: 'Seed Application'
+				},
+				/**
+				 * The subtitle to display
+				 */
+				subtitle: {
+					type: String
+				},
+				/**
+				 * The powered by to display
+				 */
+				powered: {
+					type: String
+				},
+				/**
+				 * The username to display
+				 */
+        username: {
+          type: String
+        },
+				/**
+				 * Array of menu items to display with keys (label, href)
+				 */
+				navItems: {
+					type: Array
+				},
+				/**
+				 * No brand
+				 */
+				bare: {
+					type: Boolean,
+					value: false
+				},
+				/**
+				 * The selected nav item index
+				 */
+				selected: {
+					type: Number,
+					notify: true
+				}
+			},
+			_handleTap: function(e){
+				this.fire('px-header-link-select', e);
+			},
+			_handleUserTap: function(e){
+				this.fire('px-header-user-select', e);
+			}
+			/**
+			 * Fires when the user link is selected.
+			 * @event px-header-user-select
+			 */
+			/**
+			 * Fires when a link is selected.
+			 * @event px-header-link-select
+			 */
+		});
+	</script>
+</dom-module>

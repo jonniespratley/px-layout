@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>px-mobile-design</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<script src="../webcomponentsjs/webcomponents.min.js"></script>
+	<script src="../fastclick/lib/fastclick.js"></script>
+
+	<link rel="import" href="../iron-collapse/iron-collapse.html" />
+	<link rel="import" href="../iron-demo-helpers/demo-snippet.html" />
+
+	<link rel="stylesheet" href="dist/px.css">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.min.js"></script>
+	<!--
+		<link rel="stylesheet" href="dist/px-mobile-design.css">
+	-->
+
+	<script type="text/javascript">
+		if ('addEventListener' in document) {
+			document.addEventListener('DOMContentLoaded', function() {
+				FastClick.attach(document.body);
+			}, false);
+		}
+	</script>
+	<style media="screen">
+		body {
+			background: #efeff4;
+			overflow: hidden;
+			overflow-y: scroll;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		.box {
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+
+
+	<article class="viewport viewport--full-height">
+
+		<section class="u-mb+">
+
+			<template id="app" is="dom-bind">
+				<h1 class="beta">px-mobile-design</h1>
+				<p>
+					The following components are mobile first.
+				</p>
+				<ol class="list list--bare">
+					<template is="dom-repeat" items="{{items}}">
+						<li><a href$="../{{item}}" target="_blank">{{item}}</a></li>
+					</template>
+
+				</ol>
+			</template>
+			<script type="text/javascript">
+				var app = document.getElementById('app');
+				app.items = [
+					'px-action-sheet',
+					'px-button',
+					'px-drawer',
+					'px-icon',
+					'px-navbar',
+					'px-page',
+					'px-table-view'
+				];
+			</script>
+
+			<!-- TODO: action sheet -->
+			<h2>px-action-sheet</h2>
+			<demo-snippet>
+				<template>
+					<link rel="import" href="../px-action-sheet/px-action-sheet.html">
+					<div style="position:relative; height: 500px; overflow:hidden;">
+						<px-navbar title="View Title">
+							<button type="button" class="navbar__button" onclick="document.getElementById('myActionSheet').toggle()">
+								<i class="fa fa-lg fa-ellipsis-v"></i>
+							</button>
+						</px-navbar>
+					</div>
+					<px-action-sheet id="myActionSheet">
+						<px-action-sheet-button label="This is a two line note to clarify a destructive action you are about to take." type="info"></px-action-sheet-button>
+						<px-action-sheet-button label="Delete" type="danger" onclick="alert('Delete Item')"></px-action-sheet-button>
+						<px-action-sheet-button label="Cancel" type="cancel" onclick="document.getElementById('myActionSheet').toggle()"></px-action-sheet-button>
+					</px-action-sheet>
+				</template>
+			</demo-snippet>
+
+
+
+			<!-- TODO: drawer -->
+			<div class="">
+				<h2>px-drawer</h2>
+				<p>
+					The px-drawer component provides users with the ability to display actions on mobile devices.
+				</p>
+				<demo-snippet>
+					<template>
+						<link rel="import" href="../px-design-system/px-header.html">
+						<link rel="import" href="../px-drawer/px-drawer.html">
+						<style media="screen">
+							.app {
+								background-color: #484848;
+								height: 500px;
+								overflow: hidden;
+								padding: 10px;
+								position: relative;
+							}
+
+							.table-view--bottom {
+								position: absolute;
+								bottom: 0;
+								left: 0;
+								right: 0;
+							}
+
+							.table-row {
+								border-bottom: none !important;
+							}
+
+							.position-relative {
+								position: relative;
+							}
+						</style>
+
+						<div class="app">
+							<px-header subtitle="PX Drawer Demo" class="a11y-portable"></px-header>
+							<px-drawer id="myLeftDrawer" side="left" theme="dark">
+
+
+								<div class="position-relative">
+									<ul class="table-view table-view--bae">
+										<px-table-row title="Home" icon="fa fa-home" type="tappable" href="#home">
+											<iron-collapse id="collapse">
+												<div>Content goes here...</div>
+												<ul class="list list--tiny list-bare">
+													<li><a href="#">Sub item 1</a></li>
+													<li><a href="#">Sub item 2</a></li>
+													<li><a href="#">Sub item 3</a></li>
+													<li><a href="#">Sub item 4</a></li>
+
+												</ul>
+											</iron-collapse>
+										</px-table-row>
+										<px-table-row title="Dashboard" icon="fa fa-dashboard" type="tappable" href="#dashboard"></px-table-row>
+										<px-table-row title="Alerts" icon="fa fa-exclamation-triangle" type="tappable" href="#alerts"></px-table-row>
+										<px-table-row title="Cases" icon="fa fa-briefcase" type="tappable" href="#cases"></px-table-row>
+										<px-table-row title="Analysis" icon="fa fa-bar-chart" type="tappable" href="#analysis"></px-table-row>
+									</ul>
+									<ul class="table-view table-view--bare table-view--bottom table-view--avatars">
+										<px-table-row title="Jonnie Spratley" type="tappable" image="http://s3-us-west-2.amazonaws.com/s.cdpn.io/49212/profile/profile-80_4.jpg"></px-table-row>
+									</ul>
+								</div>
+
+							</px-drawer>
+							<div class="position-relative">
+								<px-navbar title="View Title">
+									<button class="navbar__button" onclick="document.getElementById('myLeftDrawer').toggle()">
+										<i class="fa fa-lg fa-bars"></i>
+									</button>
+								</px-navbar>
+							</div>
+						</div>
+
+					</template>
+				</demo-snippet>
+			</div>
+
+			<!-- TODO: navbar -->
+			<h2>px-navbar</h2>
+			<demo-snippet>
+				<template>
+					<link rel="import" href="../px-navbar/px-navbar.html">
+
+					<div style="position:relative; height: 75px;">
+						<px-navbar id="navbar1" title="Application">
+							<button type="button" class="navbar__button">
+								<i class="fa fa-lg fa-navicon"></i>
+							</button>
+						</px-navbar>
+					</div>
+
+					<div style="position:relative; height: 75px;">
+						<px-navbar id="navbar1-1" title="View" subtitle="Context" back-label="" back>
+							<button type="button" class="navbar__button">
+								<i class="fa fa-lg fa-ellipsis-v"></i>
+							</button>
+						</px-navbar>
+					</div>
+
+					<div style="position:relative; height: 75px;">
+						<px-navbar id="navbar1-2" title="Modal">
+							<div>
+								<!-- spacer -->
+							</div>
+							<button type="button" class="btn btn--tertiary ">
+								Done
+							</button>
+						</px-navbar>
+					</div>
+				</template>
+			</demo-snippet>
+
+			<!-- TODO: table view -->
+			<h2>px-table-view</h2>
+			<demo-snippet>
+				<template>
+					<link rel="import" href="../px-table-view/px-table-view.html">
+
+					<div class="app" style="height: 480px; overflow:auto;">
+						<px-table-view id="myTable"></px-table-view>
+						<script type="text/javascript">
+							var myTable = document.getElementById('myTable');
+							var items = [];
+							_.times(100, function(i){
+								items.push({
+									title: 'Item ' + i,
+									href: 'item-' + i
+								})
+							});
+							myTable.items = items;
+						</script>
+					</div>
+				</template>
+			</demo-snippet>
+			<!-- TODO: pages view -->
+			<h2>px-page</h2>
+			<demo-snippet>
+				<template>
+					<link rel="import" href="../px-page/px-pages.html">
+
+					<div class="demo" style="height: 480px; overflow:auto;">
+						<style>
+							px-page {
+								font-size: 2rem;
+								text-align: center;
+								padding: 5rem;
+							}
+
+							px-page:nth-child(odd) {
+								background: lime;
+							}
+
+							px-page:nth-child(even) {
+								background: fuchsia;
+							}
+						</style>
+						<div class="app">
+							<div class="flex">
+								<button class="btn btn--full" onclick="document.getElementById('pages').prev()">Prev</button>
+								<button class="btn btn--full" onclick="document.getElementById('pages').next()">Next</button>
+							</div>
+							<px-pages id="pages" selected="0" debug loop>
+								<px-page id="page1">One</px-page>
+								<px-page id="page2">Two</px-page>
+								<px-page id="page3">Three</px-page>
+								<px-page id="page4">four</px-page>
+							</px-pages>
+						</div>
+					</div>
+				</template>
+			</demo-snippet>
+
+		</section>
+	</article>
+
+
+
+</body>
+
+</html>

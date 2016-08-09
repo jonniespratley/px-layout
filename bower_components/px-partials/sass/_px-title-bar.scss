@@ -1,0 +1,33 @@
+@import "px-colors-design/_settings.colors.scss";
+@import 'px-spacing-design/_trumps.spacing.scss';
+
+.title-bar {
+	padding      : $inuit-base-spacing-unit--tiny;
+}
+
+.title-bar .title-bar__spacer {
+	width        : 100%;
+	height       : 1px;
+	display      : block;
+	border-bottom: 2px dotted $gray5;
+	margin-left  : $inuit-base-spacing-unit--small;
+	margin-right : $inuit-base-spacing-unit--small;
+}
+
+.title-bar h3 {
+	white-space   : nowrap;
+	text-transform: uppercase;
+	font-weight   : bold;
+	color         : $gray9;
+}
+
+.title-bar .title-bar__actions {
+	.btn {
+		margin-right: $inuit-base-spacing-unit--tiny;
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+
+}

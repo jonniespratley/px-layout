@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<title>px-halo-wordmark demo</title>
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<!-- TODO: Dependencies -->
+		<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html"/>
+		<link rel='stylesheet' href='https://predixdev.github.io/px-library-design/css/style.css'>
+		<link rel="import" href="../px-partials.html">
+		<style media="screen">
+
+			.demo{
+				background-color: #333;
+				padding: 2rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="viewport">
+			<h2>px-halo-wordmark</h2>
+			<demo-snippet class="u-mb">
+				<template id="">
+					<div class="demo flex flex--wrap flex--center">
+						<px-halo-wordmark size="16"></px-halo-wordmark>
+						<px-halo-wordmark size="32"></px-halo-wordmark>
+						<px-halo-wordmark size="48"></px-halo-wordmark>
+						<px-halo-wordmark size="72"></px-halo-wordmark>
+						<px-halo-wordmark size="128"></px-halo-wordmark>
+						<px-halo-wordmark size="256"></px-halo-wordmark>
+					</div>
+				</template>
+			</demo-snippet>
+			<demo-snippet>
+				<template id="">
+					<div class="demo flex flex--center">
+						<px-halo-wordmark size="512"></px-halo-wordmark>
+					</div>
+				</template>
+			</demo-snippet>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,215 @@
+@charset "utf-8";
+@import "variables";
+@import "mixins";
+@import "px-mobile-design/sass/_mixins.scss";
+
+// Generic
+@import "px-normalize-design/_generic.normalize.scss";
+@import "px-box-sizing-design/_generic.box-sizing.scss";
+//@import "px-helpers-design/_generic.helpers.scss";
+
+// Base
+//@import "px-flexbox-design/_base.flexbox.scss";
+//@import "px-viewport-design/_base.viewport.scss";
+//@import "px-forms-design/_base.forms.scss";
+//@import "px-meta-lists-design/_meta.lists.scss";
+//@import "px-meta-buttons-design/_meta.buttons.scss";
+
+// Trumps
+//@import "inuit-clearfix/_trumps.clearfix.scss";
+@import "px-spacing-responsive-design/_trumps.spacing-responsive.scss";
+//@import "px-widths-responsive-design/_trumps.widths-responsive.scss";
+
+///Pull To Refresh
+@import 'modifiers/_table-view--ptr';
+
+///
+/// @group px-table-view
+/// -------------------------
+/// Table View
+/// @group px-table-view
+/// @example html
+///
+/// <section class="table-view table-view--small">
+///   <div class="table-row table-row--tappable">
+///     <div class="table-row__media table-row__media--image table-row__media--left">
+///       <img src="http://placehold.it/44">
+///     </div>
+///     <div class="table-row__content">
+///       <span class="table-row__content__title">Text Label</span>
+///     </div>
+///   </div>
+/// </section>
+@include b ('table-view') {
+  @include switch();
+  @include clearfix();
+  @include pxFonts();
+  font-size      : calculateRem(17px);
+
+  list-style-type: none;
+  margin         : 0;
+  padding        : 0;
+  position       : relative;
+  display        : flex;
+  flex-direction : column;
+
+  ///------------------------------------------------------
+  @include c ('.table-row') {
+    padding: $inuit-base-spacing-unit--small;
+  }
+
+  ///------------------------------------------------------
+  ///.table-view--tiny
+  @include modifier ('tiny') {
+    @include c ('.table-row') {
+      padding: $inuit-base-spacing-unit--tiny !important;
+    }
+  }
+
+  ///------------------------------------------------------
+  ///.table-view--small
+  @include modifier ('small') {
+    @include c ('.table-row') {
+      padding: $inuit-base-spacing-unit--small !important;
+    }
+  }
+
+  ///------------------------------------------------------
+  ///.table-view--large
+  @include modifier ('large') {
+    @include c ('.table-row') {
+      padding: $inuit-base-spacing-unit--large !important;
+    }
+  }
+
+  ///------------------------------------------------------
+  ///.table-view--huge
+  @include modifier ('huge') {
+    @include c ('.table-row') {
+      padding: $inuit-base-spacing-unit--huge !important;
+    }
+  }
+
+  ///------------------------------------------------------
+  @include modifier ('regular') {
+    @include c ('.table-row') {
+      padding: $inuit-base-spacing-unit !important;
+    }
+  }
+
+  ///------------------------------------------------------
+  ///.table-view--flush
+  @include modifier ('flush') {
+    @include c ('.table-row') {
+      padding: 0 !important;
+    }
+  }
+
+  &ul {
+    margin: 0 !important;
+  }
+
+  /// Modifiers
+  ///------------------------------------------------------
+  @import 'modifiers/_table-view--drilldown';
+
+  ///------------------------------------------------------
+  ///.table-view--responsive
+  @include modifier ('responsive') {
+    @include n-columns( $table-view-responsive-row-width, $inuit-base-spacing-unit--small, false, $table-view-responsive-row-max);
+  }
+
+  ///------------------------------------------------------
+  ///.table-view--bare
+  @include modifier ('bare') {
+    @include c ('.table-row') {
+      background-color: transparent;
+      border-bottom   : none;
+    }
+  }
+
+  ///------------------------------------------------------
+  ///.table-view--ptr
+  @include modifier ('ptr') {
+    @include c ('.table-row') {
+      user-select: none;
+    }
+  }
+
+  ///------------------------------------------------------
+  ///.table-view--col
+  @include modifier ('col') {
+    display       : flex;
+    flex-direction: column;
+  }
+
+  ///------------------------------------------------------
+  ///.table-view--row
+  @include modifier ('row') {
+    display       : flex;
+    flex-direction: row;
+  }
+
+  ///------------------------------------------------------
+  ///.table-view--rev
+  @include modifier ('rev') {
+    direction: rtl;
+  }
+
+  ///------------------------------------------------------
+  ///.table-view--avatars
+  @include modifier ('avatars') {
+    @include c ('.table-row') {
+      img {
+        height       : 32px;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  ///------------------------------------------------------
+  @include modifier ('swipeable') {
+    overflow-x: hidden;
+  }
+
+  ///------------------------------------------------------
+  ///.table-view--inset
+  @include modifier ('inset') {
+    background-image: none;
+    border          : 1px solid;
+    border-color    : var(--px-table-view-border-color, $table-row-border-color);
+    border-radius   : 0;
+
+    .table-row:last-child {
+      border-bottom: none;
+    }
+  }
+
+  ///------------------------------------------------------
+  @include modifier ('borders') {
+    @include c ('.table-row') {
+      border-bottom: 1px solid;
+      border-color : var(--px-table-view-border-color, $table-row-border-color);
+      border-radius: 0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  ///------------------------------------------------------
+  .switch {
+    float     : right;
+    position  : absolute;
+    margin-top: -25px;
+    right     : 3%;
+  }
+
+  .switch--table-row {
+    float       : right;
+    margin-top  : 6px;
+    margin-right: 10px;
+  }
+
+}

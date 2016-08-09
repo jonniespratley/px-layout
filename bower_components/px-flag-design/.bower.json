@@ -1,0 +1,43 @@
+{
+  "name": "px-flag-design",
+  "version": "0.2.12",
+  "authors": [
+    "General Electric",
+    "Harry Roberts <harry@csswizardry.com>"
+  ],
+  "description": "The flag object for Predix Experience",
+  "main": "_objects.flag.scss",
+  "keywords": [
+    "px",
+    "sass",
+    "flag"
+  ],
+  "license": "Apache 2",
+  "homepage": "https://github.com/PredixDev/px-flag-design.git",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "px-defaults-design": "https://github.com/PredixDev/px-defaults-design.git#~0.2.0"
+  },
+  "devDependencies": {
+    "px-buttons-design": "https://github.com/PredixDev/px-buttons-design.git#~0.4.0",
+    "px-code-design": "https://github.com/PredixDev/px-code-design.git#~0.2.0",
+    "px-iconography-design": "https://github.com/PredixDev/px-iconography-design.git#~0.2.0",
+    "px-starter-kit-design": "https://github.com/PredixDev/px-starter-kit-design.git#~0.4.0"
+  },
+  "_release": "0.2.12",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.12",
+    "commit": "cc72c626cd3c078302197668c18c8ee89aa7663c"
+  },
+  "_source": "https://github.com/PredixDev/px-flag-design.git",
+  "_target": "~0.2.11",
+  "_originalSource": "https://github.com/PredixDev/px-flag-design.git"
+}

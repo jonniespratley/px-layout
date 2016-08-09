@@ -1,0 +1,420 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="px-table-row-swipe-behavior.html">
+<link rel="import" href="px-table-row-styles.html">
+<link rel="import" href="../px-partials/px-icon/px-icon.html"/>
+
+<!--
+<p>
+  For a list of all demos visit  <a href="./demo" target="_blank">here</a>.
+</p>
+
+To use this element you can do the following:
+```
+<px-table-row title="Item Label"></px-table-row>
+```
+
+To style this component you can do the following:
+
+```
+<style is="custom-style">
+   :root .my-theme{
+     --px-table-row:{
+       color: #b0fffe;
+       background-color: #36bd64;
+       border-bottom: 1px solid #1d8756;
+     }
+     --px-table-row-underlay:{
+       width: 100%;
+     }
+   }
+ </style>
+```
+
+### Content attributes
+
+Attribute | Description
+--------- | -----------
+content | The content for the table row
+
+### Styling
+
+Custom property | Description | Default
+------------ | ------------- | ------------
+  `--px-table-row` | Style mixin to be applied to the component | {}
+  `--px-table-row-title` | Style mixin to be applied to the title element | {}
+  `--px-table-row-body` | Style mixin to be applied to the body element | {}
+  `--px-table-row-content` | Style mixin to be applied to the content element | {}
+  `--px-table-row-label` | Style mixin to be applied to the label element | {}
+  `--px-table-row-media` | Style mixin to be applied to the media element | {}
+
+
+@element px-table-row.html
+@demo demo/index.html
+@homepage index.html
+-->
+<dom-module id="px-table-row">
+  <!-- <link rel="import" type="css" href="css/px-table-row.css"> -->
+  <style include="px-table-row-css"></style>
+  <style media="screen">
+    :host {
+      display: block;
+      position: relative;
+      overflow: hidden;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      box-sizing: border-box;
+    }
+    :host .table-row{
+      @apply(--px-table-row);
+    }
+
+    :host .table-row__title{
+      @apply(--px-table-row-title);
+    }
+
+    :host .table-row__content{
+      @apply(--px-table-row-content);
+    }
+
+    :host .table-row__body{
+      @apply(--px-table-row-body);
+    }
+
+    :host .table-row__media{
+      @apply(--px-table-row-media);
+    }
+
+		:host .table-row__media--left{
+			@apply(--px-table-row-media--left)
+		}
+		:host .table-row__media--right{
+			@apply(--px-table-row-media--right)
+		}
+
+    :host .table-row__media img{
+      @apply(--px-table-row-media-img);
+    }
+
+    :host .table-row__label{
+      @apply(--px-table-row-label);
+    }
+
+    :host .table-row__label--right{
+      @apply(--px-table-row-label--right);
+    }
+
+    :host .table-row__label--left{
+      @apply(--px-table-row-label--left);
+    }
+    :host .table-row__content:empty{
+      display: none;
+    }
+
+    :host #underlay{
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      overflow: hidden;
+      @apply(--px-table-row-underlay);
+    }
+
+    :host #underlay ::content > [underlay] {
+      @apply(--px-table-row-underlay-content);
+    }
+
+    :host .table-row__handle{
+      border: none;
+      background: transparent;
+      color: #b1b1bc;
+      cursor: move;
+    }
+
+  </style>
+  <template strip-whitespace>
+    <div class="">
+      <div id="row" class="table-row" >
+        <template is="dom-if" if="{{label2}}">
+          <span class="table-row__label table-row__label--left">{{label2}}</span>
+        </template>
+        <template is="dom-if" if="{{image}}">
+          <div class="table-row__media table-row__media--image">
+            <img src$="{{image}}" alt="{{title}}">
+          </div>
+        </template>
+        <template is="dom-if" if="{{icon}}">
+          <div class="table-row__media table-row__media--icon">
+            <px-icon id="icon" icon$="{{icon}}" size$="{{iconSize}}"></px-icon>
+          </div>
+        </template>
+        <template is="dom-if" if="{{iconLeft}}">
+          <div class="table-row__media table-row__media--icon table-row__media--left">
+            <px-icon id="iconLeft" icon$="{{iconLeft}}" size$="{{iconSize}}"></px-icon>
+          </div>
+        </template>
+        <template is="dom-if" if="{{iconRight}}">
+          <div class="table-row__media table-row__media--icon table-row__media--right">
+            <px-icon id="iconRight" icon$="{{iconRight}}" size$="{{iconSize}}"></px-icon>
+          </div>
+        </template>
+        <template is="dom-if" if="{{editMode}}">
+          <div class="table-row__media table-row__media--icon table-row__media--right">
+            <button class="btn btn--bare table-row__handle">
+              <px-icon id="iconHandle" icon="fa:fa-bars"></px-icon>
+            </button>
+          </div>
+        </template>
+        <template is="dom-if" if="{{label1}}">
+          <span class="table-row__label table-row__label--right">{{label1}}</span>
+        </template>
+
+        <div class="table-row__content">
+          <template is="dom-if" if="{{title}}">
+            <span class="table-row__title">{{title}}</span>
+          </template>
+          <template is="dom-if" if="{{subtitle}}">
+            <span class="table-row__subtitle">{{subtitle}}</span>
+          </template>
+          <template is="dom-if" if="{{body}}">
+            <span class="table-row__body">{{body}}</span>
+          </template>
+
+          <content select="px-table-row-switch, px-table-row-checkbox"></content>
+        </div>
+      </div>
+      <div class="table-row__content">
+        <content select="[content], input, button"></content>
+      </div>
+      <div id="underlay" class="flex flex--stretch">
+        <content id="underlayContent" select="[underlay]"></content>
+      </div>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'px-table-row',
+      behaviors: [
+        Polymer.IronResizableBehavior,
+
+        pxTableRowSwipeBehavior
+      ],
+      properties: {
+        /**
+        * The table-row object.
+        */
+        item: {
+          type: Object,
+          value: {}
+        },
+        /**
+        * The title to set on the table-row.
+        */
+        title: {
+          type: String,
+          value: null
+        },
+        /**
+        * The sub title to set on the table-row.
+        */
+        subtitle: {
+          type: String
+        },
+        /**
+        * The label to place on the right side of the item.
+        */
+        label1: {
+          type: String
+        },
+        /**
+        * The label to place on the left side of the item.
+        */
+        label2: {
+          type: String
+        },
+        /**
+        * The body to set on the table-row.
+        */
+        body: {
+          type: String
+        },
+        /**
+        * The image to set on the table-row.
+        */
+        image: {
+          type: String
+        },
+        /**
+        * The icon to set on the table-row.
+        * Using font-awesome-polymer-icons svg set.
+        * Example: `fa:line-chart`
+        */
+        icon: {
+          type: String
+        },
+        /**
+        * The left icon to set on the table-row.
+        * Using font-awesome-polymer-icons svg set.
+        * Example: `fa:line-chart`
+        */
+        iconLeft: {
+          type: String
+        },
+        /**
+        * The right icon to set on the table-row.
+        * Using font-awesome-polymer-icons svg set.
+        * Example: `fa:line-chart`
+        */
+        iconRight: {
+          type: String
+        },
+        /**
+        * The size to set on the table-row.
+        */
+        size: {
+          type: String
+        },
+        /**
+        * The size to set on the icon.
+        */
+        iconSize: {
+          type: Number
+        },
+        /**
+        * The indicator to set on the table-row.
+        */
+        indicator: {
+          type: String
+        },
+        /**
+        * The media position (left or right);
+        */
+        mediaPos: {
+          type: String
+        },
+        /**
+         * The modifiers to apply to the table-row (tappable, info, nav-right, chevron)
+         */
+        modifier: {
+          type: String,
+          notify: true,
+          reflectToAttribute: true,
+          observer: '_handleModifier'
+        },
+        /**
+        * If swipeable is true then this item responds to swipeleft/swiperight events.
+        */
+        swipeable: {
+          type: Boolean
+        },
+        /**
+         * If the table row should be collapsable.
+         */
+        collapsable: {
+          type: Boolean
+        },
+        /**
+         * If the table row should be editable.
+         */
+        editMode: {
+          type: Boolean
+        },
+        /**
+         * The state of the table row if collapsable.
+         */
+        opened: {
+          type: Boolean,
+          value: false,
+          notify: true,
+          reflectToAttribute: true,
+          observer: '_handleOpened'
+        }
+      },
+      listeners: {
+        'row.tap': '_handleTap'
+      },
+      ready: function(){
+        //this.listen(this.$.row, 'tap', '_handleTap');
+        var _this = this;
+        this.async(function () {
+          _this._init();
+        });
+      },
+      detached: function(){
+        //this.unlisten(this.$.row, 'tap', '_handleTap');
+      },
+      _hideBody: function(){
+        this.opened = !this.opened;
+      },
+      _handleOpened: function (newVal, oldVal) {
+        this.toggleClass('table-row--collapsable--is-opened', oldVal, this.$.row);
+        this.toggleClass('table-row--collapsable--is-opened', newVal, this.$.row);
+      },
+      /**
+       * Fires event when row is tapped.
+       * @event px-table-row-tap
+       */
+      _handleTap: function (e) {
+        var target = Polymer.dom(e).rootTarget;
+        if(this.collapsable){
+          this._hideBody();
+        }
+        this.fire('px-table-row-tap', e);
+      },
+
+      _init: function () {
+        var _this = this;
+        if (_this.size) {
+          _this.toggleClass('table-row--' + _this.size, true, this.$.row);
+        }
+        if (_this.collapsable) {
+          _this.toggleClass('table-row--collapsable', true, this.$.row);
+        }
+        if (_this.iconPos) {
+          _this.toggleClass('table-row__media--' + _this.iconPos, true, _this.$$('.table-row__media--icon'));
+        }
+        if (_this.imagePos) {
+          _this.toggleClass('table-row__media--' + _this.imagePos, true, _this.$$('.table-row__media--image'));
+        }
+        if (_this.mediaPos) {
+          _this.toggleClass('table-row__media--' + _this.mediaPos, true, _this.$$('.table-row__media'));
+          if (_this.mediaPos === 'right') {
+            //_this.toggleClass('u-mr++', true, _this.$$('.table-row__media'));
+          }
+        }
+        if (_this.item) {
+          var item = _this.item;
+          for (var prop in item) {
+            _this[prop] = item[prop];
+          }
+        }
+      },
+      _handleRemoveItem: function (e) {
+        e.preventDefault();
+        this.fire('remove', e);
+        this.remove();
+        return false;
+      },
+      _handleReorderItem: function (e) {
+        e.preventDefault();
+        this.fire('reorder', e);
+        return false;
+      },
+      _handleModifier: function (newVal, oldVal) {
+        var _this = this,
+          klass,
+          types;
+        klass = 'table-row--' + oldVal;
+        _this.toggleClass(klass, false, this.$.row);
+        if (_this.modifier) {
+          types = _this.modifier.split(' ');
+          for (var i = 0; i < types.length; i++) {
+            klass = 'table-row--' + types[i];
+            _this.toggleClass(klass, true, this.$.row);
+          }
+        }
+      }
+    });
+  </script>
+</dom-module>

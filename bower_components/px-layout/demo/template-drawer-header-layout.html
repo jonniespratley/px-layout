@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>template-drawer-header-layout</title>
+
+    <link rel="stylesheet" href="demo.css">
+    <!-- TODO: Meta Tags -->
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- TODO: Dependencies -->
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="elements.html">
+    <style media="screen">
+    .brand-spacer {
+      min-height: 52px;
+      border-bottom: 1px solid #3b3b3f;
+    }
+    px-card {
+      flex: 1 0 275px;
+
+    }
+    </style>
+  </head>
+  <body unresolved class="responsive-demo">
+    <template id="app" is="dom-bind">
+      <article class="">
+        <px-drawer-layout id="layout" force-narrow>
+          <px-drawer overlay fixed>
+            <div class="brand-spacer flex flex--center flex--middle">
+              <px-brand predix height="57"></px-brand>
+            </div>
+             <p class="u-p">
+               Drawer Content
+             </p>
+          </px-drawer>
+          <px-header-layout>
+            <px-header subtitle="Header Layout w/ Drawer" username="Tom Edison"></px-header>
+            <px-navbar auto-hide title="View Title">
+              <div left>
+                <button class="navbar__button" drawer-toggle>
+                  <px-icon icon="fa:fa-bars"></px-icon>
+                </button>
+              </div>
+            </px-navbar>
+            <section content>
+
+              <div class="u-mt">
+                <px-card header-text="px-header-layout">
+                  <p>
+                    The <code>px-header-layout</code> component is responsive and can help layout your content.
+                  </p>
+                  <a target="_blank" class="btn btn--large" href="http://github.com/PredixDev/px-layout">
+                    <px-icon icon="fa:fa-github"></px-icon>
+                    Github Repo
+                  </a>
+                </px-card>
+              </div>
+
+              <div class="flex flex--wrap u-mt">
+                <px-card header-text="Browser Statistics" class="">
+                  <px-simple-horizontal-bar-chart id="mySimpleBarHorizontalBarChart" width="auto" height="250" chart-data="[70.4,3.7,17.5,5.8, 1.3]" legend-labels='["Chrome","Safari","Firefox","IE", "Opera"]' colors='["#029bde","#99399b","#e23838", "#f88303"]'></px-simple-horizontal-bar-chart>
+                </px-card>
+                <px-card header-text="Mobile Device Statistics" class="">
+                  <px-simple-horizontal-bar-chart width="auto" height="250" chart-data="[1.22, 3.36, 0.40, 0.14]" legend-labels='["iOS", "Android", "Windows", "Others"]'></px-simple-horizontal-bar-chart>
+                </px-card>
+              </div>
+
+              <template is="dom-repeat" items="{{cards}}">
+                <px-card icon="{{item.icon}}" header-text="{{item.title}}" class="u-mt-">
+                  <p>{{item.body}}</p>
+                </px-card>
+              </template>
+
+            </section>
+            <px-footer></px-footer>
+          </px-header-layout>
+        </px-drawer-layout>
+      </article>
+    </template>
+
+    <script type="text/javascript">
+      var app;
+      function createDemoCards(count) {
+        var i = 0,
+          lorem = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,',
+        _out = [];
+        for (; i < count; i++) {
+          _out.push({
+            title: 'Card ' + i,
+            body: lorem
+          });
+        }
+        return _out;
+      }
+      document.addEventListener('WebComponentsReady', function () {
+        app = document.getElementById('app');
+        app.cards = createDemoCards(25);
+      });
+    </script>
+  </body>
+</html>

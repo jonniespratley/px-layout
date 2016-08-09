@@ -1,0 +1,110 @@
+/// @group px-table-view
+/// Mixins
+@import "../variables";
+@import "../mixins";
+///
+///---------------------------------------------------------------------------
+///.table-row--actionable
+@include modifier ('swipeable') {
+  background-color: var(--px-table-row-background-color, $table-row-background-color);
+  overflow       : hidden;
+  transform-style: preserve-3d;
+  transition: transform cubic-bezier(.55,0,.1,1) 0.3s;
+  z-index: 10;
+  .table-row__content {
+    position  : relative;
+  }
+}
+///---------------------------------------------------------------------------
+///.table-row__actions
+@include element ('actions') {
+  overflow       : hidden;
+  transform-style: preserve-3d;
+  position       : absolute;
+  top            : 0;
+  bottom            : 0;
+ // height         : 100%;
+  display        : flex;
+  flex-direction : row;
+  justify-content: space-between;
+ // transition     : $table-row-actions-transition;
+ //will-change    : transform;
+  //  z-index        : -1;
+  width          : auto;
+  align-self     : stretch;
+  align-items    : stretch;
+
+  &.is-visible {
+    z-index: 50;
+  }
+  ///---------------------------------------------------------------------------
+  //left actions
+  @include modifier ('left') {
+    order    : 0;
+    //transform: translateX(-125%);
+    left: 0;
+
+    ///---------------------------------------------------------------------------
+    //Visible actions
+    &.is-visible {
+      width    : auto;
+      transform: translateX(0%);
+    }
+  }
+
+  ///---------------------------------------------------------------------------
+  //right actions
+  @include modifier ('right') {
+    order: 10;
+    right: 0;
+    //  width: 0;
+    //  transform: translateX(100%);
+
+    &.is-visible {
+      width    : auto;
+      transform: translateX(-100%);
+    }
+  }
+}
+///---------------------------------------------------------------------------
+//Button
+@include element ('button') {
+  @include noselect();
+  cursor         : pointer;
+  flex: 1;
+  margin         : 0;
+  border-radius  : 0;
+  min-width      : 80px;
+  outline        : 0;
+  user-select    : none;
+  margin         : $table-row-button-margin;
+  padding        : $table-row-button-padding;
+  color          : $table-row-button-font-color;
+  font-size      : $table-row-button-font-size;
+ // transition     : $table-row-button-transition;
+  display        : flex;
+  align-items    : center;
+  flex-direction : column;
+  justify-content: center;
+
+  i {
+    align-self: center;
+    display   : block;
+  }
+
+  @include modifier ('delete') {
+    @include actionButton($red);
+  }
+
+  @include modifier ('flag') {
+    @include actionButton($orange);
+  }
+
+  @include modifier ('more') {
+    @include actionButton($blue);
+  }
+
+  @include modifier ('info') {
+    @include actionButton($gray5);
+  }
+}

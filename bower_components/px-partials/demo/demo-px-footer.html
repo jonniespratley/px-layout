@@ -1,0 +1,59 @@
+<html>
+
+	<head>
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<!-- TODO: Dependencies -->
+		<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html" />
+		<link rel='stylesheet' href='https://predixdev.github.io/px-library-design/css/style.css'>
+		<title>px-footer demo</title>
+		<style media="screen">
+			.box{
+				position: relative;
+				background: #111;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="viewport">
+			<h2>px-footer</h2>
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<div class="box box--tiny">
+							<link rel="import" href="../px-partials.html">
+							<px-footer copywrite="2016 &copy;" links='[{"title": "About", "href": "about.html"}]'></px-footer>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<div class="box box--tiny">
+							<link rel="import" href="../px-partials.html">
+							<px-footer copywrite="2016 &copy;"></px-footer>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+
+			<div class="u-mb++">
+				<demo-snippet>
+					<template>
+						<div class="box box--tiny">
+							<link rel="import" href="../px-partials.html">
+							<px-footer copywrite="" links=""></px-footer>
+						</div>
+					</template>
+				</demo-snippet>
+			</div>
+
+		</div>
+
+	</body>
+</html>

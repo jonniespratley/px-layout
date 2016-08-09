@@ -1,0 +1,44 @@
+
+<!-- TODO: Row -->
+<dom-module id="pxm-code-list-item">
+  <style>
+    :host {
+      display:block;
+    }
+    :host ::content {
+      display: flex;
+    }
+		:host .code-preview {
+			width: 100%;
+			max-height: 250px;
+			min-height: 100px;
+			overflow: hidden;
+		}
+  </style>
+  <template>
+		<div id="codePreview" class="code-preview position-relative  full-width"></div>
+  </template>
+	<script type="text/javascript">
+		Polymer({
+		  is: "pxm-code-list-item",
+			properties: {
+			  html: {
+			    type: String, value: '<h3>Code</h3>'
+			  },
+				size: {
+					type: String, value: '2x'
+				}
+			},
+			ready: function(){
+				console.warn(this.tagName, 'ready');
+			},
+			attached: function(){
+				var _this = this;
+				console.warn(this.tagName, 'attached');
+				this.debounce('render', function(){
+					_this.$.codePreview.html(_this.html);
+				}, 250);
+			}
+		});
+	</script>
+</dom-module>

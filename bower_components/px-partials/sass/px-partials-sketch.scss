@@ -1,0 +1,144 @@
+/*
+ * Copyright (c) 2014 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+
+//
+// Sass for the "sketch" notion of the px-partials component
+//
+// @author
+//
+
+/*
+THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PREDIX BRANDING
+Predix branding rules go in px-partials-predix.scss, not in this file.
+*/
+
+///Defaults
+@import "px-defaults-design/_settings.defaults.scss";
+@import "px-colors-design/_settings.colors.scss";
+
+/// Base
+@import "px-headings-design/_base.headings.scss";
+@import "px-flexbox-design/_base.flexbox.scss";
+
+$inuit-enable-validation-states : true;
+$inuit-enable-inline-fields : true;
+$inuit-enable-input--tiny : true;
+$inuit-enable-input--small : true;
+$inuit-enable-input--regular : true;
+$inuit-enable-input--large : true;
+$inuit-enable-input--huge : true;
+$inuit-enable-validation-states : true;
+@import "px-forms-design/_base.forms.scss";
+
+$inuit-enable-btn--primary: true;
+$inuit-enable-btn--tertiary: true;
+$inuit-enable-btn--small: true;
+$inuit-enable-btn--large: true;
+$inuit-enable-btn--huge: true;
+$inuit-enable-btn--full: true;
+$inuit-enable-btn--icon: true;
+$inuit-enable-btn--bare: true;
+$inuit-enable-btn--disabled: true;
+@import "px-buttons-design/_objects.buttons.scss";
+
+
+@import 'px-mobile-design/index.scss';
+@import 'px-mobile-design/sass/_mixins.scss';
+.btn{
+  outline: none;
+  appearance: none;
+  color: var(--px-button-color);
+  background-color: var(--px-button-background-color);
+  &:active{
+    color: var(--px-button-color--active);
+    background-color: var(--px-button-background-color--active);
+  }
+  &:hover{
+    color: var(--px-button-color--hover);
+    background-color: var(--px-button-background-color--hover);
+  }
+  @include m('transparent') {
+    border: 1px solid transparent;
+    background-color: transparent;
+    box-shadow: none;
+    &:active{
+      border-color: transparent;
+      box-shadow: none;
+      background-color: rgba(0,0,0,.4);
+    }
+    &:hover{
+      border-color: transparent;
+      box-shadow: none;
+      background-color: rgba(0,0,0,.2);
+    }
+  }
+}
+
+/// Trumps
+@import 'px-mobile-design/_trumps.breakpoints.scss';
+$inuit-enable-paddings: true;
+$inuit-enable-paddings--tiny: true;
+$inuit-enable-paddings--small: true;
+$inuit-enable-paddings--large: true;
+$inuit-enable-paddings--huge: true;
+$inuit-enable-paddings--none: true;
+
+$inuit-enable-margins: true;
+$inuit-enable-margins--tiny: true;
+$inuit-enable-margins--small: true;
+$inuit-enable-margins--large: true;
+$inuit-enable-margins--huge: true;
+
+$inuit-enable-margins--negative: true;
+$inuit-enable-margins--negative-tiny: true;
+$inuit-enable-margins--negative-small: true;
+$inuit-enable-margins--negative-large: true;
+$inuit-enable-margins--negative-huge: true;
+$inuit-enable-margins--none: true;
+@import "px-spacing-design/_trumps.spacing.scss";
+
+$inuit-enable-responsive-paddings: true;
+$inuit-enable-responsive-paddings--none: true;
+$inuit-enable-responsive-paddings--tiny: true;
+$inuit-enable-responsive-paddings--small: true;
+$inuit-enable-responsive-paddings--large: true;
+$inuit-enable-responsive-paddings--huge: true;
+$inuit-enable-responsive-margins: true;
+$inuit-enable-responsive-margins--none: true;
+$inuit-enable-responsive-margins--tiny: true;
+$inuit-enable-responsive-margins--small: true;
+$inuit-enable-responsive-margins--large: true;
+$inuit-enable-responsive-margins--huge: true;
+$inuit-enable-responsive-margins--negative: true;
+$inuit-enable-responsive-margins--negative-tiny: true;
+$inuit-enable-responsive-margins--negative-small: true;
+$inuit-enable-responsive-margins--negative-large: true;
+$inuit-enable-responsive-margins--negative-huge: true;
+//@import "px-spacing-responsive-design/_trumps.spacing-responsive.scss";
+
+//@import "px-widths-design/_trumps.widths.scss";
+//@import "px-widths-responsive-design/_trumps.widths-responsive.scss";
+
+/// Generic
+@import "px-normalize-design/_generic.normalize.scss";
+@import "px-box-sizing-design/_generic.box-sizing.scss";
+@import "px-helpers-design/_generic.helpers.scss";
+
+
+/// Component
+@import '_px-box-section.scss';
+@import '_px-title-bar.scss';
+@import '_px-header.scss';
+
+@debug "Breakpoints - #{$breakpoints}";
+@include responsive-utils();
+
+@import "px-input-group-design/_objects.input-group.scss";
+@import "px-forms-design/_base.forms.scss";

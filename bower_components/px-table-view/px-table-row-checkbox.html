@@ -1,0 +1,90 @@
+<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../iron-checked-element-behavior/iron-checked-element-behavior.html">
+<!--
+To use this component:
+
+```
+<px-table-row-checkbox name="cb0" label="No Border Checked" type="no-border" checked></px-table-row-checkbox>
+```
+
+<demo-snippet>
+  <template>
+  <px-table-row-checkbox name="cb0" label="No Border Checked" type="no-border" checked></px-table-row-checkbox>
+  </template>
+</demo-snippet>
+
+@element px-table-row-checkbox.html
+@demo demo/checkboxes.html
+@homepage index.html
+-->
+<dom-module id="px-table-row-checkbox">
+  <style include="px-table-row-css"></style>
+  <style>
+  :host {
+    display: block;
+  }
+  </style>
+  <template>
+    <label class="table-row__checkbox needsclick" for$="{{name}}">
+      <input id$="{{name}}" type="checkbox" name$="{{name}}" value$="{{value}}">
+      <div class="table-row__checkbox__checkmark "></div>
+      <span>{{label}}</span>
+    </label>
+  </template>
+  <script>
+  Polymer({
+    is: 'px-table-row-checkbox',
+    behaviors: [
+      Polymer.IronCheckedElementBehavior
+    ],
+    properties: {
+      //The label for the checkbox
+      label: {
+        type: String
+      },
+      //The input name for the checkbox
+      name: {
+        type: String
+      },
+      //The input value for the checkbox
+      value: {
+        type: String,
+        reflectPropertyToAttribute: true,
+        notify: true
+      },
+      //The type of checkbox (no-border)
+      type: {
+        type: String
+      },
+      //The disabled state
+      disabled: {
+        type: Boolean
+      }
+    },
+    attached: function() {
+      if (this.type) {
+        this.toggleClass('table-row__checkbox--' + this.type, true, this.$$('label'));
+      }
+      if (this.checked) {
+        this.$$('input').checked = true;
+      }
+      if (this.disabled) {
+        this.$$('input').disabled = true;
+      }
+      this.listen(this.$$('label'), 'tap', 'handleTap');
+    },
+    handleTap: function(e) {
+      if (this.disabled) {
+        return;
+      }
+      // TODO: IOS and FastClick have an issue where the label does not trigger the event.
+      var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      if (iOS) {
+        //this.$$('input').checked = !this.$$('input').checked;
+      }
+
+    }
+  });
+
+  </script>
+</dom-module>

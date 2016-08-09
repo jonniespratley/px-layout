@@ -1,0 +1,238 @@
+<html>
+
+  <head>
+    <title>px-drawer mobile demo</title>
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="touch-icon-iphone.png">
+    <script src="../webcomponentsjs/webcomponents.min.js"></script>
+
+    <link rel="import" href="../px-table-view/px-table-view.html">
+    <link rel="import" href="../px-card/px-card.html">
+
+    <link rel="import" href="../px-navbar/px-navbar.html">
+    <link rel="import" href="px-drawer.html">
+    <style media="screen">
+      body {
+        background: #efeff4;
+        margin: 0;
+        height: 100vh;
+        overflow: auto;
+      }
+
+      .box {
+        background: #fff;
+      }
+
+      .demo {
+        overflow: hidden;
+        height: 500px;
+        position: relative;
+      }
+
+      .table-view--avatars {}
+
+      .table-view--avatars .table-row__media--image {
+        padding-right: 0.5rem;
+      }
+
+      .viewport {}
+      /* TODO: Fixes for static drawer */
+
+      .navbar {
+        position: relative;
+      }
+
+      .layout__item p {
+        background: transparent;
+        text-align: left;
+      }
+
+      px-navbar {
+        position: static;
+      }
+
+      .table-view--bottom {
+        position: absolute;
+        bottom: 0;
+      }
+
+      .actions {
+        margin: 0 auto;
+        max-width: 75%;
+        background: #fff;
+        padding: 25px 0;
+      }
+
+      .actions a {
+        text-decoration: none;
+      }
+
+      .actions div {
+        flex: 1 0 100px;
+        text-align: center;
+        padding: 1rem;
+        max-height: 75px;
+      }
+
+      .actions span {
+        display: block;
+        margin-top: 0.2rem;
+      }
+
+    </style>
+
+  </head>
+
+  <body unresolved>
+    <template id="tmpl" is="dom-bind">
+      <main class="position-relative has-navbar">
+        <px-navbar id="navbar1" title="px-drawer" subtitle="{{subtitle}}">
+          <div class="navbar__left">
+            <button class="navbar__button" onclick="toggleDrawer('myLeftDrawer')">
+              <i class="fa fa-lg fa-bars"></i>
+            </button>
+          </div>
+          <div class="navbar__right flex">
+            <button class="navbar__button" onclick="toggleDrawer('myBottomDrawer')">
+              <i class="fa fa-lg fa-share"></i>
+            </button>
+            <button class="navbar__button" onclick="toggleDrawer('myRightDrawer')">
+              <i class="fa fa-lg fa-ellipsis-v"></i>
+            </button>
+          </div>
+        </px-navbar>
+        <div class="viewport viewport--full-height">
+          <px-drawer id="myLeftDrawer" side="left" theme="dark">
+            <ul class="table-view table-view--bare">
+              <px-table-row title="Home" icon="fa fa-home" type="tappable" href="#home"></px-table-row>
+              <px-table-row title="Dashboard" icon="fa fa-dashboard" type="tappable" href="#dashboard"></px-table-row>
+              <px-table-row title="Alerts" icon="fa fa-exclamation-triangle" type="tappable" href="#alerts"></px-table-row>
+              <px-table-row title="Cases" icon="fa fa-briefcase" type="tappable" href="#cases"></px-table-row>
+              <px-table-row title="Analysis" icon="fa fa-bar-chart" type="tappable" href="#analysis"></px-table-row>
+            </ul>
+            <ul class="table-view table-view--bare table-view--bottom table-view--avatars">
+              <px-table-row title="Jonnie Spratley" type="tappable" image="http://s3-us-west-2.amazonaws.com/s.cdpn.io/49212/profile/profile-80_4.jpg"></px-table-row>
+            </ul>
+          </px-drawer>
+          <div class="layout clearfix u-mt+">
+            <section class="layout__item">
+              <div class="">
+                <px-card header-text="Temporary Drawer" class="u-mb">
+                  <p>Temporary navigation drawers can toggle open or closed. Closed by default, the drawer opens temporarily above all other content until a section is selected.</p>
+                  <ul>
+                    <li>Recommended for:
+                      <strong>Tablet</strong>
+                    </li>
+                    <li>Required for:
+                      <strong>Mobile</strong>
+                    </li>
+                  </ul>
+                  <button type="button" onclick="myLeftDrawer.type = 'temporary'" class="btn btn--full">Temporary</button>
+                </px-card>
+                <px-card header-text="Persistent Drawer" class="u-mb">
+                  <p>Persistent drawers can toggle open or closed. The drawer sits on the same surface elevation as the content. It is closed by default and opens by selecting the menu icon, and stays open until closed by the user.</p>
+                  <p>
+                    Sitting outside of the page grid, when opened the drawer forces other content to change size and adapt to the smaller viewport.
+                  </p>
+                  <p>
+                    Persistent navigation drawers are acceptable for all sizes larger than mobile
+                  </p>
+                  <button type="button" onclick="myLeftDrawer.type = 'persistent'" class="btn btn--full">Persistent</button>
+                </px-card>
+                <px-card header-text="Mini Drawer" class="u-mb">
+                  <p>In this variation, the persistent navigation drawer changes its width. Its resting state is as a mini-drawer at the same elevation as the content, clipped by the app bar. When expanded, it appears as the standard persistent navigation drawer.
+                  </p>
+                  <ul>
+                    <li>Recommended for: Apps sections that need quick selection access alongside content</li>
+                  </ul>
+                  <button type="button" onclick="myLeftDrawer.type = 'mini'" class="btn btn--full">Mini</button>
+                </px-card>
+              </div>
+            </section>
+          </div>
+        </div>
+        <px-drawer id="myRightDrawer" side="right" theme="dark" fixed>
+          <div class="u-pm">
+            <p>
+              This is content inside of the drawer
+            </p>
+            <p class="flex flex--col">
+              <button class="btn btn--full" type="button" onclick="document.getElementById('navbar1').theme = 'default'">Default</button>
+              <button class="btn btn--full" type="button" onclick="document.getElementById('navbar1').theme = 'transparent'">Transparent</button>
+              <button class="btn btn--full" type="button" onclick="document.getElementById('navbar1').theme = 'chrome'">Chrome</button>
+              <button class="btn btn--full" type="button" onclick="document.getElementById('navbar1').theme = 'alt'">Alt</button>
+              <button class="btn btn--full" type="button" onclick="document.getElementById('navbar1').theme = 'dark'">Dark</button>
+              <button class="btn btn--full" type="button" onclick="document.getElementById('navbar1').theme = 'primary'">Primary</button>
+            </p>
+          </div>
+        </px-drawer>
+        <px-drawer id="myBottomDrawer" side="bottom" theme="dark" fixed>
+          <div class="u-p">
+            <div class="actions">
+              <div class="flex flex--row flex--wrap flex--spaced">
+                <div>
+                  <a href="">
+                    <i class="fa fa-2x fa-cut"></i>
+                    <span>Action 1</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="">
+                    <i class="fa fa-2x fa-copy"></i>
+                    <span>Action 1</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="">
+                    <i class="fa fa-2x fa-paste"></i>
+                    <span>Action 1</span>
+                  </a>
+                </div>
+              </div>
+              <div class="flex flex--row flex--wrap flex--spaced">
+                <div>
+                  <a href="">
+                    <i class="fa fa-2x fa-cut"></i>
+                    <span>Action 1</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="">
+                    <i class="fa fa-2x fa-copy"></i>
+                    <span>Action 1</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="">
+                    <i class="fa fa-2x fa-paste"></i>
+                    <span>Action 1</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </px-drawer>
+      </main>
+    </template>
+    <script type="text/javascript">
+      var tmpl = document.getElementById('tmpl');
+      tmpl.title = 'px-drawer';
+      //	tmpl.subtitle = "View Context";
+      var toggleDrawer = function (id) {
+        console.warn('toggleDrawer', id);
+        document.getElementById(id).toggle();
+      };
+      var toggleLeftDrawer = function () {
+        console.warn('toggleLeftDrawer');
+        document.getElementById('myLeftDrawer').toggle();
+      };
+      var toggleRightDrawer = function () {
+        document.getElementById('myRightDrawer').toggle();
+      };
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,155 @@
+<!--
+/*
+ * Copyright (c) 2016 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+ -->
+<link rel="import" href="../polymer/polymer.html"/>
+
+<link rel="import" href="../iron-overlay-behavior/iron-overlay-behavior.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="px-action-sheet-styles.html">
+<!--
+The `px-action-sheet` slides up from the bottom of the screen to reveal more content
+
+[![Build Status](https://travis-ci.org/PredixDev/px-action-sheet.svg?branch=master)](https://travis-ci.org/PredixDev/px-action-sheet)
+
+
+For demo visit <a href="demo.html" target="_blank">Full demo here</a> or <a href="mobile-demo.html" target="_blank">Mobile demo here</a>
+
+
+### Usage
+```
+<button class="btn--large btn btn--tertiary btn--full" type="button" onclick="document.getElementById('actionsheet5').toggle()">Toggle Action Sheet
+</button>
+<px-action-sheet id="actionsheet5">
+  <px-table-view>
+    <px-table-row icon="fa:fa-square" modifier="tappable" title="Single-line item"></px-table-row>
+    <px-table-row icon="fa:fa-square" modifier="tappable" title="Single-line item"></px-table-row>
+    <px-table-row icon="fa:fa-square" modifier="tappable" title="Single-line item"></px-table-row>
+    <px-table-row icon="fa:fa-square" modifier="tappable" title="Single-line item"></px-table-row>
+  </px-table-view>
+</px-action-sheet>
+```
+
+
+### Styling
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+------------ | ------------- | ------------
+`--px-action-sheet`   | Style mixin to be applied to the element | null
+`--px-action-sheet-overlay`   | Style mixin to be applied to the element | null
+
+
+@element px-action-sheet.html
+@blurb px-action-sheet is a responsive mobile first action sheet.
+@demo demo.html
+@homepage index.html
+-->
+<dom-module id="px-action-sheet">
+  <style include="px-action-sheet-css"></style>
+  <template strip-whitespace>
+    <style>
+      :host {
+        display: block;
+      }
+      :host .c-action-dialog--mask {
+        @apply(--px-action-sheet-overlay)
+      }
+      :host .c-action-sheet {
+        @apply(--px-action-sheet)
+      }
+    </style>
+    <div id="overlay"></div>
+    <div id="sheet" class="c-action-sheet">
+      <div id="actions" class="c-action-sheet__actions">
+        <content></content>
+      </div>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'px-action-sheet',
+      behaviors: [
+        Polymer.IronResizableBehavior,
+        Polymer.IronOverlayBehavior
+      ],
+      properties: {
+        /**
+         * The current state of the action sheet
+         */
+        isopen: {
+          type: Boolean,
+          observer: '_openHandler',
+          value: false
+        },
+        /**
+         * The modifiers to apply (`small`, `large`, `huge`, `full`, `grid`, `list` etc)
+         */
+        modifier: {
+          type: String,
+          notify: true,
+          reflectToAttribute: true,
+          observer: '_handleModifier'
+        }
+      },
+      listeners: {
+        //'mask.tap': '_toggle',
+        'iron-resize': '_resizeHandler'
+      },
+      attached: function () {
+        this.backdropElement = this.$.overlay;
+        this.alwaysOnTop = true;
+        this.withBackdrop = true;
+      },
+      /**
+       * Handle invoking the toggleHandler when the value changes.
+       */
+      _openHandler: function (newVal, oldVal) {
+        this._toggleHandler();
+      },
+      /**
+       * Handle toggling the visibility of the action sheet.
+       */
+      _toggleHandler: function (show) {
+        //this.toggleClass('c-action-dialog--mask--is-open', show || this.open, this.$.mask);
+        this.toggleClass('c-action-sheet--is-open', show || this.open, this.$.sheet);
+      },
+      /**
+       * Handle toggling value of open, which in turn toggles the visibility.
+       */
+      _toggle: function () {
+        this.open = !this.open;
+      },
+      _handleModifier: function (newVal, oldVal) {
+        var types;
+        var klass = 'c-action-sheet--' + oldVal;
+        this.toggleClass(klass, false, this.$.sheet);
+        types = newVal.split(' ');
+        for (var i = 0; i < types.length; i++) {
+          klass = 'c-action-sheet--' + types[i];
+          this.toggleClass(klass, true, this.$.sheet);
+        }
+      },
+      /**
+        * Fired when drawer is reset
+        * @event px-drawer-layout-reset
+        */
+      resetLayout: function () {
+        this.debounce('_resetLayout', function () {});
+      },
+      /**
+       * Handle when iron-resize event fires.
+       */
+      _resizeHandler: function () {
+        //this.resetLayout();
+      }
+    });
+  </script>
+</dom-module>

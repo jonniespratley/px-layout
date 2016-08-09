@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>px-page with px-drawer-layout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <script src="../../webcomponentsjs/webcomponents.min.js"></script>
+
+    <link rel="import" href="../../px-theme/px-app.html">
+    <link rel="import" href="../../px-theme/px-theme.html">
+    <link rel="import" href="../../px-layout/px-layout-partials.html">
+
+    <link rel="import" href="../../px-layout/px-layout.html">
+    <link rel="import" href="../../px-table-view/px-table-view.html">
+    <link rel="import" href="../../px-card/px-card.html">
+    <link rel="import" href="../px-pages.html">
+  </head>
+  <body unresolved>
+    <template id="app" is="dom-bind">
+    <style is="custom-style">
+       .custom-selected {
+         background-color: crimson;
+         color: white;
+       }
+      </style>
+      <px-drawer-layout id="layout">
+        <px-drawer id="drawer" fixed overlay swipe-open swipe-close>
+          <div class="brand flex flex--center flex--middle u-p--">
+            <px-brand size="150" wordmark></px-brand>
+          </div>
+          <div class="side-nav">
+            <px-table-view id="sideNav" row-modifier="tappable" selected="{{selected}}"
+            selected-class="custom-selected">
+              <px-table-row title="Page 1"></px-table-row>
+              <px-table-row title="Page 2"></px-table-row>
+              <px-table-row title="Page 3"></px-table-row>
+              <px-table-row title="Page 4"></px-table-row>
+            </px-table-view>
+          </div>
+        </px-drawer>
+        <div class="" content>
+          <px-pages id="pages" selected="{{selected}}">
+            <px-page id="Page0" title="Main Page" main>
+              <px-navbar class="bg--seed">
+                <div left>
+                  <button class="navbar__button" drawer-toggle><px-icon icon="fa:fa-bars"></px-icon>
+                  </button>
+                </div>
+                <div right>
+                  <button class="navbar__button" onclick="document.getElementById('pages').next()">
+                    Next
+                  </button>
+                </div>
+              </px-navbar>
+              <div class="cards u-mt">
+                <px-card header-text="Card">
+                  <p>
+                    This is a card.
+                  </p>
+                </px-card>
+              </div>
+            </px-page>
+            <px-page id="Page1" title="Page 1">
+              <px-navbar ></px-navbar>
+              <px-card header-text="Card">
+                <div class="full-height scrollable">
+                  <px-table-view id="list2" modifier="large" table-data="[[items]]"></px-table-view>
+                </div>
+              </px-card>
+            </px-page>
+            <px-page id="Page2" title="Page 2">
+              <px-navbar ></px-navbar>
+              <px-card header-text="Card">
+                <p>
+                  This is a card.
+                </p>
+              </px-card>
+            </px-page>
+            <px-page id="Page3" title="Page 3">
+              <px-navbar ></px-navbar>
+              <px-card header-text="Card">
+                <p>
+                  This is a card.
+                </p>
+              </px-card>
+            </px-page>
+            <px-page id="Page4" title="Page 4">
+              <px-navbar ></px-navbar>
+              <px-card header-text="Card">
+                <p>
+                  This is a card.
+                </p>
+              </px-card>
+            </px-page>
+          </px-pages>
+        </div>
+      </px-drawer-layout>
+      <px-footer></px-footer>
+      <script type="text/javascript">
+        document.addEventListener('WebComponentsReady', function () {
+          var app = document.getElementById('app');
+          var pages = document.getElementById('pages');
+          app.selectedPage = {};
+          app.selected = 0;
+          app.set('items', createDemoList(15));
+          document.addEventListener('px-page-ready', function (e) {
+            console.log('Page ready', e);
+          });
+          document.addEventListener('px-page-change', function (e) {
+            console.log('Page Changed', e);
+          });
+        })
+
+        function createDemoList(count) {
+          var _out = [],
+            li;
+          for (var i = 0; i < count; i++) {
+            li = {
+              title: 'Item ' + i,
+              modifier: 'tappable nav-right'
+            };
+            _out.push(li);
+          }
+          return _out;
+        }
+      </script>
+    </template>
+  </body>
+</html>

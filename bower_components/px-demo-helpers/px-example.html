@@ -1,0 +1,270 @@
+<link rel="import" href="../polymer/polymer.html">
+<!--
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/codepen-embed.min.css"/>
+-->
+<script src="highlight.min.js"></script>
+<link rel="stylesheet" href="css/monokai.min.css"/>
+
+<link rel="import" href="px-code-preview.html" />
+<link rel="import" href="px-code-editor.html" />
+<link rel="import" href="px-example-device.html" />
+
+<!--
+<link rel="stylesheet" href="./prism.css">
+<script src="./prism.js" data-manual></script>
+-->
+
+
+<!--
+## Usage
+To use this component do the following:
+```
+<pxm-example id="example2">
+	<div>
+	Any kind of markup.
+	</div>
+</pxm-example>
+```
+@element px-example.html
+@blurb px-example Component that displays code snippets.
+@demo demo.html
+@homepage index.html
+-->
+<dom-module id="px-example">
+	<style>
+		:host {
+			display: block;
+			border-color: #ddd;
+			border-style: solid;
+			border-width: 1px;
+			border-radius: 0px;
+			background-color: rgba(0, , 0, 0.2);
+		}
+		:host pre code {
+    font-size: .8rem !important;
+}
+
+		:host .prism-show-language-label {
+			text-transform: uppercase;
+		}
+
+		:host .px-example-section {
+			display: block;
+		}
+
+		:host pre[class*="language-"] {
+			margin: 0;
+			padding-bottom: 5px;
+		}
+
+		:host .px-example-section {
+			position: relative;
+			padding: 45px 15px 15px;
+			margin: 0 0px 5px;
+		}
+
+		:host .px-example-section + .highlight,
+		:host .px-example-section + .zero-clipboard + .highlight {
+			margin: -15px 0px 15px;
+			border-width: 0 0 1px;
+			border-radius: 0;
+		}
+
+		:host .prism-show-language {
+			text-transform: uppercase !important;
+		}
+
+		:host .px-example-section:after {
+			position: absolute;
+			top: 15px;
+			left: 15px;
+			font-size: 12px;
+			font-weight: 700;
+			color: #959595;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			content: "Preview";
+		}
+
+		:host .highlight-block {
+			border-top: 1px solid #ccc;
+		}
+
+		:after,
+		:before {
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+
+		:host .highlight {
+			padding: 9px 14px;
+			margin-bottom: 14px;
+			border: 1px solid #ccc;
+			background-color: #efefef;
+			border-radius: 0;
+		}
+
+		:host .highlight pre code:first-child {
+			display: inline-block;
+			padding-right: 45px;
+		}
+
+		:host .highlight pre code {
+			font-size: .8rem !important;
+		}
+
+		:host .highlight pre code {
+			padding: 0;
+			font-size: inherit;
+			color: inherit;
+			white-space: pre-wrap;
+			border-radius: 0;
+		}
+
+		:host .highlight code {
+			padding: 2px 4px;
+			font-size: 90%;
+		}
+
+		:host pre {
+			padding: 10px;
+			margin-top: 0;
+			margin-bottom: 0;
+			word-break: normal;
+			white-space:pre-wrap;
+			border: 0;
+			border-radius: 0 !important;
+		}
+
+		:host .highlight pre {
+			display: block;
+			padding: 9.5px;
+			margin: 0 0 10px;
+			font-size: 13px;
+			line-height: 1.42857143;
+			word-break: break-all;
+			word-wrap: break-word;
+			border: 1px solid #ccc;
+			border-radius: 0;
+		}
+
+		@media (min-width: 768px) {
+			:host .px-example-section {
+				margin-right: 0;
+				margin-left: 0;
+				border-color: #ddd;
+				border-width: 1px;
+				-webkit-box-shadow: none;
+				box-shadow: none;
+			}
+			:host .px-example-section + .highlight,
+			:host .px-example-section + .zero-clipboard + .highlight {
+				margin-top: -16px;
+				margin-right: 0;
+				margin-left: 0;
+				border-width: 1px;
+				border-bottom-right-radius: 4px;
+				border-bottom-left-radius: 4px;
+			}
+		}
+
+		:host:not(pre) > code[class*="language-"],
+		:host pre[class*="language-"] {
+			background-color: #efefef;
+		}
+
+		:host {
+			margin-top: 20px;
+		}
+
+		:host .highlight-block {
+			margin-top: -18px;
+		}
+		:host .px-example-preview{
+			padding: 10px;
+		}
+	</style>
+	<template>
+		<div class="px-example-wrap">
+			<div class="px-example-section">
+				<div id="example" class="px-example-preview">
+					<content></content>
+				</div>
+			</div>
+			<div id="highlightBlock" class="highlight-block" hidden="{{hidden}}">
+				<pre id="codeBlock"><code id="code" class="code-block">{{code}}</code></pre>
+			</div>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'px-example',
+			properties: {
+
+				//The code to display
+				code: {
+					type: String
+				},
+
+				//The visiblity of the code view.
+				hidden: {
+					type: Boolean,
+					value: false
+				},
+
+				//The language of code to display.
+				lang: {
+					type: String,
+					value: 'html'
+				},
+
+				//The URL of the code to display.
+				url: {
+					type: String
+				},
+
+				//The code highlight theme to use.
+				theme: {
+					type: String
+				}
+
+			},
+			created: function() {
+				hljs.configure({
+					useBR: false
+				});
+			},
+			ready: function() {
+				var _this = this;
+				var regex = /^\s+|\s+$/gm
+				var code = _this.$.example.innerHTML.trim();
+				var langClass = (_this.lang ? _this.lang : 'html');
+
+				this.toggleClass(langClass, true, this.$.code);
+				this.toggleClass(langClass, true, Polymer.dom(this).querySelector('.code-block'))
+				code = code.replace(regex, ' ').replace(/^\s+/g, '');
+				_this.code = code;
+
+				_this.debounce('format', function() {
+					_this.format();
+				}, 50);
+			},
+			attached: function() {
+				if (this.lang !== 'html') {
+					//this.$.example.style.display = 'none';
+				}
+			},
+			//I handle formatting the code.
+			format: function() {
+				//Prism.highlightElement(this.$.code);
+				hljs.highlightBlock(this.$.codeBlock);
+			},
+			//I handle toggleing the code view.
+			toggleCode: function() {
+				this.hidden = !this.hidden;
+				//this.toggleClass('hidden', this.hidden, this.$.highlightBlock);
+			}
+		});
+	</script>
+</dom-module>

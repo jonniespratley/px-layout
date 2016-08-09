@@ -1,0 +1,67 @@
+<html>
+
+  <head>
+    <title>px-action-sheet | mobile demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <script src="../webcomponentsjs/webcomponents.min.js"></script>
+    <script src="../fastclick/lib/fastclick.js"></script>
+    <script type="text/javascript">
+      if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function () {
+          FastClick.attach(document.body);
+        }, false);
+      }
+    </script>
+    <link rel="import" href="px-action-sheet.html">
+    <link rel="import" href="../px-theme/px-theme.html">
+    <link rel="import" href="../px-theme/px-app.html">
+    <link rel="import" href="../px-navbar/px-navbar.html">
+    <style media="screen">
+      body {
+        overflow: hidden;
+        position: relative;
+      }
+
+    </style>
+  </head>
+  <body unresolved>
+
+    <px-navbar title="px-action-sheet">
+      <div class="navbar__left">
+        <button class="navbar__button" onclick="document.getElementById('actionsheet1').toggle()">Action 1</button>
+      </div>
+      <div class="navbar__right">
+        <button class="navbar__button" onclick="document.getElementById('actionsheet2').toggle()">Action 2</button>
+      </div>
+    </px-navbar>
+
+    <px-action-sheet id="actionsheet1" grid>
+      <px-action-sheet-button label="Item 1" icon="fa fa-2x fa-copy"></px-action-sheet-button>
+      <px-action-sheet-button label="Item 2" icon="fa fa-2x fa-paste"></px-action-sheet-button>
+      <px-action-sheet-button label="Item 3" icon="fa fa-2x fa-copy"></px-action-sheet-button>
+      <px-action-sheet-button label="Item 4" icon="fa fa-2x fa-copy"></px-action-sheet-button>
+      <px-action-sheet-button label="Item 5" icon="fa fa-2x fa-copy"></px-action-sheet-button>
+      <px-action-sheet-button label="Item 6" icon="fa fa-2x fa-copy"></px-action-sheet-button>
+      <px-action-sheet-button label="Item 7" icon="fa fa-2x fa-copy"></px-action-sheet-button>
+      <px-action-sheet-button label="Item 8" icon="fa fa-2x fa-copy"></px-action-sheet-button>
+      <px-action-sheet-button label="Item 9" icon="fa fa-2x fa-copy"></px-action-sheet-button>
+      <px-action-sheet-button label="Item 10" icon="fa fa-2x fa-copy"></px-action-sheet-button>
+      <px-action-sheet-button label="Item 11" icon="fa fa-2x fa-copy"></px-action-sheet-button>
+      <px-action-sheet-button label="Item 12" icon="fa fa-2x fa-copy"></px-action-sheet-button>
+    </px-action-sheet>
+    <px-action-sheet id="actionsheet2" list>
+      <div class="u-m--">
+        <h3>Open in</h3>
+      </div>
+      <px-action-sheet-button label="Github" icon="fa fa-lg fa-github"></px-action-sheet-button>
+      <px-action-sheet-button label="Facebook" icon="fa fa-lg fa-facebook"></px-action-sheet-button>
+      <px-action-sheet-button label="Twitter" icon="fa fa-lg fa-twitter"></px-action-sheet-button>
+      <px-action-sheet-button label="Linked In" icon="fa fa-lg fa-linkedin"></px-action-sheet-button>
+    </px-action-sheet>
+
+  </body>
+
+</html>

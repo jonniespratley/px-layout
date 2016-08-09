@@ -1,0 +1,143 @@
+<!--
+/*
+ * Copyright (c) 2016 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+ -->
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../px-partials-styles.html">
+<!--
+
+The `px-button` element is a simple web component for creating PX Design System buttons.
+
+
+### Usage
+
+```
+<px-button label="Button" modifier="bare"></px-button>
+ <px-button label="Button" modifier="disabled"></px-button>
+ <px-button label="Button"></px-button>
+ <px-button label="Button" modifier="tertiary"></px-button>
+ <px-button label="Button" modifier="primary"></px-button>
+```
+
+### Styling
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--px-button` | Mixin applied to the element | {}
+
+@element px-button
+@blurb Element for creating buttons.
+@demo px-button/demo.html
+@homepage ../index.html
+-->
+<dom-module id="px-button">
+	<!-- <link rel="import" type="css" href="../css/px-partials.css"> -->
+	<style include="px-partials-css"></style>
+	<template strip-whitespace>
+		<style>
+			:host {
+				display: flex;
+			}
+			:host .btn {
+				@apply(--px-button);
+			}
+
+			:host .btn.btn--bare{
+				@apply(--px-button-bare);
+			}
+			:host .btn.btn--icon{
+				@apply(--px-button-icon);
+			}
+			:host .btn.btn--tertiary{
+				@apply(--px-button-tertiary);
+			}
+			:host .btn.btn--primary{
+				@apply(--px-button-primary);
+			}
+
+		</style>
+		<button id="btn" type$="{{type}}" class="btn flex flex--center flex--middle" on-tap="_clickHandler">
+			<template is="dom-if" if="{{icon}}">
+				<px-icon id="ico" icon$="{{icon}}" size$="{{iconSize}}" color$="{{iconColor}}"></px-icon>
+			</template>
+			<span hidden$="{{!label}}">{{label}}</span>
+			<content></content>
+		</button>
+	</template>
+	<script type="text/javascript">
+		Polymer({
+			is: "px-button",
+			behaviors: [
+				Polymer.IronFormElementBehavior
+			],
+			properties: {
+				/**
+				 * The button label
+				 */
+				label: {
+					type: String
+				},
+				/**
+				 * The button type
+				 */
+				type: {
+					type: String,
+					value: 'button'
+				},
+				/**
+				 * The `px-icon` icon name
+				 */
+				icon: {
+					type: String
+				},
+				/**
+				 * The `px-icon` size
+				 */
+				iconSize: {
+					type: String
+				},
+				/**
+				 * The `px-icon` color
+				 */
+				iconColor: {
+					type: String
+				},
+				/**
+				 * The modifiers to apply to the button (`small`, `large`, `huge`, `disabled`, `primary`, `tertiary`, `icon`, `bare`, etc)
+				 */
+				modifier: {
+					type: String,
+					notify: true,
+					reflectToAttribute: true,
+					observer: '_handleModifier'
+				}
+			},
+			_clickHandler: function (e) {
+				this.fire('px-button-tap', e);
+			},
+			_handleModifier: function (newVal, oldVal) {
+				var types;
+				var klass = 'btn--' + oldVal;
+				this.toggleClass(klass, false, this.$.btn);
+				types = newVal.split(' ');
+				for (var i = 0; i < types.length; i++) {
+					klass = 'btn--' + types[i];
+					this.toggleClass(klass, true, this.$.btn);
+				}
+			}
+			/**
+			 * Fires when button is pressed
+			 * @event px-button-tap
+			 */
+		});
+	</script>
+</dom-module>

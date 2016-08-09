@@ -1,0 +1,32 @@
+<link rel="import" href="../../polymer/polymer.html">
+<dom-module id="px-layout-item">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+    </style>
+    <div>
+      <content select="*"></content>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'px-layout-item',
+      properties: {},
+      created: function () {
+        //console.log(this.tagName, 'created');
+      },
+      ready: function () {
+        //console.log(this.tagName, 'ready'); this.toggleClass('layout__item')
+      },
+      attached: function () {
+        //  console.log(this.tagName, 'attached');
+      },
+      detached: function () {
+        //  console.log(this.tagName, 'detached');
+      }
+    });
+  </script>
+</dom-module>

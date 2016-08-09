@@ -1,0 +1,77 @@
+<!--
+/*
+ * Copyright (c) 2016 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+ -->
+<link rel="import" href="../../polymer/polymer.html"/>
+<link rel="import" href="../px-partials-styles.html">
+<!--
+The `px-title-bar` element provides an easy way to create the section title bar commonly used in Predix apps.
+
+### Usage
+
+```
+<px-title-bar title="Widget Title">
+    <px-button modifier="tertiary">Action 1</px-button>
+    <px-button modifier="tertiary">Action 2</px-button>
+</px-title-bar>
+```
+
+### Styling
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--px-title-bar` | Mixin applied to the element | {}
+`--px-title-bar-spacer` | Mixin applied to the spacer element | {}
+
+@element px-title-bar
+@demo px-title-bar/demo.html
+@homepage ../index.html
+-->
+<dom-module id="px-title-bar">
+  <!-- <link rel="import" type="css" href="../css/px-partials.css"> -->
+  <style include="px-partials-css"></style>
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      :host .title-bar {
+        @apply(--px-title-bar);
+      }
+      :host .title-bar .title-bar__spacer {
+        @apply(--px-title-bar-spacer);
+      }
+      :host .title-bar h3 {}
+      :host .title-bar .title-bar__actions ::content .btn {
+        margin-right: 0.3333333333rem;
+      }
+    </style>
+    <div class="title-bar flex flex--middle flex--justify u-p0 u-m0">
+      <div><h3 class="u-m0 u-p0">{{title}}</h3></div>
+      <div class="title-bar__spacer flex__item is-hidden@sm-"></div>
+      <div class="title-bar__actions flex flex--spaced">
+        <content></content>
+      </div>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'px-title-bar',
+      properties: {
+        //The title for the title bar
+        title: {
+          type: String
+        }
+      },
+      created: function () {}
+    });
+  </script>
+</dom-module>

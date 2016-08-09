@@ -1,0 +1,23 @@
+<import rel="import" href="../polymer/polymer.html"/>
+
+<script type="text/javascript">
+  var pxmExampleBehavior = {
+    properties: {
+      title: {
+        type: String
+      }
+    },
+    created: function(){
+      console.log(this.tagName, 'created', this);
+    },
+    ready: function(){
+      console.log(this.tagName, this.id, 'ready', this);
+    },
+    attached: function(){
+      console.log(this.tagName, this.id, 'attached', this);
+    },
+    method1: function(){
+
+    }
+  };
+</script>

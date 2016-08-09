@@ -1,0 +1,20 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="px-checkbox">
+    <style include="px-table-row-css"></style>
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+  <template>
+    <label class="table-row__checkbox needsclick" for$="{{name}}">
+      <input id$="{{name}}" type="checkbox" name$="{{name}}" value$="{{value}}">
+      <div class="table-row__checkbox__checkmark "></div>
+      <span>{{label}}</span>
+    </label>
+  </template>
+  <script>
+    Polymer({is: 'px-checkbox'});
+  </script>
+</dom-module>

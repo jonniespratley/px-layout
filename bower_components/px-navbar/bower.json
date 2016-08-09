@@ -1,0 +1,54 @@
+{
+  "name": "px-navbar",
+  "version": "0.0.1",
+  "authors": [
+    "Jonnie Spratley <jonnie.spratley@ge.com>"
+  ],
+  "description": "A web component for mobile navigation.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PredixDev/px-navbar.git"
+  },
+  "main": "px-navbar.html",
+  "keywords": [
+    "px",
+    "px-mobile"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "~v1.4.0",
+    "fastclick": "latest",
+    "px-page": "latest",
+    "px-drawer": "latest",
+    "polymer-font-awesome": "https://github.com/jonniespratley/polymer-font-awesome.git#~0.1.5",
+    "iron-scroll-target-behavior": "PolymerElements/iron-scroll-target-behavior#~1.0.6"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#~1.0.5",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.2.3",
+    "px-table-view": "https://github.com/PredixDev/px-table-view.git",
+    "px-buttons-design": "^0.4.23",
+    "px-mobile-design": "https://github.com/PredixDev/px-mobile-design.git",
+    "px-flexbox-design": "https://github.com/PredixDev/px-flexbox-design.git#^0.3.7",
+    "px-page": "https://github.com/PredixDev/px-page.git",
+    "px-demo-helpers": "https://github.com/PredixDev/px-demo-helpers.git",
+    "px-theme": "^0.7.0",
+    "px-code-design": "^0.2.11",
+    "px-normalize-design": "^0.3.8",
+    "px-viewport-design": "^0.4.5",
+    "px-box-sizing-design": "^0.2.7"
+  },
+  "resolutions": {
+    "polymer": "~v1.4.0",
+    "fetch": "~0.10.0",
+    "px-theme": "^0.7.0",
+    "polymer-font-awesome": "~0.1.5"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "name": "px-page",
+  "version": "0.0.1",
+  "authors": [
+    "Jonnie Spratley <jonnie.spratley@ge.com>"
+  ],
+  "description": "A web component for a page",
+  "main": "px-pages.html",
+  "keywords": [
+    "px"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "~v1.5.0",
+    "fastclick": "latest",
+    "overthrow": "~0.7.1",
+    "px-theme": "~0.7.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#~1.0.5",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.2.3",
+    "px-navbar": "latest",
+    "px-layout": "latest",
+    "px-table-view": "latest",
+    "web-component-tester": "~4.2.2",
+    "px-demo-helpers": "~0.0.2"
+  },
+  "resolutions": {
+    "polymer": "~v1.4.0",
+    "px-theme": "~0.7.0",
+    "fetch": "~0.11.0",
+    "polymer-font-awesome": "~0.1.5",
+    "px-drawer": "latest",
+    "px-table-view": "latest",
+    "px-navbar": "latest",
+    "web-component-tester": "~4.2.2",
+    "async": "^1.5.0",
+    "chai": "^3.2.0"
+  }
+}

@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../web-component-tester/browser.js"></script>
+		<link rel="import" href="../px-theme/px-app.html">
+		<link rel="import" href="../px-theme/px-theme.html">
+		<link rel="import" href="px-partials.html">
+	</head>
+	<body>
+		<h3>Web Component Test : Fixture for px-partials</h3>
+		<h3>Web Component Test : Fixture for px-header</h3>
+		<px-header id="px_header_1" title="Test"></px-header>
+		<h3>Web Component Test : Fixture for px-footer</h3>
+		<px-footer id="px_footer_1" copyright="Test"></px-footer>
+		<h3>Web Component Test : Fixture for px-button</h3>
+		<px-button id="px_button_1" modifier="primary large">Test</px-button>
+		<h3>Web Component Test : Fixture for px-icon</h3>
+		<px-icon id="px_icon_1" icon="fa:fa-home"></px-icon>
+		<h3>Web Component Test : Fixture for px-brand</h3>
+		<px-brand id="px_brand_1" monogram></px-brand>
+		<h3>Web Component Test : Fixture for px-title-bar</h3>
+		<px-title-bar id="px_title_bar_1" title="Test"></px-title-bar>
+		<script>
+			suite('<px-partials>', function () {
+				suite('<px-header>', function () {
+					var element = document.getElementById('px_header_1');
+					test('renders', function () {
+						assert.ok(element);
+					});
+				});
+				suite('<px-footer>', function () {
+					var element = document.getElementById('px_footer_1');
+					test('renders', function () {
+						assert.ok(element);
+					});
+				});
+				suite('<px-title-bar>', function () {
+					var element = document.getElementById('px_title_bar_1');
+					test('renders', function () {
+						assert.ok(element);
+					});
+				});
+				suite('<px-icon>', function () {
+					var element = document.getElementById('px_icon_1');
+					test('renders', function () {
+						assert.ok(element);
+					});
+				});
+				suite('<px-button>', function () {
+					var element = document.getElementById('px_button_1');
+					test('renders', function () {
+						assert.ok(element);
+					});
+					test('should update styles when modifier changes', function () {
+						element.modifier = 'primary large';
+						assert.ok(element.$.btn.classList.contains('btn--large'));
+						assert.ok(element.$.btn.classList.contains('btn--primary'));
+						done();
+					});
+				});
+				suite('<px-brand>', function () {
+					var element = document.getElementById('px_brand_1');
+					test('renders', function () {
+						assert.ok(element);
+					});
+				});
+			});
+		</script>
+	</body>
+</html>

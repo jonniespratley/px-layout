@@ -1,0 +1,138 @@
+<html>
+	<head>
+		<!-- TODO: Dependencies -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<script src="./demo/demo.js"></script>
+		<script src="../webcomponentsjs/webcomponents.min.js"></script>
+		<link rel="import" href="../px-demo-helpers/px-demo-helpers.html"/>
+		<link rel="import" href="../iron-demo-helpers/demo-snippet.html"/>
+		<title>px-partials demo</title>
+		<style media="screen">
+			body,
+			html {
+				background: #eee !important;
+			}
+			.bg-dark {
+				background-color: #333;
+			}
+		</style>
+
+		<link rel="import" href="../px-theme/px-theme.html">
+		<link rel="import" href="../px-theme/px-app.html">
+		<link rel="import" href="px-partials.html">
+	</head>
+	<body>
+		<div class="viewport u-pt">
+			<h1 class="beta">px-partials</h1>
+			<p>
+				Re-usable simple web components.
+				<button type="button" onclick="showCode()">Show code</button>
+				<button type="button" onclick="hideCode()">Hide code</button>
+			</p>
+			<ol id="toc"></ol>
+			<script type="text/javascript">
+				document.addEventListener('WebComponentsReady', function () {
+					createToc('toc');
+				});
+			</script>
+			<!-- TODO:  -->
+			<section>
+				<h2>px-header</h2>
+				<p>
+					For more
+					<code>px-header</code>
+					demos visit
+					<a href="./px-header/demo.html" target="_blank">here.</a>
+				</p>
+				<demo-snippet>
+					<template>
+						<div class="bg-dark">
+							<px-header></px-header>
+						</div>
+					</template>
+				</demo-snippet>
+			</section>
+			<section>
+				<!-- TODO:  -->
+				<h2>px-footer</h2>
+				<p>
+					For more
+					<code>px-footer</code>
+					demos visit
+					<a href="./px-footer/demo.html" target="_blank">here.</a>
+				</p>
+				<demo-snippet>
+					<template>
+						<div class="bg-dark">
+							<px-footer links>
+								<div left class="muted">
+									<px-brand wordmark size="125"></px-brand>
+								</div>
+							</px-footer>
+						</div>
+					</template>
+				</demo-snippet>
+			</section>
+			<!-- TODO: px-title-bar -->
+			<section>
+				<h2>px-title-bar</h2>
+				<p>
+					For more
+					<code>px-title-bar</code>
+					demos visit
+					<a href="./px-title-bar/demo.html" target="_blank">here.</a>
+				</p>
+				<demo-snippet>
+					<template>
+						<px-title-bar title="Widget Title">
+							<px-button modifier="tertiary icon" icon-size="16" icon="fa:fa-download"></px-button>
+							<px-button modifier="tertiary icon" icon-size="16" icon="fa:fa-pencil"></px-button>
+						</px-title-bar>
+					</template>
+				</demo-snippet>
+			</section>
+			<!-- TODO:  -->
+			<section>
+				<h2>px-button</h2>
+				<p>
+					For more
+					<code>px-button</code>
+					demos visit
+					<a href="./px-button/demo.html" target="_blank">here.</a>
+				</p>
+				<demo-snippet>
+					<template>
+						<div class="flex flex--spaced flex--middle">
+							<px-button label="Button" modifier="bare"></px-button>
+							<px-button label="Button" modifier="disabled"></px-button>
+							<px-button label="Button"></px-button>
+							<px-button label="Button" modifier="tertiary"></px-button>
+							<px-button label="Button" modifier="primary"></px-button>
+						</div>
+					</template>
+				</demo-snippet>
+			</section>
+			<section>
+				<!-- TODO:  -->
+				<h2>px-brand</h2>
+				<p>
+					For more
+					<code>px-brand</code>
+					demos visit
+					<a href="./px-brand/demo.html" target="_blank">here.</a>
+				</p>
+				<demo-snippet>
+					<template>
+						<div class="u-p bg-dark flex flex--spaced flex--middle">
+							<px-brand size="128" monogram></px-brand>
+							<px-brand size="128" predix></px-brand>
+							<px-brand size="450" wordmark></px-brand>
+						</div>
+					</template>
+				</demo-snippet>
+			</section>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,410 @@
+<!--
+/*
+ * Copyright (c) 2016 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+ -->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../px-partials/px-icon/px-icon.html"/>
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../iron-scroll-target-behavior/iron-scroll-target-behavior.html">
+<link rel="import" href="./px-navbar-styles.html">
+<!--
+
+
+The `px-navbar` enables navigation through an information hierarchy and, optionally, management of screen contents.
+
+[![Build Status](https://travis-ci.org/PredixDev/px-navbar.svg?branch=master)](https://travis-ci.org/PredixDev/px-navbar)
+
+
+For demo visit <a href="demo.html" target="_blank">Full demo here</a> or <a href="mobile-demo.html" target="_blank">Mobile demo here</a>
+
+### Usage
+
+```
+<px-navbar id="navbar1" shadow fixed auto-hide>
+	<div left>
+
+	</div>
+	<div center>
+
+  </div>
+	<div right>
+
+	</div>
+</px-navbar>
+```
+
+
+### Styling
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+------------ | ------------- | ------------
+`--px-navbar`   | Style mixin to be applied to the element | null
+`--px-navbar-title` 			| Style mixin applied to the title | {}
+`--px-navbar-subtitle` 			| Style mixin applied to the sub title | {}
+`--px-navbar-button` 			| Style mixin applied to the button | {}
+
+@element px-navbar.html
+@blurb px-navbar
+@demo demo.html
+@demo mobile-demo.html
+@homepage index.html
+-->
+<dom-module id="px-navbar">
+<!--
+	<link rel="import" type="css" href="css/px-navbar.css">
+	-->
+
+	<style include="px-navbar-css"></style>
+	<template strip-whitespace>
+
+		<style media="screen">
+			:host {
+				display: block;
+			}
+
+			:host .navbar {
+				@apply(--px-navbar);
+				z-index: 12;
+			}
+
+			:host .navbar .navbar__title {
+				@apply(--px-navbar-title);
+			}
+
+			:host .navbar .navbar__subtitle {
+				@apply(--px-navbar-subtitle);
+			}
+
+			:host .navbar .navbar__button,
+			:host .navbar ::content .navbar__button,
+			:host .navbar ::content .btn {
+				@apply(--px-navbar-button);
+			}
+		</style>
+		<nav id="navbar" class="navbar">
+			<div class="navbar__inner">
+				<div id="left" class="navbar__left">
+					<template is="dom-if" if="{{drawer}}">
+						<button class="navbar__button flex flex--center" drawer-toggle>
+							<px-icon icon="fa:fa-bars"></px-icon>
+						</button>
+					</template>
+					<template is="dom-if" if="{{!back}}">
+						<content id="leftContent" select="[left]"></content>
+					</template>
+					<template is="dom-if" if="{{back}}">
+						<button id="backButton" class="navbar__button" on-tap="_handleBackClick">
+							<px-icon icon="fa:fa-angle-left"></px-icon>
+							<span>{{backLabel}}</span>
+						</button>
+					</template>
+				</div>
+				<div class="navbar__center">
+					<span class="navbar__title">
+						<span hidden$="{{!title}}">{{title}}</span>
+						<content select="[title]"></content>
+					</span>
+					<span class="navbar__subtitle">
+						<span hidden$="{{!subtitle}}">{{subtitle}}</span>
+						<content select="[subtitle]"></content>
+					</span>
+					<content select="[center]"></content>
+				</div>
+				<div id="right" class="navbar__right">
+					<content select="[right]"></content>
+				</div>
+				<content id="navbarContent" select="[content]"></content>
+			</div>
+		</nav>
+	</template>
+	<script>
+		var elHeight = 0,
+			elTop = 0,
+			dHeight = 0,
+			wHeight = 0,
+			wScrollCurrent = 0,
+			wScrollBefore = 0,
+			wScrollDiff = 0;
+		Polymer({
+			is: 'px-navbar',
+			behaviors: [
+				Polymer.IronScrollTargetBehavior,
+				Polymer.IronResizableBehavior
+			],
+			properties: {
+				/**
+				 * The sub-title to display.
+					*/
+				subtitle: {
+					type: String,
+					notify: true,
+					reflectToAttribute: true
+				},
+				/**
+				 * The title to display.
+				 */
+				title: {
+					type: String,
+					notify: true,
+					reflectToAttribute: true
+				},
+				/**
+				 * The #id of the view container.
+				 * @private
+				 */
+				pagesContainer: {
+					type: String,
+					notify: true,
+					reflectToAttribute: true
+				},
+				/**
+				 * Fix the navbar to the top.
+				 */
+				fixed: {
+					type: Boolean,
+					value: false
+				},
+				/**
+				 * Add a shadow to the navbar
+				 */
+				shadow: {
+					type: Boolean,
+					value: false
+				},
+				/**
+				 * The current state of the navbar
+				 */
+				isHidden: {
+					type: Boolean,
+					value: false,
+					reflectToAttribute: true,
+					observer: '_isHiddenHandler'
+				},
+				/**
+				 * Auto Hide the navbar on user scroll down, reveal on tap or scroll up.
+				 */
+				autoHide: {
+					type: Boolean,
+					value: false,
+					observer: '_handleAutoHide'
+				},
+				/**
+				 * To show the back button or not.
+				 */
+				back: {
+					type: Boolean,
+					notify: true,
+					value: false,
+					reflectToAttribute: true
+				},
+				/**
+				 * Disable the back button when attached to a view container.
+				 */
+				disableBack: {
+					type: Boolean,
+					value: false,
+					reflectToAttribute: true
+				},
+				/**
+				 * The label for the back button.
+				 */
+				backLabel: {
+					type: String,
+					value: 'Back'
+				}
+			},
+			listeners: {
+				'px-page-change': '_handleViewChange',
+				'iron-resize': '_resizeHandler'
+			},
+			observers: ['resetLayout(fixed)'],
+			/**
+			 * Handle resetting the layout.
+			 */
+			resetLayout: function () {},
+			/**
+			 * Gets the navbars height.
+			 * @return Number The height of the element.
+			 */
+			getHeight: function () {
+				return this.$.navbar.offsetHeight;
+			},
+			_resizeHandler: function () {
+				this.resetLayout();
+			},
+			/**
+			 * Handle setting up the class naming when attached.
+			 */
+			attached: function () {
+				this.toggleClass('navbar', true, this.$.navbar);
+				if (this.shadow) {
+					this.toggleClass('navbar--shadow', true, this.$.navbar);
+				}
+				if (this.fixed) {
+					this.toggleClass('navbar--fixed', true, this.$.navbar);
+				}
+				this.async(function () {
+					this._setupHandlers();
+					this._fixButtons();
+				}, 500);
+			},
+			/**
+			 * Handle cleaning up the event listeners when the component is detached.
+			 */
+			detached: function () {
+				this._cleanupHandlers();
+			},
+			/**
+			 * Handle setting up the event listeners to the 'change' event of the views
+			 */
+			_setupHandlers: function () {
+				if (this.pagesContainer) {
+					this.pagesContainer = document.getElementById(this.pagesContainer);
+					this.listen(this.pagesContainer, 'px-page-change', '_handleViewChange');
+				}
+			},
+			/**
+			 * Cleanup event listeners
+			 */
+			_cleanupHandlers: function () {
+				if (this.pagesContainer) {
+					this.unlisten(this, 'px-page-change', '_handleViewChange');
+				}
+			},
+			/**
+			 * Handle when then view is changed, if there is a view container.
+			 * If you want to change the back label, add the back-label="My Label" to the pages navbar element.
+			 */
+			_handleViewChange: function (e) {
+				var _this = this;
+				var current = e.detail;
+				
+				if (current) {
+					_this.debounce('_handleViewChange', function () {
+						if (!_this.disableBack) {
+							_this.back = (current.main ? false : true);
+						}
+						_this.title = current.getAttribute('title');
+					});
+					//_this.back = (current !== _this.views.main); _this.backLabel = (_this.views.prevView ? _this.views.prevView.title : ''); console.log(_this.tagName, _this.id, 'Add back button to current page', _this.back);
+				}
+			},
+			/**
+			 * Handle when the back button is clicked.
+			 */
+			_handleBackClick: function () {
+				this.fire('px-navbar-back');
+			},
+			/**
+			 * Handle when the navicon button is clicked.
+			 */
+			_handleNaviconClick: function () {
+				this.fire('px-navbar-toggle');
+			},
+			/**
+			 * Toggle the display of the navbar.
+			 */
+			toggle: function (display) {
+				this.isHidden = !this.isHidden;
+			},
+			/**
+			 * Handle showing the navbar.
+			 */
+			show: function () {
+				this.isHidden = false;
+			},
+			/**
+			 * Handle hidding the navbar.
+			 */
+			hide: function () {
+				this.isHidden = true;
+			},
+			_isHiddenHandler: function (newVal, oldVal) {
+				this.toggleClass('navbar--is-hidden', newVal, this.$.navbar);
+			},
+			/**
+			 * Handle getting the current view/page, if there is a pagesContainer.
+			 * @returns Element The current active view.
+			 */
+			getCurrentPage: function () {
+				if (this.pagesContainer) {
+					return this.pagesContainer.getCurrent();
+				} else {
+					return false;
+				}
+			},
+			/**
+			 * Handle fixing the class naming of the buttons.
+			 */
+			_fixButtons: function () {
+				var buttons = this.$$('button');
+				if (buttons && buttons.length) {
+					buttons.forEach(function (b) {
+						if (b && b.toggleClass) {
+							b.toggleClass('navbar__button', true);
+						}
+					});
+				}
+			},
+			_handleAutoHide: function (newVal, oldVal) {},
+			_transformHeader: function (y) {
+				this.transform('translate3d(0, ' + y + '%, 0)', this.$.navbar);
+			},
+			_scrollHandler: function (e) {
+				if (this._height === 0) {
+					return;
+				}
+				if (!this.autoHide) {
+					return;
+				}
+				var element = this.$.navbar;
+				elHeight = element.offsetHeight;
+				dHeight = document.body.offsetHeight;
+				wHeight = window.innerHeight;
+				wScrollCurrent = window.pageYOffset;
+				wScrollDiff = wScrollBefore - wScrollCurrent;
+				elTop = parseInt(window.getComputedStyle(element).getPropertyValue('top')) + wScrollDiff;
+
+				// scrolled to the very top; element sticks to the top
+				if (wScrollCurrent <= 0) {
+					element.style.top = '0px';
+				//	element.style.position = this.fixed ? 'absolute' : 'fixed';
+
+				// scrolled up; element slides in
+				} else if (wScrollDiff > 0) {
+					element.style.top = (elTop > 0
+						? 0
+						: elTop) + 'px';
+				} else if (wScrollDiff < 0) {
+
+					// scrolled to the very bottom; element slides in
+					if (wScrollCurrent + wHeight >= dHeight - elHeight) {
+						element.style.top = ((elTop = wScrollCurrent + wHeight - dHeight) < 0
+							? elTop
+							: 0) + 'px';
+					} else {
+						// scrolled down; element slides out
+						element.style.top = ((Math.abs(elTop) > elHeight ? -elHeight : elTop) + 'px');
+					}
+				}
+				wScrollBefore = wScrollCurrent;
+			}
+			/**
+			 * Fires when the back button is pressed.
+			 * @event px-navbar-back
+			 */
+			/**
+			 * Fires when the nav button is pressed.
+			 * @event px-navbar-toggle
+			 */
+		});
+	</script>
+</dom-module>

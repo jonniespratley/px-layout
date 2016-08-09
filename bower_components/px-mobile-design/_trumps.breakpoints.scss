@@ -1,0 +1,43 @@
+@import 'inuit-responsive-settings/_settings.responsive.scss';
+
+@import 'px-functions-design/_tools.functions.scss';
+@import 'inuit-responsive-tools/_tools.responsive.scss';
+
+//xs
+$bp-xs--min: 0;
+$bp-xs--max: calculateRem(320px);
+
+//small
+$bp-sm--min: calculateRem(330px);
+$bp-sm--max: calculateRem(736px);
+
+//medium
+$bp-md--min: calculateRem(768px);
+$bp-md--max: calculateRem(1023px);
+
+//large
+$bp-lg--min: calculateRem(1024px);
+$bp-lg--max: calculateRem(1200px);
+
+//xlarge
+$bp-xl--min: calculateRem(1280px);
+$bp-xl--max: calculateRem(1980px);
+
+$oldBreakpoints: (
+"palm"          "screen and (max-width: 44.9375em)",
+"lap"           "screen and (min-width: 45em) and (max-width: 63.9375em)",
+"lap-and-up"    "screen and (min-width: 45em)",
+"portable"      "screen and (max-width: 63.9375em)",
+"desk"          "screen and (min-width: 64em)",
+"retina"        "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)"
+);
+$newBreakpoints: (
+  "xs" "screen and (max-width: #{$bp-xs--max})",
+  "sm" "screen and (min-width: #{$bp-sm--min}) and (max-width: #{$bp-sm--max})",
+  "md" "screen and (min-width: #{$bp-md--min}) and (max-width: #{$bp-md--max})",
+  "lg" "screen and (min-width: #{$bp-lg--min}) and (max-width: #{$bp-lg--max})",
+  "xl" "screen and (min-width: #{$bp-xl--min})" ) !default;
+
+$breakpoints: join($oldBreakpoints, $newBreakpoints);
+
+@debug 'px-mobile-design - $breakpoints = #{$breakpoints}';

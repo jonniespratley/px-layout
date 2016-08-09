@@ -1,0 +1,136 @@
+<html>
+<head>
+	<title>px-brand demo</title>
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<!-- TODO: Dependencies -->
+	<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+
+	<link rel="import" href="../../iron-demo-helpers/demo-snippet.html" />
+	<link rel="import" href="../../px-theme/px-app.html">
+	<link rel="import" href="../../px-theme/px-theme.html">
+	<link rel="import" href="../../px-layout/px-layout.html">
+	<link rel="import" href="px-brand.html">
+	<script src="../demo/demo.js"></script>
+	<style media="screen">
+	body,
+	html {
+		background-color: #eee !important;
+	}
+	.box {
+		position: relative;
+		background: #111;
+	}
+	.bg-dark {
+		background-color: #333;
+		padding: .5rem;
+	}
+
+	</style>
+
+</head>
+<body>
+
+
+
+  <div class="viewport u-pt">
+
+		<h1 class="beta">px-brand</h1>
+		<p>
+			The <code>px-brand</code> element provides a way to use Predix brands.
+			<button type="button" onclick="showCode()">Show code</button>
+			<button type="button" onclick="hideCode()">Hide code</button>
+		</p>
+
+		<ol id="toc"></ol>
+		<script type="text/javascript">
+			document.addEventListener('WebComponentsReady', function(){
+				createToc('toc');
+			});
+		</script>
+
+
+
+
+    <h2>Brand w/ Monogram</h2>
+    <demo-snippet>
+			<template id="">
+				<div class="flex flex--spaced flex--middle flex--wrap">
+					<px-brand color="#000" size="16" monogram></px-brand>
+					<px-brand color="#000" size="32" monogram></px-brand>
+					<px-brand color="#000" size="48" monogram></px-brand>
+					<px-brand color="#000" size="72" monogram></px-brand>
+					<px-brand color="#000" size="128" monogram></px-brand>
+					<px-brand color="#000" size="256" monogram></px-brand>
+					<px-brand color="#000" size="512" monogram></px-brand>
+				</div>
+				<br>
+				<div class="bg-dark flex flex--spaced flex--middle flex--wrap">
+					<px-brand size="16" monogram></px-brand>
+					<px-brand size="32" monogram></px-brand>
+					<px-brand size="48" monogram></px-brand>
+					<px-brand size="72" monogram></px-brand>
+					<px-brand size="128" monogram></px-brand>
+					<px-brand size="256" monogram></px-brand>
+					<px-brand size="512" monogram></px-brand>
+				</div>
+			</template>
+		</demo-snippet>
+
+		<h2>Brand w/ Monogram wordmark</h2>
+    <demo-snippet>
+			<template>
+				<div class="flex flex--spaced flex--middle flex--wrap">
+					<px-brand color="#000" size="32" wordmark></px-brand>
+					<px-brand color="#000" size="48" wordmark></px-brand>
+					<px-brand color="#000" size="72" wordmark></px-brand>
+					<px-brand color="#000" size="128" wordmark></px-brand>
+					<px-brand color="#000" size="256" wordmark></px-brand>
+					<px-brand color="#000" size="512" wordmark></px-brand>
+				</div>
+				<br>
+				<div class="bg-dark flex flex--spaced flex--middle flex--wrap">
+					<px-brand size="32" wordmark></px-brand>
+					<px-brand size="48" wordmark></px-brand>
+					<px-brand size="72" wordmark></px-brand>
+					<px-brand size="128" wordmark></px-brand>
+					<px-brand size="256" wordmark></px-brand>
+					<px-brand size="512" wordmark></px-brand>
+				</div>
+			</template>
+		</demo-snippet>
+
+		<h2>Brand w/ Predix Icon</h2>
+		<demo-snippet>
+			<template>
+				<div class="bg-dark flex flex--spaced flex--middle flex--wrap">
+					<px-brand size="32" predix></px-brand>
+					<px-brand size="48" predix></px-brand>
+					<px-brand size="72" predix></px-brand>
+					<px-brand size="128" predix></px-brand>
+					<px-brand size="256" predix></px-brand>
+					<px-brand size="512" predix></px-brand>
+				</div>
+			</template>
+		</demo-snippet>
+
+		<h2>Brand w/ Predix wordmark</h2>
+		<demo-snippet>
+			<template>
+				<div class="bg-dark flex flex--spaced flex--middle flex--wrap">
+					<px-brand size="32" predix-wordmark></px-brand>
+					<px-brand size="48" predix-wordmark></px-brand>
+					<px-brand size="72" predix-wordmark></px-brand>
+					<px-brand size="128" predix-wordmark></px-brand>
+					<px-brand size="256" predix-wordmark></px-brand>
+					<px-brand size="512" predix-wordmark></px-brand>
+				</div>
+			</template>
+		</demo-snippet>
+  </div>
+
+
+
+</body>
+
+</html>

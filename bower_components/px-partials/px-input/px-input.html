@@ -1,0 +1,158 @@
+<!--
+/*
+ * Copyright (c) 2016 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+ -->
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../px-partials-styles.html">
+<link rel="import" href="../../iron-validatable-behavior/iron-validatable-behavior.html">
+<link rel="import" href="../../iron-behaviors/iron-control-state.html">
+<link rel="import" href="../../paper-input/paper-input-behavior.html">
+<link rel="import" href="../../iron-form-element-behavior/iron-form-element-behavior.html">
+<!--
+
+The `px-input` element is a simple web component for creating PX Design System buttons.
+
+
+### Usage
+
+```
+<px-input label="Button" modifier="bare"></px-input>
+ <px-input label="Button" modifier="disabled"></px-input>
+ <px-input label="Button"></px-input>
+ <px-input label="Button" modifier="tertiary"></px-input>
+ <px-input label="Button" modifier="primary"></px-input>
+```
+
+### Styling
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--px-input` | Mixin applied to the element | {}
+
+@element px-input
+@blurb Element for creating buttons.
+@demo px-input/demo.html
+@homepage ../index.html
+-->
+<dom-module id="px-input">
+	<!-- <link rel="import" type="css" href="../css/px-partials.css"> -->
+	<template strip-whitespace>
+		<style include="px-partials-css"></style>
+		<style>
+			:host {
+				display: block;
+			}
+			:host .text-input {
+				width: auto;
+				@apply(--px-input);
+			}
+			:host([invalid]) input {
+				border-color: red;
+			}
+		</style>
+		<div class="px-partials-input flex flex--col">
+			<label hidden$="[[!label]]" aria-hidden="true" for="input">[[label]]</label>
+			<input
+				is="iron-input"
+				id="input"
+				class="text-input"
+				aria-labelledby$="[[_ariaLabelledBy]]"
+				aria-describedby$="[[_ariaDescribedBy]]"
+				disabled$="[[disabled]]"
+				title$="[[title]]"
+				bind-value="{{value}}"
+				invalid="{{invalid}}"
+				prevent-invalid-input="[[preventInvalidInput]]"
+				allowed-pattern="[[allowedPattern]]"
+				validator="[[validator]]"
+				type$="[[type]]"
+				pattern$="[[pattern]]"
+				required$="[[required]]"
+				autocomplete$="[[autocomplete]]"
+				autofocus$="[[autofocus]]"
+				inputmode$="[[inputmode]]"
+				minlength$="[[minlength]]"
+				maxlength$="[[maxlength]]"
+				min$="[[min]]"
+				max$="[[max]]"
+				step$="[[step]]"
+				name$="[[name]]"
+				placeholder$="[[placeholder]]"
+				readonly$="[[readonly]]"
+				list$="[[list]]"
+				size$="[[size]]"
+				autocapitalize$="[[autocapitalize]]"
+				autocorrect$="[[autocorrect]]"
+				on-change="_onChange"
+				tabindex$="[[tabindex]]"
+				autosave$="[[autosave]]"
+				results$="[[results]]"
+				accept$="[[accept]]"
+				multiple$="[[multiple]]">
+			<content select="[suffix]"></content>
+
+			<template is="dom-if" if="[[invalid]]">
+				<span class="form-field__help validation-error" hidden$="{{!invalid}}">[[errorMessage]]</span>
+			</template>
+		</div>
+	</template>
+	<script type="text/javascript">
+		Polymer({
+			is: "px-input",
+			behaviors: [
+				Polymer.IronFormElementBehavior,
+		    Polymer.IronValidatableBehavior,
+		    Polymer.IronControlState,
+		    Polymer.PaperInputBehavior,
+			],
+			properties: {
+				/**
+			 * The error message
+			 */
+				errorMessage: {
+					type: String
+				},
+				/**
+				 * The modifiers to apply to the input (`small`, `large`, `huge`, `disabled`, etc)
+				 */
+				modifier: {
+					type: String,
+					notify: true,
+					reflectToAttribute: true,
+					observer: '_handleModifier'
+				}
+			},
+			_clickHandler: function (e) {
+				this.fire('px-input-tap', e);
+			},
+			_handleModifier: function (newVal, oldVal) {
+				var types;
+				var klass = 'input--' + oldVal;
+				this.toggleClass(klass, false, this.$.btn);
+				types = newVal.split(' ');
+				for (var i = 0; i < types.length; i++) {
+					klass = 'input--' + types[i];
+					this.toggleClass(klass, true, this.$.btn);
+				}
+			},
+			_onInput: function () {
+				this.value = this.$.value;
+			},
+			_getValidity: function () {
+				return !!this.value;
+			}
+			/**
+			 * Fires when button is pressed
+			 * @event px-input-tap
+			 */
+		});
+	</script>
+</dom-module>

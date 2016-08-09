@@ -1,0 +1,103 @@
+<link rel="import" href="../polymer/polymer.html" />
+
+<link rel="import" href="../iron-checked-element-behavior/iron-checked-element-behavior.html">
+<!--
+To use this component:
+
+```
+<px-table-view modifier="small">
+  <px-table-row icon="fa:fa-wifi" title="WiFi" modifier="switch">
+    <px-table-row-switch name="cb" size="small" checked="{{checked}}"></px-table-row-switch>
+  </px-table-row>
+  <px-table-row modifier="switch" title="Switch">
+    <px-table-row-switch name="cb05" checked="{{checked}}"></px-table-row-switch>
+  </px-table-row>
+  <px-table-row modifier="switch" title="Checked Switch">
+    <px-table-row-switch name="cb06" checked="{{checked}}"></px-table-row-switch>
+  </px-table-row>
+  <px-table-row modifier="switch" title="Switch (Disabled)">
+    <px-table-row-switch name="cb07" disabled></px-table-row-switch>
+  </px-table-row>
+  <px-table-row modifier="switch" title="Checked Switch (Disabled)">
+    <px-table-row-switch name="cb08" disabled checked="{{checked}}"></px-table-row-switch>
+  </px-table-row>
+</px-table-view>
+```
+@element px-table-row-switch.html
+@demo demo/switches.html
+@homepage index.html
+-->
+<dom-module id="px-table-row-switch">
+  <style include="px-table-row-css"></style>
+  <style>
+  :host {
+    display: flex;
+    justify-content: space-between;
+    order: 10;
+    align-self: center;
+  }
+  </style>
+  <template strip-whitespace>
+    <div class="toggle toggle__table-view-item">
+      <input id$="{{name}}" class="toggle__input" type="checkbox"
+        required$="{{required}}" 
+        checked$="{{checked}}"
+        name$="{{name}}"
+        value$="{{value}}">
+      <label for$="{{name}}" class="toggle__label needsclick">
+        <span>{{label}}</span>
+      </label>
+    </div>
+    <template is="dom-if" if="{{label}}">
+      <div class="table-row__content">
+        <span class="table-row__content__title">{{label}}</span>
+      </div>
+    </template>
+  </template>
+  <script>
+  Polymer({
+    is: 'px-table-row-switch',
+    behaviors: [
+      Polymer.IronCheckedElementBehavior
+    ],
+    properties: {
+      //The size for the switch
+      size: {
+        type: String
+      },
+      //The label for the switch
+      label: {
+        type: String
+      },
+      //The disabled state
+      disabled: {
+        type: Boolean
+      }
+    },
+    attached: function() {
+      if (this.checked) {
+        this.$$('input').checked = true;
+      }
+      if (this.disabled) {
+        this.$$('input').disabled = true;
+      }
+      if(this.size){
+        this.toggleClass('toggle__input--'+this.size, true, this.$$('input'));
+        this.toggleClass('toggle__label--'+this.size, true, this.$$('label'));
+      }
+      //this.listen(this.$.myButton, 'tap', 'onTap');
+      this.listen(this.$$('label'), 'tap', 'handleTap');
+    },
+    handleTap: function(e) {
+      if (this.disabled) {
+        return;
+      }
+      // TODO: IOS and FastClick have an issue where the label does not trigger the event.
+      var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      if (iOS) {
+      //  this.$$('input').checked = !this.$$('input').checked;
+      }
+    }
+  });
+  </script>
+</dom-module>

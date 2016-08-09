@@ -1,0 +1,240 @@
+////
+/// px-action-sheet styles
+/// @group px-action-sheet
+/// @author Jonnie Spratley
+/// @since 0.0.1
+////
+/// Mixin helpers
+@import 'px-spacing-design/_trumps.spacing.scss';
+@import 'px-mobile-design/sass/_mixins.scss';
+@import 'variables';
+@mixin actionButton($bgColor) {
+  width           : 100%;
+  background-color: $bgColor !important;
+
+  &:active {
+    transition: none;
+    opacity   : 0.8;
+  }
+
+  &:disabled,
+  &[disabled] {
+    opacity       : 0.5;
+    cursor        : default;
+    pointer-events: none;
+  }
+
+  &:focus {
+    outline   : 0;
+    transition: none;
+  }
+
+  &:hover {
+    box-shadow: none;
+    transition: none;
+  }
+  @content;
+}
+
+/// The action dialog component.
+/// @example html
+/// <div class="c-action-dialog">
+///		//Action Sheet Here
+///	</div>
+@include b ('c-action-dialog') {
+  /// The overlay that is behind the action sheet.
+  ///@example html
+  ///	<div class="action-dialog--mask"></div>
+  @include modifier ('mask') {
+    transition: $action-sheet-mask-transition;
+    position  : fixed;
+    top       : 0;
+    bottom    : 0;
+    left      : 0;
+    right     : 0;
+    background: $action-sheet-mask-background-color;
+    z-index   : -1;
+    opacity   : 0;
+    visibility: hidden;
+
+    /// The overlays visible state.
+    ///@example html
+    ///	<div class="action-dialog--mask action-dialog--mask--is-open"></div>
+    @include modifier ('is-open') {
+      position  : fixed;
+      z-index   : 10;
+      opacity   : 1;
+      visibility: visible;
+    }
+  }
+}
+
+
+///---------------------------------------------------
+/// The action sheet component.
+/// @example html
+/// <div class="c-action-sheet">
+///		//Action Sheet Here
+///	</div>
+@include b ('c-action-sheet') {
+  user-select     : none;
+  padding         : 0;
+  border-radius   : $action-sheet-button-radius;
+//z-index         : -1;
+  position        : fixed;
+
+  left            : 0;
+  right           : 0;
+  transition      : $action-sheet-transition;
+  bottom          : 0;
+  transform       : translateY(115%);
+
+  border          : $action-sheet-border;
+  border          : var(--px-action-sheet-border, $action-sheet-border);
+  background-color: $action-sheet-background-color;
+  background-color: var(--px-action-sheet-background-color, $action-sheet-background-color);
+  box-shadow      : $action-sheet-box-shadow;
+  &.sixteen-nine {
+	   @include aspect-ratio(16, 9);
+  }
+  @include noselect();
+
+  ///---------------------------------------------------
+  @include modifier ('is-open') {
+    //z-index   : 25;
+    transform : translateY(0);
+    opacity   : 1;
+    visibility: visible;
+  }
+  @include media-breakpoint-down(sm) {
+    border-left  : none;
+    border-right : none;
+    border-bottom: none;
+    left         : 0;
+    right        : 0;
+  }
+  @include media-breakpoint-up(md) {
+    left : 20%;
+    right: 20%;
+  }
+
+  ///---------------------------------------------------
+  ///c-action-sheet--full
+  @include m ('full') {
+    left: 0;
+    right: 0;
+  }
+  ///c-action-sheet--persistent
+  @include m ('persistent') {
+    //background-color: crimson;
+
+  }
+  ///---------------------------------------------------
+  ///c-action-sheet__actions
+  @include element ('actions') {
+    display        : flex;
+    flex-direction : column;
+    justify-content: space-between;
+    margin         : $inuit-base-spacing-unit--small $inuit-base-spacing-unit;
+
+    @include media-breakpoint-down(md) {
+      margin         : $inuit-base-spacing-unit--tiny;
+    }
+
+    ///---------------------------------------------------
+    @include modifier ('grid') {
+      flex-direction: row;
+      flex-wrap     : wrap;
+      //margin-top: $inuit-base-spacing-unit--small;
+      //margin-bottom: $inuit-base-spacing-unit;
+      //margin-right: $inuit-base-spacing-unit;
+      //margin-left: $inuit-base-spacing-unit;
+      px-action-sheet-button {
+        flex   : 1 0 80px;
+        padding: $action-sheet-button-margin;
+        @include media-breakpoint-down (sm) {
+          margin: $inuit-base-spacing-unit--tiny;
+        }
+      }
+    }
+
+    ///---------------------------------------------------
+    @include modifier ('list') {
+      flex-direction: column !important;
+      flex-wrap     : wrap;
+
+      px-action-sheet-button {
+        flex  : 1;
+        margin: 0;
+      }
+
+      @include c ('button') {
+        display       : flex;
+        flex-direction: row;
+        align-items   : center;
+        flex          : 1;
+        margin        : 0 !important;
+        text-align    : left;
+
+        i {
+          margin-left : $action-sheet-button-margin;
+          margin-right: $action-sheet-button-margin;
+        }
+      }
+    }
+
+  }
+
+  ///---------------------------------------------------
+  @include element ('button') {
+    box-shadow   : none;
+    border       : none;
+    display      : flex;
+    text-align   : center;
+    outline      : none;
+    user-select  : none;
+    width        : 100%;
+    cursor       : pointer;
+    outline      : none;
+    border-radius: 0;
+    padding      : $action-sheet-button-padding;
+    border-bottom: $action-sheet-button-border;
+
+    > * {
+      @include noselect();
+      outline: none;
+    }
+
+    ///---------------------------------------------------
+    @include c ('btn') {
+      height        : 100%;
+      width         : 100%;
+      align-self    : center;
+      display       : flex;
+      flex-direction: column;
+      align-items   : center;
+    }
+
+    &:last-of-type {}
+
+    /// The danger action button styles.
+    @include modifier ('danger') {
+      color        : $action-sheet-delete-button-font-color !important;
+      border-bottom: none !important;
+    }
+
+    ///---------------------------------------------------
+    /// The info action button styles.
+    @include modifier ('info') {
+      color         : $action-sheet-label-button-font-color !important;
+      pointer-events: none;
+      white-space   : pre-wrap;
+      line-height   : normal;
+
+      &:active {
+        transition: none;
+        opacity   : 1;
+      }
+    }
+  }
+}

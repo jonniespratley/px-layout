@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../web-component-tester/browser.js"></script>
+    <link rel="import" href="px-drawer.html">
+</head>
+<body>
+  <px-drawer id="fixture" side="left" theme="dark">
+ 
+  </px-drawer>
+
+
+    <script>
+      suite('<px-drawer>', function() {
+        var element = document.getElementById('fixture');
+        test('renders', function() {
+          assert.ok(element);
+        });
+
+      });
+    </script>
+</body>
+</html>

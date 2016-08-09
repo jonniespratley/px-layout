@@ -1,0 +1,98 @@
+@import "px-colors-design/_settings.colors.scss";
+@import 'px-spacing-design/_trumps.spacing.scss';
+
+@import 'px-mobile-design/sass/_mixins.scss';
+
+$tab--after: '+';
+$tab--active--after: '-';
+$tab-background-color--active: $gray2;
+$tab-transition: none;
+$tab-breakpoint: 'md';
+
+@include b ('box-section'){
+
+	@include m ('active') {
+		> .box-section__tab {
+			background: $tab-background-color--active;
+		}
+
+		> .box-section__tab:after {
+			content: $tab--active--after;
+			@include media-breakpoint-up($tab-breakpoint) {
+				content: '';
+			}
+		}
+
+		> .box-section__panel {
+			@include media-breakpoint-down($tab-breakpoint) {
+				max-height: 99vh;
+			}
+
+      > .box-section__tab {
+        background: $gray1;
+      }
+		}
+	}
+
+	@include element ('spacer') {
+		width        : 100%;
+		height       : 1px;
+		display      : block;
+		border-bottom: 2px dotted $gray5;
+		margin-left  : $inuit-base-spacing-unit--tiny;
+		margin-right : $inuit-base-spacing-unit--tiny;
+	}
+
+	@include element ('tab') {
+		@include noselect();
+		padding       : $inuit-base-spacing-unit $inuit-base-spacing-unit--small;
+		margin        : 0;
+		position      : relative;
+		cursor        : pointer;
+		outline       : 0;
+		user-select   : none;
+		text-transform: uppercase;
+		border-bottom : 1px solid $gray5;
+
+		//Hide arrows for large
+		@include media-breakpoint-up($tab-breakpoint) {
+			cursor    : default;
+			background: none !important;
+		}
+
+		&:after {
+			transform  : translateY(-50%);
+			font-style : normal;
+			font-weight: normal;
+			position   : absolute;
+			right      : 12px;
+			top        : 50%;
+			line-height: 28px;
+			height     : 28px;
+			font-size  : 28px;
+			font-family: FontAwesome;
+			color      : $gray6;
+			content    : $tab--after;
+
+			@include media-breakpoint-up($tab-breakpoint) {
+				content: '';
+			}
+		}
+	}
+
+	@include element ('panel') {
+		transition: $tab-transition;
+		overflow  : hidden;
+		max-height: 0;
+
+
+		@include media-breakpoint-up($tab-breakpoint) {
+			max-height: none;
+		}
+
+		&:last-child {
+			margin: 0;
+		}
+	}
+
+}

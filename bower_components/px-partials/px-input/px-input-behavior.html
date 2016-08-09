@@ -1,0 +1,28 @@
+<link rel="import" href="../../polymer/polymer.html">
+
+
+<script>
+  var _pxInputBehavior = {
+    created: function() {
+      console.log(this.tagName, 'created');
+    },
+    ready: function() {
+      console.log(this.tagName, 'ready');
+    },
+    attached: function() {
+      console.log(this.tagName, 'attached');
+    },
+    detached: function() {
+      console.log(this.tagName, 'detached');
+    },
+  };
+
+  /** @polymerBehavior */
+  var pxInputBehavior = [
+    Polymer.IronFormElementBehavior,
+    Polymer.IronValidatableBehavior,
+    Polymer.IronControlState,
+    Polymer.PaperInputBehavior,
+    _pxInputBehavior
+  ];
+</script>

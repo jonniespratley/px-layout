@@ -1,0 +1,47 @@
+<link rel="import" href="../polymer/polymer.html"><!--
+## Usage
+To use this component in your custom component do the following:
+```
+
+```
+@element px-code-preview.html
+@blurb px-code-preview Element to view code
+@demo demo.html
+@homepage index.html
+-->
+<dom-module id="px-code-preview">
+  <style>
+    :host {
+      display: block;
+    }
+    :host.open{
+      display: block;
+    }
+  </style>
+  <template>
+  	<div id="codeInput" class="hidden">
+			<content></content>
+		</div>
+		<div id="codeOutput"></div>
+  </template>
+  <script>
+    Polymer({
+      is: 'px-code-preview',
+
+      properties: {
+        open: {
+          type: Boolean, value: false
+        },
+
+        //The code to display
+        codeInput: {
+          type: String, value: ''
+        }
+      },
+      attached: function(){
+				//this.codeInput = this.$.codeInput.innerHTML;
+        this.$.codeOutput.innerHTML = this.codeInput;
+      }
+    });
+  </script>
+</dom-module>

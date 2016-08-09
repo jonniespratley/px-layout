@@ -1,0 +1,201 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../iron-selector/iron-selector.html">
+<link rel="import" href="../iron-selector/iron-multi-selectable.html">
+
+<link rel="import" href="px-table-view-behavior.html"/>
+<link rel="import" href="px-table-view-pull-to-refresh-behavior.html"/>
+
+<link rel="import" href="px-table-view-styles.html">
+<link rel="import" href="px-table-row-styles.html">
+
+
+<link rel="import" href="px-table-row-checkbox.html"/>
+<link rel="import" href="px-table-row-actions.html"/>
+<link rel="import" href="px-table-row-action-button.html"/>
+<link rel="import" href="px-table-row-switch.html"/>
+<link rel="import" href="px-table-row.html"/>
+
+<link rel="import" href="px-drilldown.html"/>
+<link rel="import" href="px-sortable.html"/>
+
+<!--
+<link rel="import" href="px-drilldown-list.html"/> -->
+
+<!--
+The `px-table-view` element provides a way to display list data.
+
+[![Build Status](https://travis-ci.org/PredixDev/px-table-view.svg?branch=master)](https://travis-ci.org/PredixDev/px-table-view)
+
+For demos visit <a href="./demo.html" target="_blank">here</a>.
+For individual demos visit <a href="./demo" target="_blank">here</a>.
+
+### Usage
+
+```
+<link rel="import" href="../px-table-view/px-table-view.html"/>
+<px-table-view>
+  <px-table-row title="Text Label"></px-table-row>
+  <px-table-row title="Nav Right Item" modifier="nav-right"></px-table-row>
+  <px-table-row title="Detail Item" modifier="detail"></px-table-row>
+  <px-table-row title="Tappable Item" modifier="tappable"></px-table-row>
+</px-table-view>
+```
+
+### Styling
+
+Custom property | Description | Default
+------------ | ------------- | ------------
+  `--px-table-view` | Style mixin to be applied to the component | {}
+  `--px-table-view-sortable-chosen` | Style mixin to be applied to the sortable chosen element | {}
+  `--px-table-row-selected` | Style mixin to be applied to the selected table row element | {}
+
+
+
+@element px-table-view.html
+@demo demo.html
+@homepage index.html
+-->
+<dom-module id="px-table-view">
+
+  <style include="px-table-view-css"></style>
+  <style media="screen">
+    :host {
+      display: block;
+      position: relative;
+    }
+    :host .table-view {
+      @apply(--px-table-view);
+      -webkit-overflow-scrolling: touch;
+    }
+    /*:host ::content {
+      @apply(--px-table-row);
+    }*/
+    :host .sortable-chosen,
+    :host ::content .sortable-chosen {
+      @apply(--px-table-view-sortable-chosen);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.45);
+    }
+    :host ::content .iron-selected .table-row:host .iron-selected .table-row,
+    :host ::content .px-selected .table-row {
+      @apply(--px-table-row-selected);
+      background-color: var(--px-table-row-selected-background-color);
+      color: var(--px-table-row-selected-color);
+    }
+    /* Handle when loading */
+    :host.ptr-loading.ptr {
+      -webkit-transition: all 0.25s ease;
+      transition: all 0.25s ease;
+    }
+    :host.ptr-loading .ptr__content {
+      -webkit-transition: all 0.25s ease;
+      transition: all 0.25s ease;
+      -webkit-transform: translate3d(0, 50px, 0);
+      transform: translate3d(0, 50px, 0);
+    }
+    :host.ptr-loading .ptr__loader {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+    }
+    :host.ptr-loading .ptr__loader,
+    :host.ptr-loading .ptr__loading {
+      display: block;
+    }
+  </style>
+  <template strip-whitespace>
+    <template is="dom-if" if="{{tableData}}">
+      <template id="tableRowTemplate" items="{{tableData}}" is="dom-repeat">
+        <px-table-row item="{{item}}"></px-table-row>
+      </template>
+    </template>
+    <div id="ptr" class="ptr__loader" hidden$="{{!pullToRefresh}}">
+      <div class="ptr__loading">
+        <span id="l1"></span>
+        <span id="l2"></span>
+        <span id="l3"></span>
+      </div>
+    </div>
+    <div id="content" class="table-view">
+      <content id="tableViewContent" select="px-table-row, [content]"></content>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'px-table-view',
+      behaviors: [
+        Polymer.IronMultiSelectableBehavior,
+        Polymer.IronResizableBehavior,
+        pxTableViewBehavior,
+
+        pxTableViewPullToRefreshBehavior
+      ],
+      properties: {
+
+        /**
+         * The table data to set on the component
+         */
+        tableData: {
+          type: Array
+        },
+        /**
+         * The modifiers to apply to the table-view (bare, tiny, small, large, huge, etc)
+         */
+        modifier: {
+          type: String,
+          notify: true,
+          reflectToAttribute: true,
+          observer: '_handleModifier'
+        },
+        /**
+         * If the table view is sortable set to true
+         */
+        isSortable: {
+          type: Boolean,
+          value: false
+        },
+        /**
+         * Modifier to be applied to each table row.
+         */
+        rowModifier: {
+          type: String,
+          notify: true,
+          reflectToAttribute: true,
+          observer: '_handleRowModifier'
+        }
+      },
+      /**
+      * A reference to the px-table-row elements.
+      * @property rows
+      */
+      get rows() {
+        if (this.$.tableViewContent) {
+          return Polymer.dom(this.$.tableViewContent).getDistributedNodes();
+        }
+      },
+      _handleModifier: function (newVal, oldVal) {
+        var _this = this,
+          klass,
+          types;
+        klass = 'table-view--' + oldVal;
+
+        if (_this.modifier) {
+          types = _this.modifier.split(' ');
+          for (var i = 0; i < types.length; i++) {
+            klass = 'table-view--' + types[i];
+            _this.toggleClass(klass, true, _this.$.content);
+          }
+        }
+      },
+      _handleRowModifier: function (newVal, oldVal) {
+        var rows = this.rows;
+        var len = rows.length;
+        var i = 0;
+        if (newVal) {
+          for (; i < len; i++) {
+            rows[i].modifier = newVal;
+          }
+        }
+      }
+    });
+  </script>
+</dom-module>

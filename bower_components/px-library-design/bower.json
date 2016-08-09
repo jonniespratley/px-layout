@@ -1,0 +1,28 @@
+{
+  "name": "px-library-design",
+  "version": "0.2.1",
+  "authors": [
+    "General Electric"
+  ],
+  "description": "Compendium of Predix Experience demo pages",
+  "main": "src/index.html",
+  "keywords": [
+    "px",
+    "sass",
+    "library",
+    "demo"
+  ],
+  "license": "Apache 2",
+  "homepage": "https://github.com/PredixDev/px-library-design.git",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "px-kitchen-sink-design": "https://github.com/PredixDev/px-kitchen-sink-design.git#~0.5.0"
+  }
+}

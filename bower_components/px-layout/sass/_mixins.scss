@@ -1,0 +1,70 @@
+@import 'variables';
+@import "px-mobile-design/sass/_mixins.scss";
+
+/// Scrollable solution
+/// @group px-table-view
+@mixin scrollable() {
+  //  overflow-y                : scroll;
+  overflow-y                : auto;
+  -webkit-overflow-scrolling: touch;
+  @content;
+}
+@mixin responsive-visibility-utils($bps:$breakpoints) {
+   @content;
+
+  /// Visibility utilities
+  .invisible {
+    visibility: hidden !important;
+  }
+  ///Responsive visibility utilities
+  @each $bp in map-keys($bps) {
+    .hidden-#{$bp}-up {
+      @include media-breakpoint-up($bp) {
+        display: none !important;
+      }
+    }
+    .hidden-#{$bp}-down {
+      @include media-breakpoint-down($bp) {
+        display: none !important;
+      }
+    }
+  }
+}
+
+
+
+@mixin full-height(){
+  height: 100%;
+  min-height:100vh;
+  @content;
+}
+
+
+///------------------------------------------------------
+/// Mixin to make list turn into columns on larger screen.
+@mixin n-columns($min-width, $gutter, $last-equal: false, $max-cols: 6) {
+  display    : flex;
+  flex-wrap  : wrap;
+  flex-direction: row;
+  margin-left: -$gutter;
+  margin-top : -$gutter;
+
+  > *{
+    flex       : 1 0 $min-width;
+    margin-left: $gutter;
+    margin-top : $gutter;
+    @if $last-equal {
+       @for $i from 2 through $max-cols{
+        $screen-width: ($min-width*$i)+($gutter*$i);
+        $column-width: (100%/$i);
+        @media (min-width: $screen-width) {
+          max-width: calc(#{$column-width} - #{$gutter});
+        }
+      }
+      $column-width: (100%/$max-cols);
+      @media (min-width: $min-width*$max-cols) {
+        min-width: calc(#{$column-width} - #{$gutter});
+      }
+    }
+  }
+}

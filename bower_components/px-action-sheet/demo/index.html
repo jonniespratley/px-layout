@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>px-action-sheet demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../../px-theme/px-app.html">
+    <link rel="import" href="../../px-theme/px-theme.html">
+    <link rel="import" href="../../px-navbar/px-navbar.html">
+    <link rel="import" href="../../px-partials/px-partials.html">
+    <link rel="import" href="../../px-table-view/px-table-view.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html"/>
+    <link rel="import" href="../px-action-sheet.html">
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+      <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <style media="screen">
+      body,
+      html {
+        background-color: #eee !important;
+      }
+      .details img {
+        width: 100%;
+      }
+      .details h2 {
+        font-weight: normal;
+      }
+      .details .border-top {
+        border-top: 1px solid #eee;
+      }
+      .details .details__media {
+        flex: 1 0 250px;
+      }
+      .map-container{
+        margin-top: 56px;
+        display: flex;
+        flex-direction: column;
+      }
+      #map {
+        min-height: 90vh;
+        width: 100%;
+      }
+      .leaflet-bottom.leaflet-right{
+        z-index: 5 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <px-navbar title="Full Action Sheet" fixed shadow>
+      <div right>
+        <button class="btn btn--tertiary" onclick="document.getElementById('actionsheet4').toggle()">
+          <i class="fa fa-share"></i>
+        </button>
+      </div>
+    </px-navbar>
+    <div class="map-container">
+     <div id="map"></div>
+    </div>
+    <px-action-sheet id="actionsheet4" modifier="full persistent">
+      <div class="details">
+        <h2 class="delta u-ml-">GE Digital</h2>
+        <div class="flex flex--stretch flex--wrap border-top">
+          <div class="flex__item u-mr--">
+            <px-table-view modifier="tiny" row-modifier="tappable">
+              <px-table-row icon="fa:fa-map-marker" title="2623 Camino Ramon, San Ramon, CA"></px-table-row>
+              <px-table-row icon="fa:fa-phone" title="(925) 242-6200"></px-table-row>
+              <px-table-row icon="fa:fa-clock-o" title="Fri, 10am - 9pm"></px-table-row>
+            </px-table-view>
+          </div>
+          <div class="flex__item details__media">
+            <img src="http://www.d57tm.org/wp/wp-content/uploads/2015/08/GEGlobalSoftwareCtr.jpg" alt="Image">
+          </div>
+        </div>
+      </div>
+    </px-action-sheet>
+
+
+    <script type="text/javascript">
+      document.addEventListener('WebComponentsReady', function(){
+        var mymap = L.map('map').setView([37.767, -121.958], 15);
+        var marker = L.marker([37.7672375, -121.9584131]).addTo(mymap);
+      });
+    </script>
+
+
+  </body>
+</html>

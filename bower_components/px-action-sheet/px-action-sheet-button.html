@@ -1,0 +1,54 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<!--
+## Usage
+
+```
+<px-action-sheet-button label="Item 1" icon="fa fa-edit"></px-action-sheet-button>
+```
+
+@element px-action-sheet-button.html
+@blurb px-action-sheet-button is a responsive button for the action sheet.
+@demo demo.html
+@homepage index.html
+-->
+<dom-module id="px-action-sheet-button">
+  <template strip-whitespace>
+    <button id="btn" type="button" class=" btn btn--full">
+      <i class$="{{icon}}"></i>
+      <span>{{label}}</span>
+    </button>
+  </template>
+  <script>
+    Polymer({
+      is: 'px-action-sheet-button',
+      properties: {
+        /**
+         * The label of the button
+         */
+        label: {
+          type: String
+        },
+        /**
+         * The CSS class name to apply
+         */
+        btnClass: {
+          type: String,
+          value: 'btn--tertiary'
+        },
+        /**
+         * The icon to apply
+         */
+        icon: {
+          type: String
+        }
+      },
+      attached: function () {
+        this.toggleClass('action-sheet__button', true);
+        if (this.btnClass) {
+
+          this.toggleClass(this.btnClass, true, this.$.btn);
+        }
+      }
+    });
+  </script>
+</dom-module>

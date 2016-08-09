@@ -1,0 +1,322 @@
+@import 'variables';
+@import "px-functions-design/_tools.functions.scss";
+@import 'mixins/media-query';
+@import 'mixins/bem';
+
+///
+///@access Public
+@mixin var($name,$value) {
+  #{--$name}: $value;
+}
+///
+///@access Public
+@function v($name) {
+  @return var(--#{$name});
+}
+
+//Min breakpoints
+$minBreakpoints: ( "xs" "screen and (min-width: #{$bp-xs--min})", "sm" "screen and (min-width: #{$bp-sm--min})", "md" "screen and (min-width: #{$bp-md--min})", "lg" "screen and (min-width: #{$bp-lg--min})", "xl" "screen and (min-width: #{$bp-xl--min})" );
+//Max breakpoints
+$maxBreakpoints: ( "xs" "screen and (max-width: #{$bp-xs--max})", "sm" "screen and (max-width: #{$bp-sm--max})", "md" "screen and (max-width: #{$bp-md--max})", "lg" "screen and (max-width: #{$bp-lg--max})", "xl" "screen and (max-width: #{$bp-xl--max})" ) !default;
+//@debug "px-mobile-designs - $minBreakpoints = #{$minBreakpoints}";
+
+
+///
+///-----------------------
+/// Mixins
+@mixin min-max-media-query($mq) {
+  @include media-query($mq){
+    @content;
+  }
+}
+
+/// Mixin to manage responsive breakpoints
+/// @param {String} $breakpoint - Breakpoint name
+/// @require $breakpoints
+/// @example
+///   .selector {
+///     color: red;
+///     @include respond-to('small') {
+///       color: blue;
+///     }
+///   }
+/// @access public
+@import 'inuit-responsive-tools/_tools.responsive.scss';
+@mixin media-breakpoint($media) {
+  @debug"media-breakpoint - #{$media}";
+  @include media-query($media){
+    @content;
+  }
+}
+
+
+///// Resonsive Utils
+/////
+@mixin responsiveUtils($bps:$grid_breakpoints) {
+   @content;
+  /// Visibility utilities
+  .invisible {
+    visibility: hidden !important;
+  }
+  ///Responsive visibility utilities
+  @each $bp in map-keys($bps) {
+    .hidden-#{$bp}-up {
+      @include media-breakpoint-up($bp) {
+        display: none !important;
+      }
+    }
+    .hidden-#{$bp}-down {
+      @include media-breakpoint-down($bp) {
+        display: none !important;
+      }
+    }
+  }
+}
+///// Resonsive Utils
+@mixin responsive-utils($bps:$grid_breakpoints) {
+  @content;
+  .is-invisible {
+    visibility: hidden !important;
+  }
+  @each $bp in map-keys($bps) {
+    .is-hidden\@#{$bp}\+ {
+      @include media-breakpoint-up($bp) {
+        display: none !important;
+      }
+    }
+    .is-hidden\@#{$bp}- {
+      @include media-breakpoint-down($bp) {
+        display: none !important;
+      }
+    }
+  }
+}
+@mixin noselect() {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select  : none;
+  /* Chrome/Safari/Opera */
+  -khtml-user-select   : none;
+  /* Konqueror */
+  -moz-user-select     : none;
+  /* Firefox */
+  -ms-user-select      : none;
+  /* Internet Explorer/Edge */
+  user-select          : none;
+  @content;
+}
+
+
+
+
+/// Mixin to customize scrollbars
+/// Beware, this does not work in all browsers
+/// @param {Length} $size - Horizontal scrollbar's height and vertical scrollbar's width
+/// @param {Color} $foreground-color - Scrollbar's color
+/// @param {Color} $background-color [mix($primary, white, 75%)] - Scrollbar's color
+/// @example scss - Scrollbar styling
+///   @include scrollbars(.5em, slategray);
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
+  ::-webkit-scrollbar {
+    width : $size;
+    height: $size;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: $background-color;
+  }
+  // For Internet Explorer
+  body {
+    scrollbar-face-color : $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+}
+
+// Utilities
+// -------------------------
+
+/// Centerer mixin to center object on screen.
+/// @param {Boolean} $horizontal - Align horizontal
+/// @param {Boolean} $vertical - Align vertical
+/// @access public
+@mixin centerer($horizontal: true, $vertical: true) {
+  position: absolute;
+  @if ($horizontal and $vertical) {
+    top      : 50%;
+    left     : 50%;
+    transform: translate(-50%, -50%);
+  }
+  @else if ($horizontal) {
+    left     : 50%;
+    transform: translate(-50%, 0);
+  }
+  @else if ($vertical) {
+    top      : 50%;
+    transform: translate(0, -50%);
+  }
+}
+
+
+
+/// Clearfix
+/// @access public
+@mixin clearfix() {
+  &:after,
+  &:before {
+    display: table; // 2
+    content: ' '; // 1
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+
+/// Box Shadows
+/// @access public
+/// @example scss - Using box-shadow
+///   @include box-shadow(#000);
+@mixin box-shadow($shadows...) {
+  -moz-box-shadow   : $shadows;
+  -webkit-box-shadow: $shadows;
+  box-shadow        : $shadows;
+}
+
+/// Linear-gradient
+/// @access public
+/// @example scss - Using box-shadow
+///   @include box-shadow(#000);
+@mixin linear-gradient($color-from, $color-to) {
+  background-color: $color-from; // Old browsers
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$color-from), color-stop(100%,$color-to)); // Chrome, Safari4+
+  background-image: -webkit-linear-gradient(top, $color-from 0%, $color-to 100%); // Chrome10+, Safari5.1+
+  background-image: -moz-linear-gradient(top, $color-from 0%, $color-to 100%); // FF3.6+
+  background-image: -ms-linear-gradient(top, $color-from 0%, $color-to 100%); // IE10+
+  background-image: -o-linear-gradient(top, $color-from 0%, $color-to 100%); // Opera 11.10+
+  background-image: linear-gradient(to bottom, $color-from 0%, $color-to 100%); // W3C
+  filter:progid:DXImageTransform.Microsoft.gradient( startColorstr=  '#{$color-from}', endColorstr='#{$color-to}', GradientType=0 ); // IE6-9
+}
+
+/// Linear-gradient
+/// @access public
+/// @example scss - Using box-shadow
+///   @include box-shadow(#000);
+@mixin directional-gradient($color-from, $color-to, $deg: 45deg) {
+  background-color: $color-from; // Old browsers
+  background-image: -webkit-gradient(linear, left bottom, right top, color-stop(0%,$color-from), color-stop(100%,$color-to)); // Chrome, Safari4+
+  background-image: -webkit-linear-gradient($deg, $color-from 0%, $color-to 100%); // Chrome10+, Safari5.1+
+  background-image: -moz-linear-gradient($deg, $color-from 0%, $color-to 100%); // FF3.6+
+  background-image: -ms-linear-gradient($deg, $color-from 0%, $color-to 100%); // IE10+
+  background-image: -o-linear-gradient($deg, $color-from 0%, $color-to 100%); // Opera 11.10+
+  background-image: linear-gradient($deg, $color-from 0%, $color-to 100%); // W3C
+  filter:progid:DXImageTransform.Microsoft.gradient( startColorstr=  '#{$color-from}', endColorstr='#{$color-to}', GradientType=1 ); // IE6-9
+}
+
+/// Transform mixen
+/// @access public
+/// @param {String} $transform - The transform to apply
+@mixin transform($transform...) {
+  -webkit-transform: $transform;
+  -ms-transform    : $transform;
+  transform        : $transform;
+}
+
+// Transitions
+// --------------------------------------------------
+
+/// transition
+/// @access public
+/// @example scss - Using box-shadow
+///   @include transition(ease, .5s);
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+  -moz-transition   : $transition;
+  transition        : $transition;
+}
+
+/// transition-property
+/// @access public
+/// @example scss - Using box-shadow
+///   @include box-shadow(#000);
+@mixin transition-property($property...) {
+  -webkit-transition-property: $property;
+  -moz-transition-property   : $property;
+  transition-property        : $property;
+}
+
+/// transition-duration
+/// @access public
+/// @example scss - Using box-shadow
+///   @include box-shadow(#000);
+@mixin transition-duration($duration...) {
+  -webkit-transition-duration: $duration;
+  -moz-transition-duration   : $duration;
+  transition-duration        : $duration;
+}
+
+/// transition-timing-function
+/// @access public
+/// @example scss - Using box-shadow
+///   @include box-shadow(#000);
+@mixin transition-timing-function($function...) {
+  -webkit-transition-timing-function: $function;
+  -moz-transition-timing-function   : $function;
+  transition-timing-function        : $function;
+}
+
+// Animations
+// --------------------------------------------------
+
+/// animation-name
+/// @access public
+/// @example scss - Using box-shadow
+///   @include animation-name('test');
+@mixin animation-name($name) {
+  -webkit-animation-name: $name;
+  -moz-animation-name   : $name;
+  animation-name        : $name;
+}
+
+/// animation-duration
+/// @access public
+/// @example scss - Using box-shadow
+///   @include box-shadow(#000);
+@mixin animation-duration($duration) {
+  -webkit-animation-duration: $duration;
+  -moz-animation-duration   : $duration;
+  animation-duration        : $duration;
+}
+
+/// animation-direction
+/// @access public
+/// @example scss - Using box-shadow
+///   @include box-shadow(#000);
+@mixin animation-direction($direction) {
+  -webkit-animation-direction: $direction;
+  -moz-animation-direction   : $direction;
+  animation-direction        : $direction;
+}
+
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+
+  &:before {
+    display    : block;
+    content    : '';
+    width      : 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+
+  > .content {
+    position: absolute;
+    top     : 0;
+    left    : 0;
+    right   : 0;
+    bottom  : 0;
+  }
+}

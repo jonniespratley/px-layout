@@ -1,0 +1,368 @@
+<html>
+  <head>
+    <title>px-drawer demo</title>
+    <!-- TODO: Meta Tags -->
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- TODO: Dependencies -->
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <!-- TODO: Theme -->
+    <link rel="import" href="../../px-theme/px-app.html">
+    <link rel="import" href="../../px-theme/px-theme.html">
+    <!-- TODO: Layout + Partials -->
+    <link rel="import" href="../../px-partials/px-partials.html">
+    <link rel="import" href="../px-drawer.html">
+    <link rel="import" href="../../px-navbar/px-navbar.html">
+    <link rel="import" href="../../px-layout/px-layout.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html"/>
+    <link rel="import" href="../../px-demo-helpers/px-demo-helpers.html"/>
+    <link rel="import" href="../../px-table-view/px-table-view.html">
+    <style media="screen">
+      body,
+      html {
+        background-color: #eee !important;
+      }
+      .demo-container {
+        position: relative;
+        overflow: hidden;
+        min-height: 50vh;
+      }
+    </style>
+    <script type="text/javascript">
+      var user = {
+        username: 'jonnie.spratley',
+        name: 'Jonnie Spratley',
+        email: 'jonnie.spratley@ge.com',
+        image: 'https://goo.gl/WKu72K'
+      };
+      var navItems = [
+        {
+          label: 'Dashboards',
+          icon: 'fa:fa-tachometer'
+        }, {
+          label: 'Alerts',
+          icon: 'fa:fa-exclamation-triangle'
+        }, {
+          label: 'Cases',
+          icon: 'fa:fa-briefcase'
+        }, {
+          label: 'Analysis',
+          icon: 'fa:fa-bar-chart'
+        }
+      ];
+    </script>
+  </head>
+  <body>
+    <div class="viewport u-p">
+      <h1 class="beta">px-drawer</h1>
+      <p>
+        The
+        <code>px-drawer</code>
+        element lets you store content off screen.
+      </p>
+      <!-- TODO: Drawer Alt 1 -->
+      <section>
+        <h2>Drawer Alt 1</h2>
+        <demo-snippet>
+          <template>
+            <template id="demo-1" is="dom-bind">
+              <style is="custom-style">
+                .demo-container-1 {
+                  position: relative;
+                  overflow: hidden;
+                  height: 50vh;
+                }
+                .drawer-alt-1 {
+                  --px-drawer: {
+                    background: #242326;
+                    color: #fff;
+                  }
+                }
+                .drawer-alt-1__user {
+                  --px-table-row-media-img: {
+                    width: 24px;
+                  }
+                }
+                .drawer-alt-1__user-table {
+                  position: absolute;
+                  bottom: 0;
+                  width: 100%;
+                  --px-table-view: {
+                    background-color: #323232;
+                    color: #fff;
+                  }
+                }
+                .drawer-alt-1 .selected {
+                  background-color: #0a9ec1;
+                  color: #fff;
+                }
+              </style>
+              <div class="demo-container-1">
+                <px-drawer-layout>
+                  <px-drawer id="drawer-1" class="drawer-alt-1">
+                    <px-table-view class="drawer-alt-1__table" selected-class="selected" selected="0">
+                      <template is="dom-repeat" items="[[navItems]]">
+                        <px-table-row title="{{item.label}}" icon="{{item.icon}}" icon-size="24" modifier="tappable"></px-table-row>
+                      </template>
+                    </px-table-view>
+                    <px-table-view class="drawer-alt-1__user-table">
+                      <px-table-row class="drawer-alt-1__user" title="{{user.name}}" image="{{user.image}}" modifier="tappable" icon-right="fa:fa-cog"></px-table-row>
+                    </px-table-view>
+                  </px-drawer>
+                  <px-navbar title="Example Drawer Alt 1">
+                    <button drawer-toggle right>Toggle Drawer</button>
+                  </px-navbar>
+                  <div class="layout">
+                    <div class="layout__item">
+                      <section class="u-p">
+                        <h2>Example Drawer</h2>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                          dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                      </section>
+                    </div>
+                  </div>
+                </px-drawer-layout>
+              </div>
+            </template>
+            <script type="text/javascript">
+              var scope = document.getElementById('demo-1');
+              scope.navItems = navItems;
+              scope.user = user;
+            </script>
+          </template>
+        </demo-snippet>
+      </section>
+      <!-- TODO: Drawer Alt 2 -->
+      <section>
+        <h2>Drawer Alt 2</h2>
+        <demo-snippet>
+          <template>
+            <template id="demo-2" is="dom-bind">
+              <style is="custom-style">
+                .demo-container-2 {
+                  position: relative;
+                  overflow: hidden;
+                  height: 50vh;
+                }
+                .drawer-alt-2 {
+                  --px-drawer: {
+                    background: #242326;
+                    color: #fff;
+                  }
+                }
+                .drawer-alt-2__user {
+                  --px-table-row-media-img: {
+                    width: 24px;
+                  }
+                }
+                .drawer-alt-2__user-table {
+                  --px-table-view: {
+                    background-color: #323232;
+                    color: #fff;
+                  }
+                }
+                .drawer-alt-2 .selected {
+                  background-color: #0a9ec1;
+                  color: #fff;
+                }
+              </style>
+              <div class="demo-container-2">
+                <px-drawer-layout id="layout2">
+                  <px-drawer id="drawer-2" class="drawer-alt-2">
+                    <px-table-view class="drawer-alt-2__user-table">
+                      <px-table-row title="{{user.name}}" image="{{user.image}}" modifier="tappable nav-right" class="drawer-alt-2__user"></px-table-row>
+                    </px-table-view>
+                    <px-table-view class="drawer-alt-2__table" selected-class="selected" selected="0">
+                      <template is="dom-repeat" items="[[navItems]]">
+                        <px-table-row title="{{item.label}}" icon="{{item.icon}}" icon-size="24" modifier="tappable"></px-table-row>
+                      </template>
+                    </px-table-view>
+                  </px-drawer>
+                  <px-navbar title="Example Drawer Alt 2">
+                    <button drawer-toggle right>Toggle Drawer</button>
+                  </px-navbar>
+                  <div class="layout">
+                    <div class="layout__item">
+                      <section class="u-p">
+                        <h2>Example Drawer</h2>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                          dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                      </section>
+                    </div>
+                  </div>
+                </px-drawer-layout>
+              </div>
+            </template>
+            <script type="text/javascript">
+              var scope = document.getElementById('demo-2');
+              scope.navItems = navItems;
+              scope.user = user;
+            </script>
+          </template>
+        </demo-snippet>
+      </section>
+      <!-- TODO: Drawer Alt 3 -->
+      <section>
+        <h2>Drawer Alt 3</h2>
+        <demo-snippet>
+          <template>
+            <template id="demo-3" is="dom-bind">
+              <style is="custom-style">
+                .demo-container-3 {
+                  position: relative;
+                  overflow: hidden;
+                  height: 60vh;
+                }
+                .drawer-alt-3 {
+                  --px-drawer: {
+                    background: #242326;
+                    color: #fff;
+                  }
+                }
+                .drawer-alt-3__user {
+                  --px-table-row-media-img: {
+                    width: 24px;
+                  }
+                }
+                .drawer-alt-3__user-table {
+                  --px-table-view: {
+                    background-color: #323232;
+                    color: #fff;
+                  }
+                }
+                .drawer-alt-3 .selected {
+                  background-color: #0a9ec1;
+                  color: #fff;
+                }
+              </style>
+              <div class="demo-container-3">
+                <px-drawer-layout>
+                  <px-drawer id="drawer-3" class="drawer-alt-3">
+                    <px-table-view class="drawer-alt-3__user-table">
+                      <px-table-row image="{{user.image}}" modifier="flush"></px-table-row>
+                      <px-table-row title="{{user.name}}" body="{{user.email}}" modifier="tappable nav-right"></px-table-row>
+                    </px-table-view>
+                    <px-table-view class="drawer-alt-3__table" selected-class="selected" selected="0">
+                      <template is="dom-repeat" items="[[navItems]]">
+                        <px-table-row title="{{item.label}}" icon="{{item.icon}}" icon-size="24" modifier="tappable"></px-table-row>
+                      </template>
+                    </px-table-view>
+                  </px-drawer>
+                  <px-navbar title="Example Drawer Alt 3">
+                    <button drawer-toggle right>Toggle Drawer</button>
+                  </px-navbar>
+                  <div class="layout">
+                    <div class="layout__item">
+                      <section class="u-p">
+                        <h2>Example Drawer</h2>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                          dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                      </section>
+                    </div>
+                  </div>
+                </px-drawer-layout>
+              </div>
+            </template>
+            <script type="text/javascript">
+              var scope = document.getElementById('demo-3');
+              scope.navItems = navItems;
+              scope.user = user;
+            </script>
+          </template>
+        </demo-snippet>
+      </section>
+      <!-- TODO: Drawer - Mini - Left - Tablet -->
+      <section>
+        <h2>Drawer - Mini</h2>
+        <demo-snippet>
+          <template>
+            //Code
+          </template>
+        </demo-snippet>
+      </section>
+      <!-- TODO: Drawer - Persistent - Left - Desktop-->
+      <section>
+        <h2>Drawer - Static</h2>
+        <demo-snippet>
+          <template>
+            <template id="demo-5" is="dom-bind">
+              <style is="custom-style">
+                .demo-container-5 {
+                  background-color: #333;
+                  position: relative;
+                  overflow: hidden;
+                  min-height: 60vh;
+                  --px-header-layout-content:{
+                    background-color: #fff;
+                  }
+                }
+                .drawer-alt-5 {
+                  --px-drawer: {
+                    background: #242326;
+                    color: #fff;
+                  }
+                }
+                .drawer-alt-5__user {
+                  --px-table-row-media-img: {
+                    width: 24px;
+                  }
+                }
+                .drawer-alt-5__user-table {
+                  position: absolute;
+                  bottom: 0;
+                  width: 100%;
+                  --px-table-view: {
+                    background-color: #323232;
+                    color: #fff;
+                  }
+                }
+                .drawer-alt-5 .selected {
+                  background-color: #0a9ec1;
+                  color: #fff;
+                }
+              </style>
+
+                <px-header-layout id="layout5" class="demo-container-5">
+                  <px-header></px-header>
+                  <px-drawer id="drawer-5" class="drawer-alt-5" type="static">
+                    <px-table-view class="drawer-alt-5__user-table">
+                      <px-table-row title="{{user.name}}" image="{{user.image}}" modifier="tappable nav-right" class="drawer-alt-5__user"></px-table-row>
+                    </px-table-view>
+                    <px-table-view class="drawer-alt-5__table" selected-class="selected" selected="0">
+                      <template is="dom-repeat" items="[[navItems]]">
+                        <px-table-row title="{{item.label}}" icon="{{item.icon}}" icon-size="24" modifier="tappable"></px-table-row>
+                      </template>
+                    </px-table-view>
+                  </px-drawer>
+                  <px-navbar title="Example Drawer 5"></px-navbar>
+                  <div class="layout">
+                    <div class="layout__item">
+                      <section class="u-p">
+                        <h2>Example Drawer</h2>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                          dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                      </section>
+                    </div>
+                  </div>
+                </px-header-layout>
+
+            </template>
+            <script type="text/javascript">
+              var scope = document.getElementById('demo-5');
+              scope.navItems = navItems;
+              scope.user = user;
+            </script>
+          </template>
+        </demo-snippet>
+      </section>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,283 @@
+@import "variables";
+@import "mixins";
+
+
+
+
+
+
+///Display
+$displays: none, block, inline-block, inline, flex;
+@each $display in ($displays) {
+  .#{$utility-prefix}display--#{$display} {
+    display: ($display) !important;
+  }
+}
+///Position
+@each $position in (fixed, relative, absolute, static) {
+  .#{$utility-prefix}position--#{$position} {
+    position: ($position) !important;
+  }
+}
+///z-index
+@each $z-index in (-1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 9999) {
+  .#{$utility-prefix}zindex--#{$z-index} {
+    z-index: ($z-index) !important;
+  }
+}
+///text-transform
+@each $position in (uppercase, lowercase, capitalize) {
+  .#{$utility-prefix}text--#{$position} {
+    text-transform: ($position) !important;
+  }
+}
+///text-align
+@each $align in (left, center, right, justify) {
+  .#{$utility-prefix}text--#{$align} {
+    text-align: ($align) !important;
+  }
+}
+///font-weight
+@each $weight in (italic, oblique, normal, bold, bolder, lighter) {
+  .#{$utility-prefix}font--#{$weight} {
+    font-weight: ($weight) !important;
+  }
+}
+///overflow
+@each $overflow in (none, auto, scroll, scroll-x, scroll-y, inherit, hidden, visible) {
+  .#{$utility-prefix}overflow--#{$overflow} {
+    overflow: ($overflow) !important;
+  }
+}
+/// Transition properties
+@each $transition in (background, color, opacity, transform, all) {
+  .#{$utility-prefix}transition--#{$transition} {
+    transition-property: ($transition) !important;
+  }
+}
+/// Cursors
+@each $cursor in (pointer, default, auto, none, not-allowed, help, progress, cell, wait, text, copy, move, no-drop, col-resize, context-menu, row-resize, n-resize, e-resize, s-resize, w-resize, grab, grabbing, zoom-in, zoom-out) {
+  .#{$utility-prefix}cursor--#{$cursor} {
+    cursor: ($cursor) !important;
+  }
+}
+
+.#{$utility-prefix}clearfix,
+.clearfix {
+  @include clearfix
+}
+// Scrolling
+// ------------------------------------------
+.u-scroll--x,
+.u-scroll--y {
+  -webkit-overflow-scrolling: touch;
+}
+
+.u-scroll--x {
+  overflow-x: auto;
+}
+
+.u-scroll--y {
+  overflow-y: auto;
+}
+// TODO: Layouts
+.#{$utility-prefix}fluid,
+.#{$utility-prefix}full,
+.#{$utility-prefix}full-width {
+  width: 100%;
+}
+// Floats
+// ------------------------------------------
+.#{$utility-prefix}float {
+  &.right{
+    float: right !important;
+  }
+
+  &.left{
+    float: left !important;
+  }
+}
+// Images
+// ------------------------------------------
+img {
+  &.#{$utility-prefix}full-width {
+    width    : 100%;
+    max-width: 100%;
+  }
+
+  &.responsive {
+    height   : auto;
+    width    : 100%;
+    max-width: 100%;
+  }
+
+  &.round {
+    border-radius: 50%;
+  }
+}
+
+// Borders
+// ------------------------------------------
+.#{$utility-prefix}no-border {
+  border: 0 !important;
+}
+
+// Text decoration
+// ------------------------------------------
+.t-d-u,
+.text-decoration--underline {
+  text-decoration: underline;
+}
+
+.t-d-s,
+.text-decoration--strike {
+  text-decoration: line-through;
+}
+
+
+.text-decoration--none {
+  text-decoration: none;
+}
+// Font Colors
+// ------------------------------------------
+.u-color--primary,
+a.u-color--primary {
+  color: $primary-blue !important;
+}
+
+.u-color--alt,
+a.u-color--alt {
+  color: $gray5 !important;
+}
+
+.u-color--dark,
+a.u-color--dark {
+  color: $gray9 !important;
+}
+
+.u-color--light,
+a.u-color--light {
+  color: $gray2 !important;
+}
+
+.u-color--green,
+a.u-color--green {
+  color: $green !important;
+}
+
+.u-color--red,
+a.u-color--red {
+  color: $red !important;
+}
+
+.u-color--blue,
+a.u-color--blue {
+  color: $blue;
+}
+
+.u-color--yellow,
+a.u-color--yellow {
+  color: $yellow;
+}
+
+.u-color--white,
+a.u-color--white {
+  color: $white !important;
+}
+
+.#{$utility-prefix}hover-btn-outline {
+  &:hover {
+    background: transparent;
+    border    : 1px solid;
+  }
+}
+
+.#{$utility-prefix}hover-btn-outline-reverse {
+  &:hover {
+    background: auto;
+    border    : 1px solid transparent;
+  }
+}
+// Hover Opacity
+// ------------------------------------------
+.#{$utility-prefix}hover-opacity-0 {
+  &:hover {
+    opacity: 0;
+  }
+}
+
+.#{$utility-prefix}hover-opacity-25 {
+  &:hover {
+    opacity: 0.25;
+  }
+}
+
+.#{$utility-prefix}hover-opacity-50 {
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.#{$utility-prefix}hover-opacity-75 {
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+.#{$utility-prefix}hover-opacity-100 {
+  &:hover {
+    opacity: 1;
+  }
+}
+// Hover Scale
+// ------------------------------------------
+.#{$utility-prefix}hover-scale-0 {
+  &:hover {
+    transform: scale(0);
+  }
+}
+
+.#{$utility-prefix}hover-scale-25 {
+  &:hover {
+    transform: scale(.25);
+  }
+}
+
+.#{$utility-prefix}hover-scale-50 {
+  &:hover {
+    transform: scale(0.5);
+  }
+}
+
+.#{$utility-prefix}hover-scale-100 {
+  &:hover {
+    transform: scale(1);
+  }
+}
+
+.#{$utility-prefix}hover-scale-105 {
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.#{$utility-prefix}hover-scale-125 {
+  &:hover {
+    transform: scale(1.25);
+  }
+}
+
+/* ARIA + Screen reader assists */
+.sr-only {
+  height  : 1px;
+  width   : 1px;
+  position: absolute;
+  overflow: hidden;
+  margin  : -1px;
+  clip    : rect(0,0,0,0);
+  border  : 0;
+}
+
+[aria-hidden="true"] {
+  display: none;
+}

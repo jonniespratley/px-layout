@@ -1,0 +1,140 @@
+<html>
+  <head>
+    <title>px-action-sheet demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="../webcomponentsjs/webcomponents.min.js"></script>
+    <link rel="import" href="../polymer/polymer.html">
+    <link rel="import" href="../px-theme/px-app.html">
+    <link rel="import" href="../px-partials/px-partials.html">
+    <link rel="import" href="../px-table-view/px-table-view.html">
+    <link rel="import" href="../px-theme/px-theme.html">
+    <link rel="import" href="../iron-demo-helpers/demo-snippet.html"/>
+    <link rel="import" href="../px-demo-helpers/px-demo-helpers.html"/>
+    <link rel="import" href="px-action-sheet.html">
+  
+    <style media="screen">
+      body,
+      html {
+        background: #eee !important;
+      }
+      .position-relative {
+        position: relative;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="viewport u-pt">
+      <div class="u-m+">
+        <h1 class="beta">px-action-sheet</h1>
+        <p>The
+          <code>px-action-sheet</code>
+          slides up from the bottom of the screen to reveal more content.</p>
+        <p>
+          To view the mobile demo visit
+          <a href="mobile-demo.html" target="_blank">here.</a>
+        </p>
+      </div>
+      <div class="u-m+">
+        <h2>Example w/ grid</h2>
+        <demo-snippet>
+          <template>
+            <button class="btn--large btn btn--tertiary btn--full" type="button" onclick="document.getElementById('actionsheet1').toggle()">Toggle Action Sheet
+            </button>
+            <px-action-sheet id="actionsheet1">
+              <px-table-view modifier="row responsive" row-modifier="col center tappable">
+                <px-table-row icon="fa:fa-square" icon-size="32" title="Single-line item"></px-table-row>
+                <px-table-row icon="fa:fa-square" icon-size="32" title="Single-line item"></px-table-row>
+                <px-table-row icon="fa:fa-square" icon-size="32" title="Single-line item"></px-table-row>
+                <px-table-row icon="fa:fa-square" icon-size="32" title="Single-line item"></px-table-row>
+                <px-table-row icon="fa:fa-square" icon-size="32" title="Single-line item"></px-table-row>
+              </px-table-view>
+            </px-action-sheet>
+          </template>
+        </demo-snippet>
+      </div>
+      <div class="u-m+">
+        <h2>Example w/ settings</h2>
+        <demo-snippet>
+          <template>
+            <button class="btn--large btn btn--tertiary btn--full" type="button" onclick="document.getElementById('actionsheet2').toggle()">Toggle Action Sheet
+            </button>
+            <px-action-sheet id="actionsheet2" modifier="">
+              <px-table-view>
+                <px-table-row title="Offline Database" icon="fa:fa-database" modifier="switch">
+                  <px-table-row-switch name="cb1" size="small"></px-table-row-switch>
+                </px-table-row>
+                <px-table-row title="Debug" icon="fa:fa-bug" modifier="switch">
+                  <px-table-row-switch name="cb2" size="small"></px-table-row-switch>
+                </px-table-row>
+                <px-table-row title="WiFi" icon="fa:fa-wifi" modifier="switch">
+                  <px-table-row-switch name="cb3" size="small"></px-table-row-switch>
+                </px-table-row>
+              </px-table-view>
+            </px-action-sheet>
+          </template>
+        </demo-snippet>
+      </div>
+      <div class="u-m+">
+        <h2>Example w/ menu</h2>
+        <demo-snippet>
+          <template>
+            <button class="btn--large btn btn--tertiary btn--full" type="button" onclick="document.getElementById('actionsheet5').toggle()">Toggle Action Sheet
+            </button>
+            <px-action-sheet id="actionsheet5">
+              <px-table-view>
+                <px-table-row icon="fa:fa-square" modifier="tappable" title="Single-line item"></px-table-row>
+                <px-table-row icon="fa:fa-square" modifier="tappable" title="Single-line item"></px-table-row>
+                <px-table-row icon="fa:fa-square" modifier="tappable" title="Single-line item"></px-table-row>
+                <px-table-row icon="fa:fa-square" modifier="tappable" title="Single-line item"></px-table-row>
+              </px-table-view>
+            </px-action-sheet>
+          </template>
+        </demo-snippet>
+      </div>
+      <div class="u-m+">
+        <h2>Example w/ media controls</h2>
+        <demo-snippet>
+          <template>
+            <button class="btn--large btn btn--tertiary btn--full" type="button" onclick="document.getElementById('actionsheet6').toggle()">Toggle Action Sheet
+            </button>
+            <px-action-sheet id="actionsheet6" modifier="persistent">
+              <div class="media__controller box flex flex--col">
+                <div class="flex flex--middle u-p--">
+                  <div class="media__icon u-p--">
+                    <px-icon icon="fa:fa-volume-up"></px-icon>
+                  </div>
+                  <div class="media__track-number u-p-">
+                    <span class="muted">#1</span>
+                  </div>
+                  <div class="media__track-name flex__item flex flex--col u-p-">
+                    <span>Deadmau5</span>
+                    <small class="muted">Snow Cone</small>
+                  </div>
+                  <div class="media__track-time u-p-">
+                    <span class="muted">4:54</span>
+                  </div>
+                  <div class="media__controls muted flex__item flex flex--spaced u-p-">
+                    <px-button icon="fa:fa-backward" modifier="bare"></px-button>
+                    <px-button icon="fa:fa-play" modifier="bare"></px-button>
+                    <px-button icon="fa:fa-forward" modifier="bare"></px-button>
+                  </div>
+                </div>
+              </div>
+            </px-action-sheet>
+          </template>
+        </demo-snippet>
+      </div>
+      <div class="u-m+">
+        <h2>Example full width</h2>
+        <demo-snippet>
+          <template>
+            <div class="flex flex--center flex--middle">
+              <device-layout-viewer device="tablet" src="./demo/index.html"></device-layout-viewer>
+            </div>
+          </template>
+        </demo-snippet>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<html>
+	<head>
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<!-- TODO: Dependencies -->
+		<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html"/>
+		<link rel="import" href="../../px-theme/px-app.html">
+		<link rel="import" href="../../px-theme/px-theme.html">
+		<link rel="import" href="../../px-layout/px-layout.html">
+		<link rel="import" href="../px-partials.html">
+		<script src="../demo/demo.js"></script>
+		<title>px-title-bar demo</title>
+		<style media="screen">
+			body,
+			html {
+				background: #eee !important;
+			}
+			.bg-dark {
+				background-color: #333;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="viewport u-pt">
+			<h1 class="beta">px-title-bar</h1>
+			<p>
+				The
+				<code>px-title-bar</code>
+				is best used to display the name of a widget or the contents within a view and may provide actions associated to the widget or content.
+				<button type="button" onclick="showCode()">Show code</button>
+				<button type="button" onclick="hideCode()">Hide code</button>
+			</p>
+			<ol id="toc"></ol>
+			<script type="text/javascript">
+				document.addEventListener('WebComponentsReady', function () {
+					createToc('toc');
+				});
+			</script>
+			<div class="">
+				<h2>Default example</h2>
+				<demo-snippet>
+					<template>
+						<px-title-bar title="Widget Title"></px-title-bar>
+					</template>
+				</demo-snippet>
+			</div>
+			<div class="">
+				<h2>Example w/ icons</h2>
+				<demo-snippet>
+					<template>
+						<px-title-bar title="Widget Title">
+							<px-button modifier="tertiary icon" icon-size="16" icon="fa:fa-download"></px-button>
+							<px-button modifier="tertiary icon" icon-size="16" icon="fa:fa-pencil"></px-button>
+						</px-title-bar>
+					</template>
+				</demo-snippet>
+			</div>
+			<div class="">
+				<h2>Example w/ buttons</h2>
+				<demo-snippet>
+					<template>
+						<px-title-bar title="Widget Title">
+								<px-button modifier="tertiary">Action 1</px-button>
+								<px-button modifier="tertiary">Action 2</px-button>
+						</px-title-bar>
+					</template>
+				</demo-snippet>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>px-halo demo</title>
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<!-- TODO: Dependencies -->
+		<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html"/>
+		<link rel='stylesheet' href='https://predixdev.github.io/px-library-design/css/style.css'>
+		<link rel="import" href="../px-partials.html">
+		<style media="screen">
+			.padding-10 {
+				padding: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="viewport">
+			<h2>px-halo</h2>
+			<demo-snippet class="u-mb">
+				<template id="">
+					<div class="flex flex--wrap">
+						<px-halo size="16"></px-halo>
+						<px-halo size="32"></px-halo>
+						<px-halo size="48"></px-halo>
+						<px-halo size="72"></px-halo>
+						<px-halo size="128"></px-halo>
+						<px-halo size="256"></px-halo>
+					</div>
+				</template>
+			</demo-snippet>
+			<demo-snippet>
+				<template id="">
+					<px-halo size="512"></px-halo>
+				</template>
+			</demo-snippet>
+		</div>
+	</body>
+</html>

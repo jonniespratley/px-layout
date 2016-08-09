@@ -1,0 +1,273 @@
+<!--
+/*
+ * Copyright (c) 2016 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+ -->
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../px-media-query/px-media-query.html">
+
+<link rel="import" href="../../px-drawer/px-drawer.html">
+<link rel="import" href="../px-layout-styles.html">
+
+<!--
+The `px-drawer-layout` aims to help Industrial Internet developers create responsive layouts. This element is used to layout a side drawer and other content.
+When the viewport is less than the `responsiveWidth` the drawer will be hidden.
+
+[![Build Status](https://travis-ci.org/PredixDev/px-layout.svg?branch=master)](https://travis-ci.org/PredixDev/px-layout)
+
+
+### Usage
+
+```
+<link rel="import" href="../px-layout/px-drawer-layout/px-drawer-layout.html"/>
+<px-drawer-layout>
+  <px-drawer>
+    drawer content
+  </px-drawer>
+  <section content>
+    main content
+  </section>
+</px-drawer-layout>
+```
+
+### Content attributes
+
+Attribute | Description
+----------------|-------------
+`drawer-toggle` | The drawer toggle element.
+`content` | The layouts content.
+
+### Styling
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--px-drawer-layout` | Mixin applied to element | {}
+`--px-drawer-layout-content` | Mixin applied to elements content | {}
+
+@element px-drawer-layout
+@demo ./px-drawer-layout/demo.html
+@homepage index.html
+-->
+<dom-module id="px-drawer-layout">
+  <style include="px-layout-css"></style>
+  <template strip-whitespace>
+    <style>
+      :host {
+        display: block;
+        position: relative;
+      }
+      :host.has-navbar ::content .drawer-spacer{
+        min-height: 57px;
+      }
+      :host.has-navbar .l-drawer-layout__container{
+        padding-top: 56px;
+      }
+      :host .l-drawer-layout {
+        position: relative;
+        transition: all 0.3s;
+        display: flex;
+        @apply(--px-drawer-layout);
+      }
+      :host .l-drawer-layout__drawer {
+        position: relative;
+        height:100%;
+        @apply(--px-drawer-layout-drawer);
+      }
+      :host .l-drawer-layout__container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        @apply(--px-drawer-layout-container);
+      }
+      :host .l-drawer-layout__content{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        @apply(--px-drawer-layout-content);
+      }
+
+      :host .l-drawer-layout__content:not(.is-narrow) ::content [drawer-toggle] {
+        display: none;
+      }
+        /* Hide the drawer-toggle button on large screens*/
+        :host .l-drawer-layout__container:not(.is-narrow) ::content [drawer-toggle] {
+          display: none;
+        }
+    </style>
+    <div id="container" class="l-drawer-layout flex flex--stretch">
+      <div id="drawerContainer" class="l-drawer-layout__drawer">
+        <content id="drawerContent" select="px-drawer"></content>
+      </div>
+
+      <div id="contentContainer" class="l-drawer-layout__container">
+        <content id="navbarContent" select="px-navbar"></content>
+        <content id="content" select=":not(px-drawer):not(px-navbar)"></content>
+      </div>
+
+    </div>
+    <px-media-query query="[[_computeMediaQuery(forceNarrow, responsiveWidth)]]" on-query-matches-changed="_onQueryMatchesChanged"></px-media-query>
+  </template>
+  <script>
+    Polymer({
+      is: 'px-drawer-layout',
+      behaviors: [Polymer.IronResizableBehavior],
+      hostAttributes: {},
+      properties: {
+        /**
+       * If true, ignore `responsiveWidth` setting and force the narrow layout.
+       */
+        forceNarrow: {
+          type: Boolean,
+          value: false
+        },
+        /**
+       * If the viewport's width is smaller than this value, the panel will change to narrow
+       * layout. In this mode the drawer will be closed.
+       */
+        responsiveWidth: {
+          type: String,
+          value: '768px'
+        },
+        /**
+        * Returns true if it is in narrow layout.
+        */
+        narrow: {
+          type: Boolean,
+          reflectToAttribute: true,
+          readOnly: true
+        }
+      },
+      /**
+      * A reference to the px-drawer element. (if it exists)
+      * @property drawer
+      * return Element
+      */
+      get drawer() {
+        return Polymer.dom(this.$.drawerContent).getDistributedNodes()[0];
+      },
+      /**
+      * A reference to the px-navbar element. (if it exists)
+      * @property navbar
+      * return Element
+      */
+      get navbar() {
+        return Polymer.dom(this.$.navbarContent).getDistributedNodes()[0];
+      },
+      listeners: {
+        'tap': '_tapHandler',
+        'px-drawer-layout-reset': 'resetLayout'
+      },
+      observers: ['resetLayout(narrow, isAttached)'],
+
+      attached: function(){
+        this.async(function(){
+          this.toggleClass('has-navbar', (this.navbar ? true : false), this.$.layoutContent);
+          if(this.drawer){
+            this.drawer.fitInto = this.$.drawerContainer;
+          }
+        });
+      },
+
+      /**
+       * Handle when a tap event occurs, when if the element as a `drawer-toggle` attribute
+       ( toggle the drawer.
+       */
+      _tapHandler: function (e) {
+        var target = Polymer.dom(e).localTarget;
+        if (target && target.hasAttribute('drawer-toggle') || target && target.parentElement.hasAttribute('drawer-toggle')) {
+          this.drawer.toggle();
+        }
+      },
+      /**
+       * Handle resetting the layout and either hiding or revealing the drawer.
+       * @event px-layout-reset
+       */
+      resetLayout: function () {
+        this.debounce('_resetLayout', function () {
+          if (!this.isAttached) {
+            console.warn('notAttached');
+            return;
+          }
+          var drawer = this.drawer;
+          var drawerWidth = this.drawer.getWidth();
+          var contentContainer = this.$.contentContainer;
+
+
+          if (this.narrow) {
+            drawer.opened = drawer.persistent = false;
+            drawer.type = 'temporary';
+            contentContainer.classList.add('is-narrow');
+            contentContainer.style.marginLeft = '';
+            contentContainer.style.marginRight = '';
+            if (this.navbar && this.navbar.fixed) {
+              this.navbar.$$('.navbar').style.left = '';
+            }
+
+          } else {
+            drawer.opened = drawer.persistent = true;
+            drawer.type = 'persistent';
+            contentContainer.classList.remove('is-narrow');
+
+            if (this.navbar && this.navbar.fixed) {
+              this.navbar.$$('.navbar').style.left = drawerWidth + 'px';
+            }
+
+            if (drawer.align == 'right') {
+              contentContainer.style.marginLeft = '';
+              contentContainer.style.marginRight = drawerWidth + 'px';
+            } else {
+              contentContainer.style.marginLeft = drawerWidth + 'px';
+              contentContainer.style.marginRight = '';
+            }
+          }
+          this.toggleClass('is-narrow', this.narrow);
+          this.notifyResize();
+        });
+      },
+
+      _handleDrawerToggle: function(){
+        var drawer = this.drawer;
+        var drawerWidth = this.drawer.getWidth();
+        var contentContainer = this.$.contentContainer;
+        if(drawer && drawer.opened){
+          if (drawer.align == 'right') {
+            contentContainer.style.marginLeft = '';
+            contentContainer.style.marginRight = drawerWidth + 'px';
+          } else {
+            contentContainer.style.marginLeft = drawerWidth + 'px';
+            contentContainer.style.marginRight = '';
+          }
+        } else {
+          contentContainer.style.marginLeft = '';
+          contentContainer.style.marginRight = '';
+        }
+      },
+      /**
+       * Handle when the media query changes.
+       * @event px-media-query
+       */
+      _onQueryMatchesChanged: function (event) {
+        this.fire('px-media-query', event.detail.value);
+        this._setNarrow(event.detail.value);
+      },
+      _computeMediaQuery: function (forceNarrow, responsiveWidth) {
+        return forceNarrow
+          ? '(min-width: 0px)'
+          : '(max-width: ' + responsiveWidth + ')';
+      },
+      _resizeHandler: function () {
+        this.debounce('_resetLayout', function () {
+          this.resetLayout();
+        }, 1);
+      }
+    });
+  </script>
+</dom-module>
